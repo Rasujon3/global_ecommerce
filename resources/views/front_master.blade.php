@@ -362,103 +362,10 @@
                                         <!-- End of Megamenu -->
                                     </li>
                                     <li>
-                                        <a href="vendor-dokan-store.html">Vendor</a>
-                                        <ul>
-                                            <li>
-                                                <a href="vendor-dokan-store-list.html">Store Listing</a>
-                                                <ul>
-                                                    <li><a href="vendor-dokan-store-list.html">Store listing 1</a></li>
-                                                    <li><a href="vendor-wcfm-store-list.html">Store listing 2</a></li>
-                                                    <li><a href="vendor-wcmp-store-list.html">Store listing 3</a></li>
-                                                    <li><a href="vendor-wc-store-list.html">Store listing 4</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="vendor-dokan-store.html">Vendor Store</a>
-                                                <ul>
-                                                    <li><a href="vendor-dokan-store.html">Vendor Store 1</a></li>
-                                                    <li><a href="vendor-wcfm-store-product-grid.html">Vendor Store 2</a>
-                                                    </li>
-                                                    <li><a href="vendor-wcmp-store-product-grid.html">Vendor Store 3</a>
-                                                    </li>
-                                                    <li><a href="vendor-wc-store-product-grid.html">Vendor Store 4</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                        <a href="{{ route('about') }}">About Us</a>
                                     </li>
                                     <li>
-                                        <a href="blog.html">Blog</a>
-                                        <ul>
-                                            <li><a href="blog.html">Classic</a></li>
-                                            <li><a href="blog-listing.html">Listing</a></li>
-                                            <li>
-                                                <a href="blog-grid-3cols.html">Grid</a>
-                                                <ul>
-                                                    <li><a href="blog-grid-2cols.html">Grid 2 columns</a></li>
-                                                    <li><a href="blog-grid-3cols.html">Grid 3 columns</a></li>
-                                                    <li><a href="blog-grid-4cols.html">Grid 4 columns</a></li>
-                                                    <li><a href="blog-grid-sidebar.html">Grid sidebar</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="blog-masonry-3cols.html">Masonry</a>
-                                                <ul>
-                                                    <li><a href="blog-masonry-2cols.html">Masonry 2 columns</a></li>
-                                                    <li><a href="blog-masonry-3cols.html">Masonry 3 columns</a></li>
-                                                    <li><a href="blog-masonry-4cols.html">Masonry 4 columns</a></li>
-                                                    <li><a href="blog-masonry-sidebar.html">Masonry sidebar</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="blog-mask-grid.html">Mask</a>
-                                                <ul>
-                                                    <li><a href="blog-mask-grid.html">Blog mask grid</a></li>
-                                                    <li><a href="blog-mask-masonry.html">Blog mask masonry</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="post-single.html">Single Post</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="about-us.html">Pages</a>
-                                        <ul>
-
-                                            <li><a href="about-us.html">About Us</a></li>
-                                            <li><a href="become-a-vendor.html">Become A Vendor</a></li>
-                                            <li><a href="contact-us.html">Contact Us</a></li>
-                                            <li><a href="faq.html">FAQs</a></li>
-                                            <li><a href="error-404.html">Error 404</a></li>
-                                            <li><a href="coming-soon.html">Coming Soon</a></li>
-                                            <li><a href="{{url('/wishlists')}}">Wishlist</a></li>
-                                            <li><a href="{{url('/carts')}}">Cart</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a href="my-account.html">My Account</a></li>
-                                            <li><a href="compare.html">Compare</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="elements.html">Elements</a>
-                                        <ul>
-                                            <li><a href="element-accordions.html">Accordions</a></li>
-                                            <li><a href="element-alerts.html">Alert &amp; Notification</a></li>
-                                            <li><a href="element-blog-posts.html">Blog Posts</a></li>
-                                            <li><a href="element-buttons.html">Buttons</a></li>
-                                            <li><a href="element-cta.html">Call to Action</a></li>
-                                            <li><a href="element-icons.html">Icons</a></li>
-                                            <li><a href="element-icon-boxes.html">Icon Boxes</a></li>
-                                            <li><a href="element-instagrams.html">Instagrams</a></li>
-                                            <li><a href="element-categories.html">Product Category</a></li>
-                                            <li><a href="element-products.html">Products</a></li>
-                                            <li><a href="element-tabs.html">Tabs</a></li>
-                                            <li><a href="element-testimonials.html">Testimonials</a></li>
-                                            <li><a href="element-titles.html">Titles</a></li>
-                                            <li><a href="element-typography.html">Typography</a></li>
-
-                                            <li><a href="element-vendors.html">Vendors</a></li>
-                                        </ul>
+                                        <a href="{{ route('contact') }}">Contact Us</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -527,7 +434,7 @@
                                 </a>
                                 <div class="widget-body">
                                     <p class="widget-about-title">Got Question? Call us 24/7</p>
-                                    <a href="tel:18005707777" class="widget-about-call">1-800-570-7777</a>
+                                    <a href="tel:{{ setting()->phone ?? '' }}" class="widget-about-call">{{ setting()->phone ?? '' }}</a>
                                     <p class="widget-about-desc">Register now to get updates on pronot get up icons
                                         & coupons ster now toon.
                                     </p>
@@ -583,82 +490,82 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer-middle">
-                    <div class="widget widget-category">
-                        <div class="category-box">
-                            <h6 class="category-name">Consumer Electric:</h6>
-                            <a href="#">TV Television</a>
-                            <a href="#">Air Condition</a>
-                            <a href="#">Refrigerator</a>
-                            <a href="#">Washing Machine</a>
-                            <a href="#">Audio Speaker</a>
-                            <a href="#">Security Camera</a>
-                            <a href="#">View All</a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">Clothing & Apparel:</h6>
-                            <a href="#">Men's T-shirt</a>
-                            <a href="#">Dresses</a>
-                            <a href="#">Men's Sneacker</a>
-                            <a href="#">Leather Backpack</a>
-                            <a href="#">Watches</a>
-                            <a href="#">Jeans</a>
-                            <a href="#">Sunglasses</a>
-                            <a href="#">Boots</a>
-                            <a href="#">Rayban</a>
-                            <a href="#">Acccessories</a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">Home, Garden & Kitchen:</h6>
-                            <a href="#">Sofa</a>
-                            <a href="#">Chair</a>
-                            <a href="#">Bed Room</a>
-                            <a href="#">Living Room</a>
-                            <a href="#">Cookware</a>
-                            <a href="#">Utensil</a>
-                            <a href="#">Blender</a>
-                            <a href="#">Garden Equipments</a>
-                            <a href="#">Decor</a>
-                            <a href="#">Library</a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">Health & Beauty:</h6>
-                            <a href="#">Skin Care</a>
-                            <a href="#">Body Shower</a>
-                            <a href="#">Makeup</a>
-                            <a href="#">Hair Care</a>
-                            <a href="#">Lipstick</a>
-                            <a href="#">Perfume</a>
-                            <a href="#">View all</a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">Jewelry & Watches:</h6>
-                            <a href="#">Necklace</a>
-                            <a href="#">Pendant</a>
-                            <a href="#">Diamond Ring</a>
-                            <a href="#">Silver Earing</a>
-                            <a href="#">Leather Watcher</a>
-                            <a href="#">Rolex</a>
-                            <a href="#">Gucci</a>
-                            <a href="#">Australian Opal</a>
-                            <a href="#">Ammolite</a>
-                            <a href="#">Sun Pyrite</a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">Computer & Technologies:</h6>
-                            <a href="#">Laptop</a>
-                            <a href="#">iMac</a>
-                            <a href="#">Smartphone</a>
-                            <a href="#">Tablet</a>
-                            <a href="#">Apple</a>
-                            <a href="#">Asus</a>
-                            <a href="#">Drone</a>
-                            <a href="#">Wireless Speaker</a>
-                            <a href="#">Game Controller</a>
-                            <a href="#">View all</a>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="footer-middle">--}}
+{{--                    <div class="widget widget-category">--}}
+{{--                        <div class="category-box">--}}
+{{--                            <h6 class="category-name">Consumer Electric:</h6>--}}
+{{--                            <a href="#">TV Television</a>--}}
+{{--                            <a href="#">Air Condition</a>--}}
+{{--                            <a href="#">Refrigerator</a>--}}
+{{--                            <a href="#">Washing Machine</a>--}}
+{{--                            <a href="#">Audio Speaker</a>--}}
+{{--                            <a href="#">Security Camera</a>--}}
+{{--                            <a href="#">View All</a>--}}
+{{--                        </div>--}}
+{{--                        <div class="category-box">--}}
+{{--                            <h6 class="category-name">Clothing & Apparel:</h6>--}}
+{{--                            <a href="#">Men's T-shirt</a>--}}
+{{--                            <a href="#">Dresses</a>--}}
+{{--                            <a href="#">Men's Sneacker</a>--}}
+{{--                            <a href="#">Leather Backpack</a>--}}
+{{--                            <a href="#">Watches</a>--}}
+{{--                            <a href="#">Jeans</a>--}}
+{{--                            <a href="#">Sunglasses</a>--}}
+{{--                            <a href="#">Boots</a>--}}
+{{--                            <a href="#">Rayban</a>--}}
+{{--                            <a href="#">Acccessories</a>--}}
+{{--                        </div>--}}
+{{--                        <div class="category-box">--}}
+{{--                            <h6 class="category-name">Home, Garden & Kitchen:</h6>--}}
+{{--                            <a href="#">Sofa</a>--}}
+{{--                            <a href="#">Chair</a>--}}
+{{--                            <a href="#">Bed Room</a>--}}
+{{--                            <a href="#">Living Room</a>--}}
+{{--                            <a href="#">Cookware</a>--}}
+{{--                            <a href="#">Utensil</a>--}}
+{{--                            <a href="#">Blender</a>--}}
+{{--                            <a href="#">Garden Equipments</a>--}}
+{{--                            <a href="#">Decor</a>--}}
+{{--                            <a href="#">Library</a>--}}
+{{--                        </div>--}}
+{{--                        <div class="category-box">--}}
+{{--                            <h6 class="category-name">Health & Beauty:</h6>--}}
+{{--                            <a href="#">Skin Care</a>--}}
+{{--                            <a href="#">Body Shower</a>--}}
+{{--                            <a href="#">Makeup</a>--}}
+{{--                            <a href="#">Hair Care</a>--}}
+{{--                            <a href="#">Lipstick</a>--}}
+{{--                            <a href="#">Perfume</a>--}}
+{{--                            <a href="#">View all</a>--}}
+{{--                        </div>--}}
+{{--                        <div class="category-box">--}}
+{{--                            <h6 class="category-name">Jewelry & Watches:</h6>--}}
+{{--                            <a href="#">Necklace</a>--}}
+{{--                            <a href="#">Pendant</a>--}}
+{{--                            <a href="#">Diamond Ring</a>--}}
+{{--                            <a href="#">Silver Earing</a>--}}
+{{--                            <a href="#">Leather Watcher</a>--}}
+{{--                            <a href="#">Rolex</a>--}}
+{{--                            <a href="#">Gucci</a>--}}
+{{--                            <a href="#">Australian Opal</a>--}}
+{{--                            <a href="#">Ammolite</a>--}}
+{{--                            <a href="#">Sun Pyrite</a>--}}
+{{--                        </div>--}}
+{{--                        <div class="category-box">--}}
+{{--                            <h6 class="category-name">Computer & Technologies:</h6>--}}
+{{--                            <a href="#">Laptop</a>--}}
+{{--                            <a href="#">iMac</a>--}}
+{{--                            <a href="#">Smartphone</a>--}}
+{{--                            <a href="#">Tablet</a>--}}
+{{--                            <a href="#">Apple</a>--}}
+{{--                            <a href="#">Asus</a>--}}
+{{--                            <a href="#">Drone</a>--}}
+{{--                            <a href="#">Wireless Speaker</a>--}}
+{{--                            <a href="#">Game Controller</a>--}}
+{{--                            <a href="#">View all</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="footer-bottom">
                     <div class="footer-left">
                         <p class="copyright">Copyright © 2021 Wolmart Store. All Rights Reserved.</p>

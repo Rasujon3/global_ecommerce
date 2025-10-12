@@ -22,6 +22,13 @@ Route::post('admin-login', [AccessController::class, 'adminLogin']);
 
 Route::get('/admin/logout', [AccessController::class, 'adminLogout']);
 
+Route::get('/migrate', function(){
+    Artisan::call('migrate', [
+        '--force' => true,
+    ]);
+    return response()->json(['message' => 'Migrations run successfully.']);
+});
+
 Route::group(['middleware' => 'prevent-back-history'],function(){
 
 	//admin dashboard

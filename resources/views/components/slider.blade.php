@@ -14,10 +14,10 @@
                     <div class="swiper-wrapper">
                       @foreach($sliders as $key=>$slider)
                         <div class="swiper-slide banner banner-fixed intro-slide intro-slide-1"
-                            style="background-image: url(front/assets/images/demos/demo1/sliders/slide-1.jpg); background-color: #ebeef2;">
+                            style="background-image: url({{ $slider->image }}); background-color: #ebeef2;">
                             <div class="container">
                                 <figure class="slide-image skrollable slide-animate">
-                                    <img src="front/assets/images/demos/demo1/sliders/shoes.png" alt="Banner"
+                                    <img src="{{ $slider->image }}" alt="Banner"
                                         data-bottom-top="transform: translateY(10vh);"
                                         data-top-bottom="transform: translateY(-10vh);" width="474" height="397">
                                 </figure>
