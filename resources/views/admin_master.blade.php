@@ -339,6 +339,14 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-item {{ Request::is('about-us') ? 'menu-open' : '' }}">
+                <a href="{{ route('about-us') }}" class="nav-link">
+                    <i class="nav-icon far fa-image"></i>
+                    <p>
+                        About Us
+                    </p>
+                </a>
+            </li>
 
         </ul>
       </nav>

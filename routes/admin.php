@@ -58,4 +58,8 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     // Settings
     Route::get('/settings', [SettingController::class, 'settings'])->name('settings');
     Route::post('settings-app', [SettingController::class, 'settingApp']);
+
+    // about-us
+    Route::get('about-us', [SettingController::class, 'aboutUs'])->name('about-us');
+    Route::post('about-us', [SettingController::class, 'storeAboutUs'])->name('store-about-us');
 });

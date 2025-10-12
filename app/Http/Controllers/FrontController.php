@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutUs;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -93,7 +94,7 @@ class FrontController extends Controller
     public function about()
     {
 //        return view('fronts.contact');
-        $setting = Setting::first();
-        return view('fronts.about-us', compact('setting'));
+        $data = AboutUs::first();
+        return view('fronts.about-us', compact('data'));
     }
 }

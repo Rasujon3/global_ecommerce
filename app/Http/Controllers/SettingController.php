@@ -7,6 +7,7 @@ use App\Models\LoginPageContent;
 use App\Models\Setting;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class SettingController extends Controller
@@ -114,6 +115,75 @@ class SettingController extends Controller
 
             $notification=array(
                 'messege' => 'Something went wrong!!!',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function aboutUs()
+    {
+        $aboutUs = AboutUs::first();
+        return view('admin.settings.about_us',compact('aboutUs'));
+    }
+    public function storeAboutUs(Request $request)
+    {
+        DB::beginTransaction();
+        try
+        {
+            $data = AboutUs::first();
+
+            $defaults = [
+                'title' => $data ? $data->title : null,
+                'desc' => $data ? $data->desc : null,
+                'img' => $data ? $data->img : null,
+            ];
+
+            // Handle file upload
+            $img = $defaults['img'];
+            if ($request->hasFile('img')) {
+                $filePath = $this->storeFile($request->file('img'));
+                $img = $filePath;
+            }
+
+            if ($data) {
+                AboutUs::where('id', $data->id)->update(
+                    [
+                        'title' => trim($request->title) ?? $defaults['title'],
+                        'desc' => trim($request->desc) ?? $defaults['desc'],
+                        'img' => $img,
+                    ]
+                );
+            } else {
+                AboutUs::create(
+                    [
+                        'title' => trim($request->title) ?? $defaults['title'],
+                        'desc' => trim($request->desc) ?? $defaults['desc'],
+                        'img' => $img,
+                    ]
+                );
+            }
+
+            DB::commit();
+            $notification = [
+                'message'    => 'Successfully updated',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->back()->with($notification);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            // Log the error
+            Log::error('Error in updating about us: ', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            $notification=array(
+                'message' => 'Something went wrong!!!',
                 'alert-type' => 'error'
             );
             return redirect()->back()->with($notification);

@@ -533,11 +533,11 @@
                                     </p>
 
                                     <div class="social-icons social-icons-colored">
-                                        <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
-                                        <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
-                                        <a href="#" class="social-icon social-instagram w-icon-instagram"></a>
-                                        <a href="#" class="social-icon social-youtube w-icon-youtube"></a>
-                                        <a href="#" class="social-icon social-pinterest w-icon-pinterest"></a>
+                                        <a href="{{ setting()->facebook ?? '' }}" class="social-icon social-facebook w-icon-facebook"></a>
+                                        <a href="{{ setting()->twitter ?? '' }}" class="social-icon social-twitter w-icon-twitter"></a>
+                                        <a href="{{ setting()->instagram ?? '' }}" class="social-icon social-instagram w-icon-instagram"></a>
+                                        <a href="{{ setting()->youtube ?? '' }}" class="social-icon social-youtube w-icon-youtube"></a>
+                                        <a href="{{ setting()->pinterest ?? '' }}" class="social-icon social-pinterest w-icon-pinterest"></a>
                                     </div>
                                 </div>
                             </div>
@@ -546,10 +546,10 @@
                             <div class="widget">
                                 <h3 class="widget-title">Company</h3>
                                 <ul class="widget-body">
-                                    <li><a href="about-us.html">About Us</a></li>
+                                    <li><a href="{{ route('about') }}">About Us</a></li>
                                     <li><a href="#">Team Member</a></li>
                                     <li><a href="#">Career</a></li>
-                                    <li><a href="contact-us.html">Contact Us</a></li>
+                                    <li><a href="{{ route('contact') }}">Contact Us</a></li>
                                     <li><a href="#">Affilate</a></li>
                                     <li><a href="#">Order History</a></li>
                                 </ul>
