@@ -1,3 +1,4 @@
+
 @extends('admin_master')
 @section('content')
 <div class="content-wrapper">
@@ -28,10 +29,10 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-    
+
                 <div class="card-body">
                     <div class="row">
-                      
+
                       <div class="col-md-12">
                       	<div class="invoice p-3 mb-3">
               <!-- title row -->
@@ -56,7 +57,7 @@
                     Phone: {{$data->phone}}
                   </address>
                 </div>
-                
+
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -79,9 +80,16 @@
                       <td>{{$order->qty}}</td>
                       <td>
                       	{{$order->product->product_name}}
-                      	{{-- @if($order->variants != null)
-                      	 <p>(Variants: {{variantNames($order->variants)}} )</p> 
-                      	@endif --}}
+                          {{-- ✅ Show variants if available --}}
+                          @if(!empty($order->variant_details))
+                              <br>
+                              @foreach($order->variant_details as $variant)
+                                  <small class="text-muted">
+                                      {{ $variant->variant_name }}: {{ $variant->variant_value }}
+                                      @if(!$loop->last) | @endif
+                                  </small>
+                              @endforeach
+                          @endif
                       </td>
                       <td>{{$key+1}}</td>
                       <td>{{discount($order->product)}} BDT</td>
@@ -95,7 +103,7 @@
               <!-- /.row -->
 
               <div class="row">
-                
+
                 <div class="col-12">
 
                   <div class="table-responsive">
