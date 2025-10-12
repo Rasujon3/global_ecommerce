@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Productvariant;
 use App\Models\Variant;
+use Exception;
 use Illuminate\Http\Request;
 use App\Model\Order;
 use App\Models\Orderdetail;
 use DataTables;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -29,8 +31,31 @@ class OrderController extends Controller
                 	return $row->id;
                 })
 
-                ->addColumn('status', function ($row) {
-                    return $row->status;
+//                ->addColumn('status', function ($row) {
+//                    return $row->status;
+//                })
+
+                ->addColumn('status', function($row) {
+                    $statuses = ['Pending', 'Order_Received', 'Processing','Shipped', 'In_Transit', 'Out_for_Delivery', 'Delivered'];
+
+                    // Find the current status index
+                    $currentIndex = array_search($row->status, $statuses);
+
+                    $html = "<select class='form-control change-status' data-id='".$row->id."'>";
+
+                    foreach ($statuses as $index => $status) {
+                        // Disable previous statuses (index < currentIndex)
+                        $disabled = ($index < $currentIndex && $row->status != 'Cancel') ? "disabled" : "";
+
+                        // Mark current status as selected
+                        $selected = ($row->status == $status) ? "selected" : "";
+
+                        $html .= "<option value='{$status}' {$selected} {$disabled}>{$status}</option>";
+                    }
+
+                    $html .= "</select>";
+
+                    return $html;
                 })
 
                 ->addColumn('action', function ($row) {
@@ -90,5 +115,22 @@ class OrderController extends Controller
 //
 //        dd($data->orders[0]->variants, $data->variants, $data?->variant_details);
     	return view('orders.show_invoice', compact('data'));
+    }
+    public function orderStatusUpdate(Request $request)
+    {
+        DB::beginTransaction();
+        try
+        {
+            $order = Orderdetail::findOrFail($request->order_id);
+
+            $order->status = $request->status;
+            $order->update();
+
+            DB::commit();
+            return response()->json(['status'=>true, 'message'=>"Successfully the order's status has been changed"]);
+        } catch(Exception $e) {
+            DB::rollback();
+            return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
+        }
     }
 }

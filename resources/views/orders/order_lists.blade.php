@@ -170,6 +170,32 @@
 
        });
 
+        $(document).on('change', '.change-status', function(){
+
+            order_id = $(this).data('id');
+            var status_val = $(this).val();
+
+            if(confirm('Do you want to change the status?'))
+            {
+                $.ajax({
+
+                    url: "{{url('/order-status-update')}}",
+
+                    type:"POST",
+                    data:{'order_id':order_id, 'status':status_val},
+                    dataType:"json",
+                    success:function(data) {
+                        console.log(data);
+                        toastr.success(data.message);
+
+                        $('.data-table').DataTable().ajax.reload(null, false);
+
+                    },
+
+                });
+            }
+        });
+
   	});
   </script>
 

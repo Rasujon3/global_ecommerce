@@ -51,6 +51,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 	Route::get('/order-lists', [OrderController::class, 'orderLists']);
 
 	Route::get('/show-order/{id}', [OrderController::class, 'showOrder']);
+    Route::post('order-status-update', [OrderController::class, 'orderStatusUpdate']);
 
     Route::get('password-change', [UserController::class, 'passwordChange'])->name('password-change');
     Route::post('change-password', [UserController::class, 'changePassword'])->name('change-password');
