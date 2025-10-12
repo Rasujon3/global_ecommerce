@@ -25,7 +25,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 	//admin dashboard
 
     Route::get('/dashboard', [DashboardController::class, 'Dashboard']);
-    
+
 	//categories
 	Route::resource('categories', CategoryController::class);
 	//subcategories
@@ -49,5 +49,6 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 	Route::get('/order-lists', [OrderController::class, 'orderLists']);
 
 	Route::get('/show-order/{id}', [OrderController::class, 'showOrder']);
+
 
 });

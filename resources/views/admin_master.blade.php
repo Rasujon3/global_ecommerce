@@ -40,11 +40,11 @@
     <link rel="stylesheet" type="text/css" href="{{asset('back/datatable/css/dataTables.bootstrap4.min.css')}}">
 
     <link rel="stylesheet" type="text/css" href="{{asset('back/datatable/css/buttons.dataTables.min.css')}}">
-    
+
     <link rel="stylesheet" type="text/css" href="{{asset('back/datatable/css/responsive.bootstrap4.min.css')}}">
 
 
-    
+
     <link rel="stylesheet" href="{{asset('dropify/dist/css/dropify.min.css')}}">
 
 
@@ -60,7 +60,7 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-    
+
     </ul>
 
     <!-- Right navbar links -->
@@ -68,7 +68,7 @@
       <!-- Navbar Search -->
       <li class="nav-item">
         <a href="{{url('/admin/logout')}}" class="btn btn-primary font-weight-bold">LOGOUT</a>
-      
+
       </li>
 
 
@@ -118,12 +118,12 @@
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                
+
               </p>
             </a>
-            
+
           </li>
-          
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -145,7 +145,7 @@
                   <p>All Category</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
 
@@ -171,7 +171,7 @@
                   <p>All SubCategory</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
 
@@ -197,7 +197,7 @@
                   <p>All Brand</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
 
@@ -222,7 +222,7 @@
                   <p>All Unit</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
 
@@ -248,7 +248,7 @@
                   <p>All Variant</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
 
@@ -274,7 +274,7 @@
                   <p>All Product</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
 
@@ -300,7 +300,7 @@
                   <p>All Slider</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
 
@@ -320,11 +320,11 @@
                   <p>Order Lists</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
-          
-          
+
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -396,16 +396,16 @@
 
     var base_url = "{{url('/')}}";
     localStorage.setItem('base_url', base_url);
- 
+
   })
 </script>
 
 <script src="{{asset('custom/toastr.js')}}"></script>
- 
+
   @if(Session::has('messege'))
     @toastr("{{ Session::get('messege') }}")
   @endif
-  
+
   @stack('scripts')
 
 </body>
