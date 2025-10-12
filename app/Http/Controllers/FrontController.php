@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\AboutUs;
+use App\Models\Orderdetail;
 use App\Models\Setting;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Subcategory;
@@ -12,6 +15,9 @@ use App\Models\Variant;
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Slider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Session;
 
 class FrontController extends Controller
@@ -87,14 +93,93 @@ class FrontController extends Controller
     }
     public function contact()
     {
-//        return view('fronts.contact');
         $setting = Setting::first();
         return view('fronts.contact-us', compact('setting'));
     }
     public function about()
     {
-//        return view('fronts.contact');
         $data = AboutUs::first();
         return view('fronts.about-us', compact('data'));
+    }
+    public function myAccount()
+    {
+        $userId = user()->id;
+        // Orders (total, today, monthly, yearly)
+        $totalOrders = OrderDetail::where('user_id', $userId)->count();
+
+        $todayOrders = OrderDetail::where('user_id', $userId)
+            ->whereDate('created_at', now())
+            ->count();
+
+        $monthlyOrders = OrderDetail::where('user_id', $userId)
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
+
+        $orders = Orderdetail::with('orders.product')
+            ->where('user_id', $userId)
+            ->latest()
+            ->get();
+
+        return view('fronts.my-account', compact(
+            'totalOrders',
+            'todayOrders',
+            'monthlyOrders',
+            'orders'
+        ));
+    }
+    public function userChangePassword(Request $request)
+    {
+        try
+        {
+            $user = User::findorfail(Auth::user()->id);
+
+            if (!Hash::check($request->current_password, $user->password)) {
+
+                $notification=array(
+                    'messege' => 'The current password is not matched',
+                    'alert-type' => 'error'
+                );
+
+                return redirect()->route('home')->with($notification);
+            }
+
+            if ($request->new_password !== $request->confirm_password) {
+
+                $notification=array(
+                    'messege' => 'The new & confirm password are not matched',
+                    'alert-type' => 'error'
+                );
+
+                return redirect()->route('home')->with($notification);
+            }
+
+            $user->password = Hash::make($request->new_password);
+            $user->update();
+
+
+            $notification=array(
+                'messege' => 'Successfully your has been changed',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('home')->with($notification);
+
+        } catch(Exception $e) {
+            // Log the error
+            Log::error('Error in changePassword: ', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            $notification=array(
+                'messege' => 'Something went wrong!!!',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->route('home')->with($notification);
+        }
     }
 }

@@ -33,3 +33,5 @@ Route::post('save-order', [CheckoutController::class, 'saveOrder']);
 
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/about', [FrontController::class, 'about'])->name('about');
+Route::get('/my-account', [FrontController::class, 'myAccount'])->name('my-account');
+Route::post('user-change-password', [FrontController::class, 'userChangePassword'])->name('user-change-password');

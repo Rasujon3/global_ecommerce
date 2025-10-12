@@ -91,7 +91,7 @@
                         <span class="divider d-lg-show"></span>
                         <a href="{{ route('contact') }}" class="d-lg-show">Contact Us</a>
                         @if(Auth::check())
-                         {{-- <a href="#" class="d-lg-show">My Account</a> --}}
+                          <a href="{{ route('my-account') }}" class="d-lg-show">My Account</a>
 
                          <a href="{{'/user-logout'}}" class="d-lg-show">{{Auth::user()->name}} ( Logout )</a>
 
@@ -140,7 +140,7 @@
                             <div class="call-info d-lg-show">
                                 <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
                                     <a href="https://portotheme.com/cdn-cgi/l/email-protection#99ba" class="text-capitalize">Live Chat</a> or :</h4>
-                                <a href="tel:#" class="phone-number font-weight-bolder ls-50">0(800)123-456</a>
+                                <a href="tel:#" class="phone-number font-weight-bolder ls-50">{{ setting()->phone }}</a>
                             </div>
                         </div>
                         <a class="wishlist label-down link d-xs-show" href="{{url('/wishlists')}}">
@@ -1242,7 +1242,7 @@
     <!-- End of Mobile Menu -->
 
     <!-- Start of Newsletter popup -->
-    <div class="newsletter-popup mfp-hide">
+    <div class="newsletter-popup mfp-hide" hidden="">
         <div class="newsletter-content">
             <h4 class="text-uppercase font-weight-normal ls-25">Get Up to<span class="text-primary">25% Off</span></h4>
             <h2 class="ls-25">Sign up to Wolmart</h2>
@@ -1568,6 +1568,16 @@
 
     });
  </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Disable the newsletter popup trigger entirely
+        if (typeof Wolmart !== "undefined") {
+            Wolmart.popup = function() {
+                console.log("Newsletter popup disabled.");
+            };
+        }
+    });
+</script>
 
 
 
