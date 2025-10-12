@@ -140,7 +140,7 @@
                             <div class="call-info d-lg-show">
                                 <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
                                     <a href="https://portotheme.com/cdn-cgi/l/email-protection#99ba" class="text-capitalize">Live Chat</a> or :</h4>
-                                <a href="tel:#" class="phone-number font-weight-bolder ls-50">{{ setting()->phone }}</a>
+                                <a href="tel:#{{ setting()->phone ?? '' }}" class="phone-number font-weight-bolder ls-50">{{ setting()->phone ?? '' }}</a>
                             </div>
                         </div>
                         <a class="wishlist label-down link d-xs-show" href="{{url('/wishlists')}}">
@@ -1476,14 +1476,14 @@
     });
  </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Disable the newsletter popup trigger entirely
-        if (typeof Wolmart !== "undefined") {
-            Wolmart.popup = function() {
-                console.log("Newsletter popup disabled.");
-            };
-        }
-    });
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     // Disable the newsletter popup trigger entirely
+    //     if (typeof Wolmart !== "undefined") {
+    //         Wolmart.popup = function() {
+    //             console.log("Newsletter popup disabled.");
+    //         };
+    //     }
+    // });
 </script>
 
 
