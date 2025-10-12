@@ -26,7 +26,53 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-     
+                <div class="card w-100">
+                    <div class="card-header">
+                        <h5>Filter Order</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="from_date">From Date</label>
+                                    <input type="date" class="form-control" id="from_date" required=""/>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="to_date">To Date</label>
+                                    <input type="date" class="form-control" id="to_date" required=""/>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Select Status</label>
+                                    <select class="form-control select2bs4" id="selected_status">
+                                        <option value="" selected="" disabled="">Select Status</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Order_Received">Order Received</option>
+                                        <option value="Processing">Processing</option>
+                                        <option value="Shipped">Shipped</option>
+                                        <option value="In_Transit">In Transit</option>
+                                        <option value="Out_for_Delivery">Out for Delivery</option>
+                                        <option value="Delivered">Delivered</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary btn-block filter-order"><i class="fa fa-search"></i> SEARCH</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="fetch-data table-responsive">
                     <table id="order-table-detail" class="table table-bordered table-striped data-table">
                         <thead>
@@ -41,9 +87,9 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="conts"> 
+                        <tbody class="conts">
                         </tbody>
-                    </table> 
+                    </table>
                 </div>
             </div>
         </div>
@@ -52,7 +98,7 @@
 @endsection
 
 @push('scripts')
-  
+
   <script>
   	$(document).ready(function(){
   		let order_id;
@@ -65,6 +111,12 @@
 		        stateSave: true,
 		        ajax: {
 		          url: "{{url('/order-lists')}}",
+                    data: function (d) {
+                        d.from_date = $('#from_date').val()
+                            d.to_date = $('#to_date').val()
+                            d.status = $('#selected_status').val()
+                        d.search = $('.dataTables_filter input').val()
+                    }
 		        },
 
 		        columns: [
@@ -79,13 +131,16 @@
 		        ]
         });
 
-
+        $('.filter-order').click(function(e){
+            e.preventDefault();
+            orderTable.draw();
+        });
 
        $(document).on('click', '#status-order-update', function(){
 
 	         order_id = $(this).data('id');
-	         
-       }); 
+
+       });
 
 
        $(document).on('click', '.delete-order', function(e){
@@ -109,7 +164,7 @@
                             $('.data-table').DataTable().ajax.reload(null, false);
 
                     },
-                                
+
               });
            }
 

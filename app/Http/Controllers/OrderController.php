@@ -49,7 +49,29 @@ class OrderController extends Controller
                             <i class="fa fa-trash"></i>
                         </button>
                     ';
-                })
+                })->filter(function ($instance) use ($request) {
+
+                    if ($request->get('from_date') != "") {
+                        $instance->where(function($w) use($request){
+                            $w->orWhereDate('orderdetails.created_at', '>=', $request->from_date);
+                        });
+                    }
+
+                    if ($request->get('to_date') != "") {
+                        $instance->where(function($w) use($request){
+                            $w->orWhereDate('orderdetails.created_at', '<=', $request->to_date);
+                        });
+                    }
+
+                    if ($request->get('status') != "") {
+                        $instance->where(function($w) use($request){
+                            $status = $request->get('status');
+                            $w->orWhere('orderdetails.status', $status);
+                        });
+                    }
+
+
+                })->setRowID('id')
 
                 ->rawColumns(['status', 'action','serial'])
                 ->make(true);
