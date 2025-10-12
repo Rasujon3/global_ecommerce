@@ -35,18 +35,18 @@ class SubcategoryController extends Controller
 
                     return $row->category->category_name;
                 })
-                
+
                 ->addColumn('status', function ($row) {
                     $checked = $row->status === 'Active' ? 'checked' : '';
                     $class   = $row->status === 'Active' ? 'active-subcategory' : 'decline-subcategory';
 
                     return '
                         <label class="switch">
-                            <input 
-                                type="checkbox" 
-                                class="' . $class . '" 
-                                id="status-subcategory-update" 
-                                data-id="' . $row->id . '" 
+                            <input
+                                type="checkbox"
+                                class="' . $class . '"
+                                id="status-subcategory-update"
+                                data-id="' . $row->id . '"
                                 ' . $checked . '
                             >
                             <span class="slider round"></span>
@@ -58,14 +58,14 @@ class SubcategoryController extends Controller
                     $editUrl = route('subcategories.show', $row->id);
 
                     return '
-                        <a href="' . $editUrl . '" 
-                           class="btn btn-primary btn-sm action-button edit-subcategory" 
+                        <a href="' . $editUrl . '"
+                           class="btn btn-primary btn-sm action-button edit-subcategory"
                            data-id="' . $row->id . '">
                             <i class="fa fa-edit"></i>
                         </a>
                         &nbsp;
-                        <button type="button" 
-                           class="btn btn-danger btn-sm delete-subcategory action-button" 
+                        <button type="button"
+                           class="btn btn-danger btn-sm delete-subcategory action-button"
                            data-id="' . $row->id . '">
                             <i class="fa fa-trash"></i>
                         </button>
@@ -86,7 +86,7 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        return view('subcategories.create'); 
+        return view('subcategories.create');
     }
 
     /**
@@ -174,6 +174,7 @@ class SubcategoryController extends Controller
     {
         try
         {
+            $subcategory->products()->delete();
             $subcategory->delete();
             return response()->json(['status'=>true, 'message'=>'Successfully the subcategory has been deleted']);
         }catch(Exception $e){

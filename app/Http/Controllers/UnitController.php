@@ -28,18 +28,18 @@ class UnitController extends Controller
 
             return DataTables::of($units)
                 ->addIndexColumn()
-                
+
                 ->addColumn('status', function ($row) {
                     $checked = $row->status === 'Active' ? 'checked' : '';
                     $class   = $row->status === 'Active' ? 'active-unit' : 'decline-unit';
 
                     return '
                         <label class="switch">
-                            <input 
-                                type="checkbox" 
-                                class="' . $class . '" 
-                                id="status-unit-update" 
-                                data-id="' . $row->id . '" 
+                            <input
+                                type="checkbox"
+                                class="' . $class . '"
+                                id="status-unit-update"
+                                data-id="' . $row->id . '"
                                 ' . $checked . '
                             >
                             <span class="slider round"></span>
@@ -51,14 +51,14 @@ class UnitController extends Controller
                     $editUrl = route('units.show', $row->id);
 
                     return '
-                        <a href="' . $editUrl . '" 
-                           class="btn btn-primary btn-sm action-button edit-unit" 
+                        <a href="' . $editUrl . '"
+                           class="btn btn-primary btn-sm action-button edit-unit"
                            data-id="' . $row->id . '">
                             <i class="fa fa-edit"></i>
                         </a>
                         &nbsp;
-                        <button type="button" 
-                           class="btn btn-danger btn-sm delete-unit action-button" 
+                        <button type="button"
+                           class="btn btn-danger btn-sm delete-unit action-button"
                            data-id="' . $row->id . '">
                             <i class="fa fa-trash"></i>
                         </button>
@@ -107,7 +107,7 @@ class UnitController extends Controller
 
         }catch(Exception $e){
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
-        } 
+        }
     }
 
     /**
@@ -142,7 +142,7 @@ class UnitController extends Controller
     public function update(UpdateUnitRequest $request, Unit $unit)
     {
         try
-        {   
+        {
             $unit->update($request->validated());
 
             $notification=array(
@@ -154,7 +154,7 @@ class UnitController extends Controller
 
         }catch(Exception $e){
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
-        } 
+        }
     }
 
     /**
@@ -167,6 +167,7 @@ class UnitController extends Controller
     {
         try
         {
+            $unit->products()->delete();
             $unit->delete();
             return response()->json(['status'=>true, 'message'=>'Successfully the unit has been deleted']);
         }catch(Exception $e){

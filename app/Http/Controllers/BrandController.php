@@ -29,18 +29,18 @@ class BrandController extends Controller
 
             return DataTables::of($brands)
                 ->addIndexColumn()
-                
+
                 ->addColumn('status', function ($row) {
                     $checked = $row->status === 'Active' ? 'checked' : '';
                     $class   = $row->status === 'Active' ? 'active-brand' : 'decline-brand';
 
                     return '
                         <label class="switch">
-                            <input 
-                                type="checkbox" 
-                                class="' . $class . '" 
-                                id="status-brand-update" 
-                                data-id="' . $row->id . '" 
+                            <input
+                                type="checkbox"
+                                class="' . $class . '"
+                                id="status-brand-update"
+                                data-id="' . $row->id . '"
                                 ' . $checked . '
                             >
                             <span class="slider round"></span>
@@ -52,14 +52,14 @@ class BrandController extends Controller
                     $editUrl = route('brands.show', $row->id);
 
                     return '
-                        <a href="' . $editUrl . '" 
-                           class="btn btn-primary btn-sm action-button edit-brand" 
+                        <a href="' . $editUrl . '"
+                           class="btn btn-primary btn-sm action-button edit-brand"
                            data-id="' . $row->id . '">
                             <i class="fa fa-edit"></i>
                         </a>
                         &nbsp;
-                        <button type="button" 
-                           class="btn btn-danger btn-sm delete-brand action-button" 
+                        <button type="button"
+                           class="btn btn-danger btn-sm delete-brand action-button"
                            data-id="' . $row->id . '">
                             <i class="fa fa-trash"></i>
                         </button>
@@ -92,7 +92,7 @@ class BrandController extends Controller
     public function store(StoreBrandRequest $request)
     {
         try
-        {   
+        {
             if($request->file('image')){
                 $file = $request->file('image');
                 $name = time() . auth()->user()->id . $file->getClientOriginalName();
@@ -151,7 +151,7 @@ class BrandController extends Controller
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
         try
-        {   
+        {
             if($request->file('image')){
                 $file = $request->file('image');
                 $name = time() . auth()->user()->id . $file->getClientOriginalName();
@@ -190,6 +190,7 @@ class BrandController extends Controller
     {
         try
         {
+            $brand->products()->delete();
             $brand->delete();
             return response()->json(['status'=>true, 'messsage'=>"Successfully the brand has been deleted"]);
         }catch(Exception $e){

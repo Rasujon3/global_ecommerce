@@ -40,18 +40,18 @@ class ProductController extends Controller
 
                     return $row->unit->unit_name;
                 })
-                
+
                 ->addColumn('status', function ($row) {
                     $checked = $row->status === 'Active' ? 'checked' : '';
                     $class   = $row->status === 'Active' ? 'active-product' : 'decline-product';
 
                     return '
                         <label class="switch">
-                            <input 
-                                type="checkbox" 
-                                class="' . $class . '" 
-                                id="status-product-update" 
-                                data-id="' . $row->id . '" 
+                            <input
+                                type="checkbox"
+                                class="' . $class . '"
+                                id="status-product-update"
+                                data-id="' . $row->id . '"
                                 ' . $checked . '
                             >
                             <span class="slider round"></span>
@@ -64,22 +64,22 @@ class ProductController extends Controller
                     $variantUrl = url('/add-product-variant/'.$row->id);
                     return '
 
-                        <a href="' . $variantUrl . '" 
+                        <a href="' . $variantUrl . '"
                            class="btn btn-success btn-sm action-button add-product-variant" >
                             Add/Edit Variant
                         </a>
 
                         &nbsp;
 
-                        <a href="' . $editUrl . '" 
-                           class="btn btn-primary btn-sm action-button edit-product" 
+                        <a href="' . $editUrl . '"
+                           class="btn btn-primary btn-sm action-button edit-product"
                            data-id="' . $row->id . '">
                             Edit
                         </a>
                         &nbsp;
 
-                        <button type="button" 
-                           class="btn btn-danger btn-sm delete-product action-button" 
+                        <button type="button"
+                           class="btn btn-danger btn-sm delete-product action-button"
                            data-id="' . $row->id . '">
                             Delete
                         </button>
@@ -112,7 +112,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         try
-        {   
+        {
             if($request->file('image')){
                 $file = $request->file('image');
                 $name = time() . auth()->user()->id . $file->getClientOriginalName();
@@ -153,7 +153,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
-    {  
+    {
         $subcategories = Subcategory::where('category_id',$product->category_id)->latest()->get();
         return view('products.edit', compact('product','subcategories'));
     }
@@ -179,7 +179,7 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         try
-        {   
+        {
             if($request->file('image')){
                 $file = $request->file('image');
                 $name = time() . auth()->user()->id . $file->getClientOriginalName();
@@ -225,7 +225,12 @@ class ProductController extends Controller
         try
         {
             unlink(public_path($product->image));
+
+            $product->carts()->delete();
+            $product->whishlist()->delete();
+            $product->orders()->delete();
             $product->delete();
+
             return response()->json(['status'=>true, 'message'=>"Successfully the product has been deleted"]);
         }catch(Exception $e){
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);

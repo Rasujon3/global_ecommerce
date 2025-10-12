@@ -27,18 +27,18 @@ class VariantController extends Controller
 
             return DataTables::of($variants)
                 ->addIndexColumn()
-                
+
                 ->addColumn('status', function ($row) {
                     $checked = $row->status === 'Active' ? 'checked' : '';
                     $class   = $row->status === 'Active' ? 'active-variant' : 'decline-variant';
 
                     return '
                         <label class="switch">
-                            <input 
-                                type="checkbox" 
-                                class="' . $class . '" 
-                                id="status-variant-update" 
-                                data-id="' . $row->id . '" 
+                            <input
+                                type="checkbox"
+                                class="' . $class . '"
+                                id="status-variant-update"
+                                data-id="' . $row->id . '"
                                 ' . $checked . '
                             >
                             <span class="slider round"></span>
@@ -50,14 +50,14 @@ class VariantController extends Controller
                     $editUrl = route('variants.show', $row->id);
 
                     return '
-                        <a href="' . $editUrl . '" 
-                           class="btn btn-primary btn-sm action-button edit-variant" 
+                        <a href="' . $editUrl . '"
+                           class="btn btn-primary btn-sm action-button edit-variant"
                            data-id="' . $row->id . '">
                             <i class="fa fa-edit"></i>
                         </a>
                         &nbsp;
-                        <button type="button" 
-                           class="btn btn-danger btn-sm delete-variant action-button" 
+                        <button type="button"
+                           class="btn btn-danger btn-sm delete-variant action-button"
                            data-id="' . $row->id . '">
                             <i class="fa fa-trash"></i>
                         </button>
@@ -141,7 +141,7 @@ class VariantController extends Controller
     public function update(UpdateVariantRequest $request, Variant $variant)
     {
         try
-        {   
+        {
             $variant->update($request->validated());
 
             $notification=array(
@@ -166,6 +166,7 @@ class VariantController extends Controller
     {
         try
         {
+            $variant->productvariants()->delete();
             $variant->delete();
             return response()->json(['status'=>true, 'message'=>'Successfully the variant has been deleted']);
         }catch(Exception $e){

@@ -28,18 +28,18 @@ class CategoryController extends Controller
 
             return DataTables::of($categories)
                 ->addIndexColumn()
-                
+
                 ->addColumn('status', function ($row) {
                     $checked = $row->status === 'Active' ? 'checked' : '';
                     $class   = $row->status === 'Active' ? 'active-category' : 'decline-category';
 
                     return '
                         <label class="switch">
-                            <input 
-                                type="checkbox" 
-                                class="' . $class . '" 
-                                id="status-category-update" 
-                                data-id="' . $row->id . '" 
+                            <input
+                                type="checkbox"
+                                class="' . $class . '"
+                                id="status-category-update"
+                                data-id="' . $row->id . '"
                                 ' . $checked . '
                             >
                             <span class="slider round"></span>
@@ -51,14 +51,14 @@ class CategoryController extends Controller
                     $editUrl = route('categories.show', $row->id);
 
                     return '
-                        <a href="' . $editUrl . '" 
-                           class="btn btn-primary btn-sm action-button edit-category" 
+                        <a href="' . $editUrl . '"
+                           class="btn btn-primary btn-sm action-button edit-category"
                            data-id="' . $row->id . '">
                             <i class="fa fa-edit"></i>
                         </a>
                         &nbsp;
-                        <button type="button" 
-                           class="btn btn-danger btn-sm delete-category action-button" 
+                        <button type="button"
+                           class="btn btn-danger btn-sm delete-category action-button"
                            data-id="' . $row->id . '">
                             <i class="fa fa-trash"></i>
                         </button>
@@ -92,7 +92,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         try
-        {   
+        {
             if($request->file('image')){
                 $file = $request->file('image');
                 $name = time() . auth()->user()->id . $file->getClientOriginalName();
@@ -153,7 +153,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         try
-        {   
+        {
             if($request->file('image')){
                 $file = $request->file('image');
                 $name = time() . auth()->user()->id . $file->getClientOriginalName();
@@ -165,7 +165,7 @@ class CategoryController extends Controller
             }else{
                 $path = $category->image;
             }
-            
+
             $category->category_name = $request->category_name;
             $category->status = $request->status;
             $category->is_top = $request->has('is_top')?$request->is_top:$category->is_top;
@@ -199,6 +199,10 @@ class CategoryController extends Controller
             if($category->image != null){
                 unlink(public_path($category->image));
             }
+
+            $category->sliders()->delete();
+            $category->subcategories()->delete();
+            $category->products()->delete();
             $category->delete();
             return response()->json(['status'=>true, 'message'=>'Successfully the category has been deleted']);
         }catch(Exception $e){
