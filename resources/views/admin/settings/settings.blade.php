@@ -32,23 +32,19 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label for="company_name">Company name</label>
-                                <input type="text" name="company_name" class="form-control" id="company_name"
-                                    placeholder="Company name"  value="{{old('company_name', ($setting && $setting->company_name) ? $setting->company_name : "")}}">
-                                @error('company_name')
-                                    <span class="alert alert-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="telegram_group_link">Telegram group Link <span class="required">*</span></label>
-                                <input type="text" name="telegram_group_link" class="form-control numericInput" id="telegram_group_link"
-                                       placeholder="Telegram group Link"  value="{{old('telegram_group_link', $setting ? $setting->telegram_group_link : "")}}">
-                                @error('telegram_group_link')
+                                <label for="logo">Logo <span class="required">*</span></label>
+                                <input
+                                    name="logo"
+                                    type="file"
+                                    id="logo"
+                                    accept="image/*"
+                                    class="dropify"
+                                    data-height="150"
+                                    data-default-file="{{ URL::to($setting ? $setting->logo : '') }}"
+                                />
+                                @error('logo')
                                 <span class="alert alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -58,18 +54,18 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="company_logo">Company Logo <span class="required">*</span></label>
+                                <label for="favicon">Favicon <span class="required">*</span></label>
                                 <input
-                                    name="company_logo"
+                                    name="favicon"
                                     type="file"
-                                    id="company_logo"
+                                    id="favicon"
                                     accept="image/*"
                                     class="dropify"
                                     data-height="150"
-                                    data-default-file="{{ URL::to($setting ? $setting->company_logo : '') }}"
+                                    data-default-file="{{ URL::to($setting ? $setting->favicon : '') }}"
                                 />
-                                @error('company_logo')
-                                    <span class="alert alert-danger">{{ $message }}</span>
+                                @error('favicon')
+                                <span class="alert alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -78,18 +74,153 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="daily_task_limit">Daily Task Limit (Per Day) <span class="required">*</span></label>
+                                <label for="phone">Phone <span class="required">*</span></label>
                                 <input
                                     type="text"
-                                    name="daily_task_limit"
-                                    class="form-control numericInput"
-                                    id="daily_task_limit"
-                                    placeholder="Daily Task Limit (Per Day)"
-                                    required=""
-                                    value="{{ old('daily_task_limit', ($setting && $setting->daily_task_limit) ? $setting->daily_task_limit : "") }}"
+                                    name="phone"
+                                    class="form-control"
+                                    id="phone"
+                                    required
+                                    placeholder="Phone"
+                                    value="{{old('phone', ($setting && $setting->phone) ? $setting->phone : "")}}"
                                 >
-                                @error('daily_task_limit')
+                                @error('phone')
                                     <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email">Email <span class="required">*</span></label>
+                                <input type="text" name="email" class="form-control" id="email"
+                                       placeholder="Email" required value="{{old('email', $setting ? $setting->email : "")}}">
+                                @error('email')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address">Address <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="address"
+                                    class="form-control"
+                                    id="address"
+                                    required
+                                    placeholder="Address"
+                                    value="{{old('address', ($setting && $setting->address) ? $setting->address : "")}}"
+                                >
+                                @error('address')
+                                    <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="established">Established <span class="required">*</span></label>
+                                <input type="text" name="established" class="form-control" id="established"
+                                       placeholder="Established" required value="{{old('established', $setting ? $setting->established : "")}}">
+                                @error('established')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="facebook">Facebook <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="facebook"
+                                    class="form-control"
+                                    id="facebook"
+                                    required
+                                    placeholder="Facebook"
+                                    value="{{old('facebook', ($setting && $setting->facebook) ? $setting->facebook : "")}}"
+                                >
+                                @error('facebook')
+                                    <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="twitter">Twitter <span class="required">*</span></label>
+                                <input type="text" name="twitter" class="form-control" id="twitter"
+                                       placeholder="Twitter" required value="{{old('twitter', $setting ? $setting->twitter : "")}}">
+                                @error('twitter')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="instagram">Instagram <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="instagram"
+                                    class="form-control"
+                                    id="instagram"
+                                    required
+                                    placeholder="Facebook"
+                                    value="{{old('instagram', ($setting && $setting->instagram) ? $setting->instagram : "")}}"
+                                >
+                                @error('instagram')
+                                    <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="youtube">Youtube <span class="required">*</span></label>
+                                <input type="text" name="youtube" class="form-control" id="youtube"
+                                       placeholder="Youtube" required value="{{old('youtube', $setting ? $setting->youtube : "")}}">
+                                @error('youtube')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pinterest">Pinterest <span class="required">*</span></label>
+                                <input type="text" name="pinterest" class="form-control" id="pinterest"
+                                       placeholder="Youtube"  value="{{old('pinterest', $setting ? $setting->pinterest : "")}}">
+                                @error('pinterest')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="contact_us_img">Contact Us Img <span class="required">*</span></label>
+                                <input
+                                    name="contact_us_img"
+                                    type="file"
+                                    id="contact_us_img"
+                                    accept="image/*"
+                                    class="dropify"
+                                    data-height="150"
+                                    data-default-file="{{ URL::to($setting ? $setting->contact_us_img : '') }}"
+                                />
+                                @error('contact_us_img')
+                                <span class="alert alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>

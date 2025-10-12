@@ -1,0 +1,222 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\AboutUs;
+use App\Models\LoginPageContent;
+use App\Models\Setting;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class SettingController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth_check');
+    }
+    public function settings()
+    {
+        $setting = Setting::first();
+        return view('admin.settings.settings',compact('setting'));
+    }
+    public function settingApp(Request $request)
+    {
+        try
+        {
+            $data = Setting::first();
+
+            $defaults = [
+                'logo'       => $data ? $data->logo : null,
+                'favicon'    => $data ? $data->favicon : null,
+                'phone'      => $data ? $data->phone : null,
+                'email'      => $data ? $data->email : null,
+                'address'    => $data ? $data->address : null,
+                'established'=> $data ? $data->established : null,
+                'facebook'   => $data ? $data->facebook : null,
+                'twitter'    => $data ? $data->twitter : null,
+                'instagram'  => $data ? $data->instagram : null,
+                'youtube'    => $data ? $data->youtube : null,
+                'pinterest'  => $data ? $data->pinterest : null,
+                'contact_us_img'    => $data ? $data->contact_us_img : null,
+            ];
+
+            // Handle file upload
+            $logo = $defaults['logo'];
+            if ($request->hasFile('logo')) {
+                $filePath = $this->storeFile($request->file('logo'));
+                $logo = $filePath;
+            }
+
+            $favicon = $defaults['favicon'];
+            if ($request->hasFile('favicon')) {
+                $filePath = $this->storeFile($request->file('favicon'));
+                $favicon = $filePath;
+            }
+
+            $contact_us_img = $defaults['contact_us_img'];
+            if ($request->hasFile('contact_us_img')) {
+                $filePath = $this->storeFile($request->file('contact_us_img'));
+                $contact_us_img = $filePath;
+            }
+
+            if ($data) {
+                Setting::where('id', $data->id)->update(
+                    [
+                        'logo'        => $logo,
+                        'favicon'     => $favicon,
+                        'contact_us_img' => $contact_us_img,
+                        'phone'       => $request->phone ?? $defaults['phone'],
+                        'email'       => $request->email ?? $defaults['email'],
+                        'address'     => $request->address ?? $defaults['address'],
+                        'established' => $request->established ?? $defaults['established'],
+                        'facebook'    => $request->facebook ?? $defaults['facebook'],
+                        'twitter'     => $request->twitter ?? $defaults['twitter'],
+                        'instagram'   => $request->instagram ?? $defaults['instagram'],
+                        'youtube'     => $request->youtube ?? $defaults['youtube'],
+                        'pinterest'   => $request->pinterest ?? $defaults['pinterest'],
+                    ]
+                );
+            } else {
+                Setting::create(
+                    [
+                        'logo'        => $logo,
+                        'favicon'     => $favicon,
+                        'contact_us_img' => $contact_us_img,
+                        'phone'       => $request->phone ?? $defaults['phone'],
+                        'email'       => $request->email ?? $defaults['email'],
+                        'address'     => $request->address ?? $defaults['address'],
+                        'established' => $request->established ?? $defaults['established'],
+                        'facebook'    => $request->facebook ?? $defaults['facebook'],
+                        'twitter'     => $request->twitter ?? $defaults['twitter'],
+                        'instagram'   => $request->instagram ?? $defaults['instagram'],
+                        'youtube'     => $request->youtube ?? $defaults['youtube'],
+                        'pinterest'   => $request->pinterest ?? $defaults['pinterest'],
+                    ]
+                );
+            }
+
+            $notification = [
+                'messege'    => 'Successfully updated',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->back()->with($notification);
+
+        } catch (Exception $e) {
+            // Log the error
+            Log::error('Error in updating settings: ', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            $notification=array(
+                'messege' => 'Something went wrong!!!',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+    private function storeFile($file)
+    {
+        // Define the directory path
+        // TODO: Change path if needed
+        $filePath = 'uploads/logo'; # change path if needed
+        $directory = public_path($filePath);
+
+        // Ensure the directory exists
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        // Generate a unique file name
+        // TODO: Change path if needed
+        $fileName = uniqid('logo_', true) . '.' . $file->getClientOriginalExtension();
+
+        // Move the file to the destination directory
+        $file->move($directory, $fileName);
+
+        // path & file name in the database
+        $path = $filePath . '/' . $fileName;
+        return $path;
+    }
+    private function updateFile($file, $data)
+    {
+        // Define the directory path
+        // TODO: Change path if needed
+        $filePath = 'uploads/logo'; # change path if needed
+        $directory = public_path($filePath);
+
+        // Ensure the directory exists
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        // Generate a unique file name
+        // TODO: Change path following storeFile function
+        $fileName = uniqid('logo_', true) . '.' . $file->getClientOriginalExtension();
+
+        // Delete the old file if it exists
+        $this->deleteOldFile($data);
+
+        // Move the new file to the destination directory
+        $file->move($directory, $fileName);
+
+        // Store path & file name in the database
+        $path = $filePath . '/' . $fileName;
+        return $path;
+    }
+    private function deleteOldFile($data)
+    {
+        // TODO: ensure from database
+        if (!empty($data->company_logo)) { # ensure from database
+            $oldFilePath = public_path($data->company_logo); // Use without prepending $filePath
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath); // Delete the old file
+                return true;
+            } else {
+                Log::warning('Old file not found for deletion', ['path' => $oldFilePath]);
+                return false;
+            }
+        }
+    }
+    private function storeLoginFile($file)
+    {
+        // Define the directory path
+        // TODO: Change path if needed
+        $filePath = 'uploads/login'; # change path if needed
+        $directory = public_path($filePath);
+
+        // Ensure the directory exists
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        // Generate a unique file name
+        // TODO: Change path if needed
+        $fileName = uniqid('login_', true) . '.' . $file->getClientOriginalExtension();
+
+        // Move the file to the destination directory
+        $file->move($directory, $fileName);
+
+        // path & file name in the database
+        $path = $filePath . '/' . $fileName;
+        return $path;
+    }
+    private function deleteLoginOldFile($data)
+    {
+        // TODO: ensure from database
+        if (!empty($data->img)) { # ensure from database
+            $oldFilePath = public_path($data->img); // Use without prepending $filePath
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath); // Delete the old file
+                return true;
+            } else {
+                Log::warning('Old file not found for deletion', ['path' => $oldFilePath]);
+                return false;
+            }
+        }
+    }
+}

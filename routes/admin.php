@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
@@ -54,4 +55,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     Route::get('password-change', [UserController::class, 'passwordChange'])->name('password-change');
     Route::post('change-password', [UserController::class, 'changePassword'])->name('change-password');
 
+    // Settings
+    Route::get('/settings', [SettingController::class, 'settings'])->name('settings');
+    Route::post('settings-app', [SettingController::class, 'settingApp']);
 });

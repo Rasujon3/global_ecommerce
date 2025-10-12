@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Wolmart - Marketplace HTML5 Template</title>
+    <title>Wolmart</title>
 
     <meta name="keywords" content="Marketplace ecommerce responsive HTML5 Template" />
     <meta name="description"
@@ -17,7 +17,7 @@
     <meta name="author" content="D-THEMES">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{asset('front/assets/images/icons/favicon.png')}}">
+    <link rel="icon" type="image/png" href="{{asset(setting()->favicon ?? 'front/assets/images/icons/favicon.png')}}" />
 
     <link rel="stylesheet" href="{{asset('custom/toastr.css')}}">
 
@@ -89,8 +89,7 @@
                         </div>
                         <!-- End of Dropdown Menu -->
                         <span class="divider d-lg-show"></span>
-                        <a href="blog.html" class="d-lg-show">Blog</a>
-                        <a href="contact-us.html" class="d-lg-show">Contact Us</a>
+                        <a href="{{ route('contact') }}" class="d-lg-show">Contact Us</a>
                         @if(Auth::check())
                          {{-- <a href="#" class="d-lg-show">My Account</a> --}}
 
@@ -105,7 +104,7 @@
                         <span class="delimiter d-lg-show">/</span>
                         <a href="{{url('/login-register')}}" class="ml-0 d-lg-show login register">Register</a>
                         @endif
-                        
+
                     </div>
                 </div>
             </div>
@@ -119,7 +118,7 @@
                         <a href="{{url('/')}}" class="logo ml-lg-0">
                             <img src="{{asset('front/assets/images/logo.png')}}" alt="logo" width="144" height="45" />
                         </a>
-                        <form method="get" action="{{url('product-lists')}}" 
+                        <form method="get" action="{{url('product-lists')}}"
                             class="header-search hs-expanded hs-round d-none d-md-flex input-wrapper">
                             <div class="select-box">
                                 <select id="category" name="category">
@@ -273,7 +272,7 @@
                                      @endif
                                      @endforeach
                                     @endif
-                                        
+
                                         <li class="d-none">
                                             <a href="shop-banner-sidebar.html"
                                                 class="font-weight-bold text-primary text-uppercase ls-25">
@@ -325,7 +324,7 @@
                                      @endif
                                      @endforeach
                                     @endif
-                                        
+
                                         <li class="d-none">
                                             <a href="shop-banner-sidebar.html"
                                                 class="font-weight-bold text-primary text-uppercase ls-25">
@@ -335,7 +334,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            
+
                            @endif
                             <nav class="main-nav">
                                 <ul class="menu active-underline">
@@ -1452,7 +1451,7 @@
     <script src="{{asset('front/assets/js/main.min.js')}}"></script>
 
     <script src="{{asset('custom/toastr.js')}}"></script>
- 
+
       @if(Session::has('messege'))
         @toastr("{{ Session::get('messege') }}")
       @endif
@@ -1470,16 +1469,16 @@
                 $('.dropdown-box').stop(true, true).fadeOut(200);
             }
         );
-          
 
-       }); 
+
+       });
      </script>
     @endif
 
     <script>
       $(function () {
         var base_url = "{{url('/')}}";
-        localStorage.setItem('base_url', base_url);     
+        localStorage.setItem('base_url', base_url);
       })
     </script>
 </body>
@@ -1506,7 +1505,7 @@
 
                 url: "{{url('user-signup')}}",
 
-                    type:"POST", 
+                    type:"POST",
 
                     data:{'name_1':name_1,'email_1':email_1,'phone_1':phone_1,'password_1':password_1,'password_2':password_2},
                     dataType:"json",
@@ -1524,9 +1523,9 @@
                         }else{
                             toastr.error(data.message);
                         }
-                        
+
                 },
-                                    
+
             });
         });
 
@@ -1546,7 +1545,7 @@
 
                 url: "{{url('user-signin')}}",
 
-                    type:"POST", 
+                    type:"POST",
 
                     data:{'email_or_phone':email_or_phone,'password':password},
                     dataType:"json",
@@ -1561,9 +1560,9 @@
                         }else{
                             toastr.error(data.message);
                         }
-                        
+
                 },
-                                    
+
             });
         });
 

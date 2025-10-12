@@ -1,6 +1,7 @@
 <?php
  use App\Models\Category;
- use App\Models\Unit;
+use App\Models\Setting;
+use App\Models\Unit;
  use App\Models\Subcategory;
  use App\Models\Brand;
  use App\Models\Product;
@@ -57,7 +58,7 @@ function stockCheck($request){
 	}else{
 		if($request->use_for == 'variant'){
 			$variant = Productvariant::findorfail($request->element_id);
-			if($variant->stock_qty > 0){ 
+			if($variant->stock_qty > 0){
 				return true;
 			}else{
 				return false;
@@ -85,10 +86,16 @@ function variantNames($variants)
 	//$values = Productvariant::whereIN('id',json_decode($variants))->pluck('variant_value')->toArray();
 	$values = Productvariant::whereIN('id',json_decode($variants))->get();
 	// $data = Variant::with(['productvariants' => function ($query) use($values) {
-		
+
 	// 		        $query->whereIN('id',$values);
-			    
+
 	// 		    }])->get();
 	return $values;
 	//return implode(",",$data);
+}
+
+function setting()
+{
+    $setting = Setting::first();
+    return $setting;
 }

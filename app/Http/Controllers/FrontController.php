@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Subcategory;
@@ -15,12 +16,12 @@ use Session;
 class FrontController extends Controller
 {
     public function frontPage()
-    {   
-    	return view('layouts.front'); 
+    {
+    	return view('layouts.front');
     }
 
 	public function carts()
-    {    
+    {
         $carts = Cart::where('cart_session_id',Session::get('cart_session_id'))->latest()->get();
         return view('fronts.carts', compact('carts'));
     }
@@ -82,5 +83,17 @@ class FrontController extends Controller
 
 	    return view('fronts.product_page', compact('products'));
     	//return view('fronts.product_page', compact('products'));
+    }
+    public function contact()
+    {
+//        return view('fronts.contact');
+        $setting = Setting::first();
+        return view('fronts.contact-us', compact('setting'));
+    }
+    public function about()
+    {
+//        return view('fronts.contact');
+        $setting = Setting::first();
+        return view('fronts.about-us', compact('setting'));
     }
 }
