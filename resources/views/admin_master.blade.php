@@ -323,7 +323,14 @@
 
             </ul>
           </li>
-
+            <li class="nav-item {{ Request::is('password-change') ? 'menu-open' : '' }}">
+                <a href="{{ route('password-change') }}" class="nav-link">
+                    <i class="nav-icon fas fa-cog"></i>
+                    <p>
+                        Password Change
+                    </p>
+                </a>
+            </li>
 
         </ul>
       </nav>

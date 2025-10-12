@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AccessController;
@@ -24,7 +25,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
 	//admin dashboard
 
-    Route::get('/dashboard', [DashboardController::class, 'Dashboard']);
+    Route::get('/dashboard', [DashboardController::class, 'Dashboard'])->name('dashboard');
 
 	//categories
 	Route::resource('categories', CategoryController::class);
@@ -50,5 +51,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
 	Route::get('/show-order/{id}', [OrderController::class, 'showOrder']);
 
+    Route::get('password-change', [UserController::class, 'passwordChange'])->name('password-change');
+    Route::post('change-password', [UserController::class, 'changePassword'])->name('change-password');
 
 });
