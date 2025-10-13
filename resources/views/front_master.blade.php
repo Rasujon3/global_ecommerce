@@ -65,7 +65,7 @@
         <h1 class="d-none">Wolmart - Responsive Marketplace HTML Template</h1>
         <!-- Start of Header -->
         <header class="header">
-            <div class="header-top">
+            <div class="header-top" style="background-color: #e5757e !important;">
                 <div class="container">
                     <div class="header-left">
                         <p class="welcome-msg">Welcome to Wolmart Store message or remove it!</p>
@@ -115,8 +115,8 @@
                     <div class="header-left mr-md-4">
                         <a href="#" class="mobile-menu-toggle  w-icon-hamburger" aria-label="menu-toggle">
                         </a>
-                        <a href="{{url('/')}}" class="logo ml-lg-0">
-                            <img src="{{asset('front/assets/images/logo.png')}}" alt="logo" width="144" height="45" />
+                        <a href="{{ url('/') }}" class="logo ml-lg-0">
+                            <img src="{{ asset(setting()->logo ?? 'front/assets/images/logo.png') }}" alt="logo" width="144" height="45" />
                         </a>
                         <form method="get" action="{{url('product-lists')}}"
                             class="header-search hs-expanded hs-round d-none d-md-flex input-wrapper">
@@ -136,7 +136,7 @@
                     </div>
                     <div class="header-right ml-4">
                         <div class="header-call d-xs-show d-lg-flex align-items-center">
-                            <a href="tel:#" class="w-icon-call"></a>
+                            <a href="tel:#{{ setting()->phone ?? '' }}" class="w-icon-call"></a>
                             <div class="call-info d-lg-show">
                                 <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
                                     <a href="https://portotheme.com/cdn-cgi/l/email-protection#99ba" class="text-capitalize">Live Chat</a> or :</h4>
@@ -429,7 +429,7 @@
                         <div class="col-lg-4 col-sm-6">
                             <div class="widget widget-about">
                                 <a href="{{url('/')}}" class="logo-footer">
-                                    <img src="{{asset('front/assets/images/logo_footer.png')}}" alt="logo-footer" width="144"
+                                    <img src="{{ asset(setting()->logo ?? 'front/assets/images/logo_footer.png') }}" alt="logo-footer" width="144"
                                         height="45" />
                                 </a>
                                 <div class="widget-body">
