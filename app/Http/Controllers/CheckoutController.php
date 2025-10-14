@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
@@ -14,22 +15,23 @@ use DB;
 class CheckoutController extends Controller
 {
     public function checkout()
-    {   
+    {
     	if(auth()->check()){
     		$carts = Cart::with('product')->where('cart_session_id',Session::get('cart_session_id'))->get();
 	    	$sum = Cart::where('cart_session_id',Session::get('cart_session_id'))->sum('unit_total');
-	    	return view('fronts.checkout',compact('carts','sum'));  
+            $settings = Setting::first();
+	    	return view('fronts.checkout',compact('carts','sum', 'settings'));
     	}else{
     		return back();
     	}
-    	
+
     }
 
     public function saveOrder(CheckoutRequest $request)
-    {   
+    {
     	DB::beginTransaction();
     	try
-    	{   
+    	{
     		date_default_timezone_set("Asia/Dhaka");
     		//return response()->json($request->all());
     		$carts = Cart::with('product')->where('cart_session_id',Session::get('cart_session_id'))->get();
@@ -54,12 +56,13 @@ class CheckoutController extends Controller
     		$detail->zip_code = $request->zip_code;
     		$detail->full_address = $request->full_address;
     		$detail->sub_total = $sum;
-    		$detail->total = $sum;
+    		$detail->delivery_charge = $request->delivery_charge;
+    		$detail->total = $request->grand_total;
     		$detail->date = date('Y-m-d');
     		$detail->time = date('h:i: a');
     		$detail->timestamp = time();
     		$detail->status = 'Pending';
-    		$detail->screen_shot = $path; 
+    		$detail->screen_shot = $path;
     		$detail->save();
 
     		foreach($carts as $cart){
@@ -74,7 +77,7 @@ class CheckoutController extends Controller
     		}
 
     		Session::forget('cart_session_id');
-    		
+
 
     		$notification=array(
                 'messege'=>"Successfully your order has been taken. We Will Contact you soon",
@@ -88,6 +91,18 @@ class CheckoutController extends Controller
     	}catch(Exception $e){
     		DB::rollback();
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
-        } 
+        }
     }
+    public function showBankInfo()
+    {
+        $settings = \App\Models\Setting::first([
+            'bank_name',
+            'branch_name',
+            'routing_number',
+            'acc_no'
+        ]);
+
+        return view('fronts.bank_info', compact('settings'));
+    }
+
 }

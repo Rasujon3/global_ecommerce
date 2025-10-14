@@ -114,7 +114,7 @@
                         <td class="order-id" style="text-align: center !important;">{{ $order->id ?? '' }}</td>
                         <td class="order-date" style="text-align: center !important;">{{ $order->created_at ?? '' }}</td>
                         <td class="order-status" style="text-align: center !important;">{{ $order->status ?? '' }}</td>
-                        <td class="order-total" style="text-align: center !important;">{{ $order->sub_total ?? 0 }}</td>
+                        <td class="order-total" style="text-align: center !important;">{{ $order->total ?? 0 }}</td>
                       </tr>
                     @endforeach
                     @else

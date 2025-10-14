@@ -30,6 +30,7 @@ Route::get('/wishlists', [WishlistController::class, 'wishlists']);
 //checkout
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
 Route::post('save-order', [CheckoutController::class, 'saveOrder']);
+Route::get('/bank-info', [CheckoutController::class, 'showBankInfo'])->name('bank.info');
 
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/about', [FrontController::class, 'about'])->name('about');

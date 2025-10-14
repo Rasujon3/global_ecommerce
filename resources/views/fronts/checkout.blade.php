@@ -19,7 +19,7 @@
             <div class="page-content">
                 <div class="container">
                     <form class="login-content">
-                        <p>If you have shopped with us before, please enter your details below. 
+                        <p>If you have shopped with us before, please enter your details below.
                             If you are a new customer, please proceed to the Billing section.</p>
                         <div class="row">
                             <div class="col-xs-6">
@@ -56,9 +56,11 @@
                             <button type="submit" class="btn button btn-rounded btn-coupon mb-2" name="apply_coupon" value="Apply coupon">Apply Coupon</button>
                         </div>
                     </div>
-                    <form class="form checkout-form" action="{{url('save-order')}}" method="post">
+                    <form class="form checkout-form" action="{{url('save-order')}}" method="post" enctype="multipart/form-data">
                        @csrf
                        <input type="hidden" name="paymentmethod_id" id="paymentmethod_id" value=""/>
+                       <input type="hidden" name="grand_total" id="grand_total" value="{{ $sum + $settings->inside_dhaka_dc }}"/>
+                        <input type="hidden" name="selected_delivery_charge" id="selected_delivery_charge" value="{{ $settings->inside_dhaka_dc }}">
                         <div class="row mb-9">
                             <div class="col-lg-7 pr-lg-4 mb-4">
                                 <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">
@@ -101,7 +103,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group"> 
+                                <div class="form-group">
                                     <label>Full address *</label>
                                     <textarea class="form-control" name="full_address" placeholder="Full Address"></textarea>
                                     @error('full_address')
@@ -252,6 +254,31 @@
                                                         <b>{{$sum}} BDT</b>
                                                     </td>
                                                 </tr>
+                                             <tr class="delivery-charge">
+                                                 <td><b>Delivery Charge</b></td>
+                                                 <td>
+                                                     <ul class="list-unstyled mb-0">
+                                                         <li>
+                                                             <label>
+                                                                 <input type="radio" name="delivery_charge" value="{{ $settings->inside_dhaka_dc }}" checked>
+                                                                 Inside Dhaka ({{ $settings->inside_dhaka_dc }} BDT)
+                                                             </label>
+                                                         </li>
+                                                         <li>
+                                                             <label>
+                                                                 <input type="radio" name="delivery_charge" value="{{ $settings->sub_urban_areas_dc }}">
+                                                                 Suburban Areas ({{ $settings->sub_urban_areas_dc }} BDT)
+                                                             </label>
+                                                         </li>
+                                                         <li>
+                                                             <label>
+                                                                 <input type="radio" name="delivery_charge" value="{{ $settings->outside_dhaka_dc }}">
+                                                                 Outside Dhaka ({{ $settings->outside_dhaka_dc }} BDT)
+                                                             </label>
+                                                         </li>
+                                                     </ul>
+                                                 </td>
+                                             </tr>
                                             </tbody>
                                             <tfoot>
                                                 <tr class="shipping-methods d-none">
@@ -290,12 +317,8 @@
                                                     </td>
                                                 </tr>
                                                 <tr class="order-total">
-                                                    <th>
-                                                        <b>Total</b>
-                                                    </th>
-                                                    <td>
-                                                        <b>{{$sum}} BDT</b>
-                                                    </td>
+                                                    <th><b>Total</b></th>
+                                                    <td><b id="grand-total">{{ $sum + $settings->inside_dhaka_dc }} BDT</b></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -330,23 +353,91 @@
                 </div>
             </div>
             <!-- End of PageContent -->
+            <!-- 💳 Bank Info Modal
+            <div class="modal fade" id="bankInfoModal" tabindex="-1" aria-labelledby="bankInfoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="bankInfoModalLabel">Bank Account Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @php
+                                $settings = \App\Models\Setting::first(['bank_name', 'branch_name', 'routing_number', 'acc_no']);
+                            @endphp
+                            <table class="table table-bordered mb-0">
+                                <tr>
+                                    <th>Bank Name</th>
+                                    <td>{{ $settings->bank_name ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Branch Name</th>
+                                    <td>{{ $settings->branch_name ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Routing Number</th>
+                                    <td>{{ $settings->routing_number ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Account No.</th>
+                                    <td>{{ $settings->acc_no ?? 'N/A' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
         </main>
         <!-- End of Main -->
+
 @endsection
 
 @push('scripts')
- <script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
  	$(document).ready(function(){
  		$(document).on('click','.select-payment-method',function(){
  			//e.preventDefault();
  			let payment_id = $(this).val();
  			if(payment_id == '2'){
- 				$('.screenshot').html(`<div class="form-group"><label for="image"><b>Upload Payment Proof ScreenShot</b></label><input type="file" name="image" class="form-control" accept="image/*"  id="image"/></div>`); 
+ 				$('.screenshot').html(`
+<div class="form-group">
+<label for="image"><b>Upload Payment Proof ScreenShot</b></label>
+<a href="{{ route('bank.info') }}" target="_blank" class="btn btn-sm btn-info ml-2">
+                Show Bank Info
+            </a>
+<input type="file" name="image" class="form-control" accept="image/*"  id="image"/></div>
+`);
  			}else{
  				$('.screenshot').html('');
  			}
  			$('#paymentmethod_id').val(payment_id);
  		});
  	});
+ </script>
+
+ <script>
+     document.addEventListener("DOMContentLoaded", function () {
+         const deliveryOptions = document.querySelectorAll('input[name="delivery_charge"]');
+         const hiddenCharge = document.getElementById('selected_delivery_charge');
+         const grandTotal = document.getElementById('grand_total');
+         const grandTotalElem = document.getElementById('grand-total');
+         const baseTotal = {{ $sum }};
+
+         deliveryOptions.forEach(option => {
+             option.addEventListener('change', function () {
+                 const deliveryCharge = parseFloat(this.value);
+                 hiddenCharge.value = deliveryCharge;
+                 grandTotal.value = grandTotal;
+                 const newTotal = baseTotal + deliveryCharge;
+                 grandTotalElem.textContent = `${newTotal} BDT`;
+             });
+         });
+     });
  </script>
 @endpush

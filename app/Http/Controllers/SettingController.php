@@ -40,6 +40,14 @@ class SettingController extends Controller
                 'youtube'    => $data ? $data->youtube : null,
                 'pinterest'  => $data ? $data->pinterest : null,
                 'contact_us_img'    => $data ? $data->contact_us_img : null,
+                'inside_dhaka_dc'    => $data ? $data->inside_dhaka_dc : null,
+                'outside_dhaka_dc'    => $data ? $data->outside_dhaka_dc : null,
+                'sub_urban_areas_dc'    => $data ? $data->sub_urban_areas_dc : null,
+
+                'bank_name'    => $data ? $data->bank_name : null,
+                'branch_name'    => $data ? $data->branch_name : null,
+                'routing_number'    => $data ? $data->routing_number : null,
+                'acc_no'    => $data ? $data->acc_no : null,
             ];
 
             // Handle file upload
@@ -76,6 +84,14 @@ class SettingController extends Controller
                         'instagram'   => $request->instagram ?? $defaults['instagram'],
                         'youtube'     => $request->youtube ?? $defaults['youtube'],
                         'pinterest'   => $request->pinterest ?? $defaults['pinterest'],
+                        'inside_dhaka_dc'   => $request->inside_dhaka_dc ?? $defaults['inside_dhaka_dc'],
+                        'outside_dhaka_dc'   => $request->outside_dhaka_dc ?? $defaults['outside_dhaka_dc'],
+                        'sub_urban_areas_dc'   => $request->sub_urban_areas_dc ?? $defaults['sub_urban_areas_dc'],
+
+                        'bank_name'   => $request->bank_name ?? $defaults['bank_name'],
+                        'branch_name'   => $request->branch_name ?? $defaults['branch_name'],
+                        'routing_number'   => $request->routing_number ?? $defaults['routing_number'],
+                        'acc_no'   => $request->acc_no ?? $defaults['acc_no'],
                     ]
                 );
             } else {
@@ -93,6 +109,14 @@ class SettingController extends Controller
                         'instagram'   => $request->instagram ?? $defaults['instagram'],
                         'youtube'     => $request->youtube ?? $defaults['youtube'],
                         'pinterest'   => $request->pinterest ?? $defaults['pinterest'],
+                        'inside_dhaka_dc'   => $request->inside_dhaka_dc ?? $defaults['inside_dhaka_dc'],
+                        'outside_dhaka_dc'   => $request->outside_dhaka_dc ?? $defaults['outside_dhaka_dc'],
+                        'sub_urban_areas_dc'   => $request->sub_urban_areas_dc ?? $defaults['sub_urban_areas_dc'],
+
+                        'bank_name'   => $request->bank_name ?? $defaults['bank_name'],
+                        'branch_name'   => $request->branch_name ?? $defaults['branch_name'],
+                        'routing_number'   => $request->routing_number ?? $defaults['routing_number'],
+                        'acc_no'   => $request->acc_no ?? $defaults['acc_no'],
                     ]
                 );
             }
