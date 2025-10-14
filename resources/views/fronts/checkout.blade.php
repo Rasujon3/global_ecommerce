@@ -341,7 +341,7 @@
  			//e.preventDefault();
  			let payment_id = $(this).val();
  			if(payment_id == '2'){
- 				$('.screenshot').html(`<div class="form-group"><label for="image"><b>Upload Payment Proof ScreenShot</b></label><input type="file" class="form-control" accept="image/*" name="image" id="image"/></div>`); 
+ 				$('.screenshot').html(`<div class="form-group"><label for="image"><b>Upload Payment Proof ScreenShot</b></label><input type="file" name="image" class="form-control" accept="image/*"  id="image"/></div>`); 
  			}else{
  				$('.screenshot').html('');
  			}

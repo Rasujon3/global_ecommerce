@@ -53,5 +53,10 @@ class Orderdetail extends Model
             ->select('v.variant_name', 'pv.variant_value')
             ->get();
     }
+    
+    public function paymentmethod()
+    {
+        return $this->belongsTo(Paymentmethod::class);
+    }
 
 }

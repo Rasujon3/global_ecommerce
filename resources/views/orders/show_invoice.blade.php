@@ -41,7 +41,8 @@
                   <h4>
                     <i class="fas fa-globe"></i> GlamoursWorld
                     <b class="float-right">Order: INV-00-{{$data->id}}</b><br/>
-                    <small class="float-right">Date: {{$data->date}}</small>
+                    <small class="float-right">Date: {{$data->date}}</small><br/>
+                    <small class="float-right">Status: {{$data->status}}</small>
                   </h4>
                 </div>
                 <!-- /.col -->

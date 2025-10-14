@@ -81,6 +81,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <th>Payment Method</th>
                                 <th>Date</th>
                                 <th>Time</th>
                                 <th>Status</th>
@@ -124,6 +125,7 @@
 	                {data: 'name', name: 'name'},
 	                {data: 'email', name: 'email'},
 	                {data: 'phone', name: 'phone'},
+	                {data: 'payment_method', name:'payment_method'},
 	                {data: 'date', name: 'date'},
 	                {data: 'time', name: 'time'},
 		            {data: 'status', name: 'status'},

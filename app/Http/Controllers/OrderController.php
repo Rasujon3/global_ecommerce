@@ -30,6 +30,10 @@ class OrderController extends Controller
                 ->addColumn('serial', function ($row) {
                 	return $row->id;
                 })
+                
+                ->addColumn('payment_method', function ($row) {
+                	return $row->paymentmethod->name;
+                })
 
 //                ->addColumn('status', function ($row) {
 //                    return $row->status;
@@ -98,7 +102,7 @@ class OrderController extends Controller
 
                 })->setRowID('id')
 
-                ->rawColumns(['status', 'action','serial'])
+                ->rawColumns(['status', 'action','serial','payment_method'])
                 ->make(true);
         }
 
