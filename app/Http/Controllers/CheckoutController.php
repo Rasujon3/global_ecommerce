@@ -57,7 +57,7 @@ class CheckoutController extends Controller
     		$detail->full_address = $request->full_address;
     		$detail->sub_total = $sum;
     		$detail->delivery_charge = $request->delivery_charge;
-    		$detail->total = $request->grand_total;
+    		$detail->total = $sum + $request->delivery_charge;
     		$detail->date = date('Y-m-d');
     		$detail->time = date('h:i: a');
     		$detail->timestamp = time();
