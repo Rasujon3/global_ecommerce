@@ -92,7 +92,7 @@
                                                 </div>
                                                @endforeach
                                               @endif
-                                                
+
                                             </div>
                                             <button class="swiper-button-next"></button>
                                             <button class="swiper-button-prev"></button>
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="col-md-6 mb-4 mb-md-6">
                                     <div class="product-details" data-sticky-options="{'minWidth': 767}">
-                                        <h1 class="product-title">Electronics Black Wrist Watch</h1>
+                                        <h1 class="product-title">{{$product->product_name}}</h1>
                                         <div class="product-bm-wrapper">
                                             <figure class="brand">
                                                 <img src="{{URL::to($product->category->image)}}" alt="Category"
@@ -110,7 +110,9 @@
                                             <div class="product-meta">
                                                 <div class="product-categories">
                                                     Category:
-                                                    <span class="product-category"><a href="{{url('/category-details/'.$product->category->id)}}">{{$product->category->category_name}}</a></span>
+                                                    <span class="product-category">
+                                                        <a href="{{url('/product-lists?category_id='.$product->category->id)}}">{{$product->category->category_name}}</a>
+                                                    </span>
                                                 </div>
                                                 <div class="product-sku d-none">
                                                     SKU: <span>MS46891340</span>
@@ -171,7 +173,7 @@
 
 					                    @endif
 
-					                    @endforeach 
+					                    @endforeach
 
                                        @endif
 
@@ -338,7 +340,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <section class="vendor-product-section d-none">
@@ -463,8 +465,8 @@
 				                                          @else
 				                                            <ins class="new-price">{{$product->product_price}} BDT</ins>
 				                                          @endif
-                                                    </div> 
-                                                </div> 
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                       @endforeach
@@ -710,13 +712,13 @@
                             alt=${data.variant.variant_value} height="900">
                         `);
                 	}
-                    
+
                     productvariant_ids.push(variant_id);
 
             },
-	                            
+
 	    });
-   	 	
+
    	 });
 
    	 $(document).on('click', '.product-variation-clean', function(e){
@@ -744,10 +746,10 @@
 					    window.location.href = redirectUrl;
 					}, 1000);
             },
-	                            
+
 	    });
 
    	 });
-   });	
+   });
  </script>
 @endpush
