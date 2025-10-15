@@ -104,14 +104,14 @@
                                         <h1 class="product-title">{{$product->product_name}}</h1>
                                         <div class="product-bm-wrapper">
                                             <figure class="brand">
-                                                <img src="{{URL::to($product->category->image)}}" alt="Category"
+                                                <img src="{{URL::to($product->brand->image)}}" alt="Brand"
                                                     width="102" height="48" />
                                             </figure>
                                             <div class="product-meta">
                                                 <div class="product-categories">
-                                                    Category:
+                                                    Brand:
                                                     <span class="product-category">
-                                                        <a href="{{url('/product-lists?category_id='.$product->category->id)}}">{{$product->category->category_name}}</a>
+                                                        <a href="{{url('/product-lists?brand_id='.$product->brand->id)}}">{{$product->brand->brand_name}}</a>
                                                     </span>
                                                 </div>
                                                 <div class="product-sku d-none">

@@ -37,6 +37,7 @@ class FrontController extends Controller
     {
     	$product = Product::with([
 		    'category',
+		    'brand',
 		    'productvariants' => function ($query) {
 		        $query->whereNotNull('image');
 		    }
