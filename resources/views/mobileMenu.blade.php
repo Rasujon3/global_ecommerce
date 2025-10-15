@@ -7,7 +7,7 @@
     <!-- End of .mobile-menu-close -->
 
     <div class="mobile-menu-container scrollable">
-        <form method="get" action="{{url('product-lists')}}" class="input-wrapper">
+        <form method="get" action="{{url('product-lists')}}" class="input-wrapper d-none">
             <input type="text" class="form-control" name="search_product" autocomplete="off" placeholder="Search"
                    required />
             <button class="btn btn-search" type="submit">

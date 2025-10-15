@@ -46,7 +46,7 @@
                                         {{$slider->sub_title}}
                                     </p>
 
-                                    <a href="{{url('/category-details/'.$slider->category_id)}}"
+                                    <a href="{{url('/product-lists?category_id='.$slider->category_id)}}"
                                         class="btn btn-dark btn-outline btn-rounded btn-icon-right slide-animate"
                                         data-animation-options="{
                                     'name': 'fadeInRightShorter',
