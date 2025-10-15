@@ -276,7 +276,7 @@
                                      @if(count($menuCategory->subcategories) > 0)
                                         <li>
 
-                                            <a href="{{url('/category-details/'.$menuCategory->id)}}">
+                                            <a href="{{url('/product-lists?category_id='.$menuCategory->id)}}">
                                                 <i class="w-icon-list"></i>{{$menuCategory->category_name}}
                                             </a>
                                             <ul class="megamenu">
@@ -295,7 +295,7 @@
                                         </li>
                                       @else
                                         <li>
-                                            <a href="{{url('/category-details/'.$menuCategory->id)}}">
+                                            <a href="{{url('/product-lists?category_id='.$menuCategory->id)}}">
                                                 <i class="w-icon-list"></i>{{$menuCategory->category_name}}
                                             </a>
                                         </li>
@@ -328,7 +328,7 @@
                                      @if(count($menuCategory->subcategories) > 0)
                                         <li>
 
-                                            <a href="{{url('/category-details/'.$menuCategory->id)}}">
+                                            <a href="{{url('/product-lists?category_id='.$menuCategory->id)}}">
                                                 <i class="w-icon-list"></i>{{$menuCategory->category_name}}
                                             </a>
                                             <ul class="megamenu">
@@ -347,7 +347,7 @@
                                         </li>
                                       @else
                                         <li>
-                                            <a href="{{url('/category-details/'.$menuCategory->id)}}">
+                                            <a href="{{url('/product-lists?category_id='.$menuCategory->id)}}">
                                                 <i class="w-icon-list"></i>{{$menuCategory->category_name}}
                                             </a>
                                         </li>

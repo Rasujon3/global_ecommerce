@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Productvariant;
 use App\Models\Cart;
 use App\Models\Whishlist;
+use Exception;
 use Session;
 session_start();
 use Auth;
@@ -109,7 +110,7 @@ class AjaxController extends Controller
     }
 
     public function addProductVariant($id)
-    {  
+    {
         $product = Product::findorfail($id);
         $variants = Variant::with(['productvariants' => function ($query) use ($id) {
             $query->where('product_id', $id);
@@ -131,7 +132,7 @@ class AjaxController extends Controller
 
             foreach ($variant_values as $variant_id => $values) {
                 foreach ($values as $index => $value) {
- 
+
                     if (empty($value)) continue;
 
                     $pv_id = $productvariant_ids[$variant_id][$index] ?? null;
@@ -197,7 +198,7 @@ class AjaxController extends Controller
     public function addToCart(Request $request)
     {
         try
-        {  
+        {
             //return response()->json($request->all());
             $product = Product::find($request->element_id);
 
@@ -206,12 +207,14 @@ class AjaxController extends Controller
             $count+=1;
             $cart_session_id = Session::get('cart_session_id');
 
-            if(!stockCheck($request)){ 
+            if(!stockCheck($request)){
                 return response()->json(['status'=>false, 'message'=>'The product is sold out']);
             }
 
-            if(empty($cart_session_id)){
-                $cart_session_id = Session::put('cart_session_id',rand(1000,9000).$count);
+            if (empty($cart_session_id)) {
+                $new_session_id = rand(1000, 9000) . $count;
+                Session::put('cart_session_id', $new_session_id);
+                $cart_session_id = $new_session_id;
             }
 
             if($product){
@@ -273,7 +276,7 @@ class AjaxController extends Controller
     public function cartDelete($id)
     {
         try
-        {   
+        {
             $cart = Cart::findorfail($id);
             $cart->delete();
             $count = Cart::where('cart_session_id',Session::get('cart_session_id'))->count();
@@ -305,7 +308,7 @@ class AjaxController extends Controller
     public function addWishlist($id)
     {
         try
-        {   
+        {
             $product = Product::findorfail($id);
             if(Auth::check()){
                 $count = Whishlist::where('user_id',user()->id)->where('product_id',$product->id)->count();

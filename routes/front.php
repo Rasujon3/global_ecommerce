@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CheckoutController;
+use Illuminate\Support\Facades\Artisan;
 
 //frontend routes
 Route::get('/', [FrontController::class, 'frontPage'])->name('home');
@@ -36,3 +37,12 @@ Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/about', [FrontController::class, 'about'])->name('about');
 Route::get('/my-account', [FrontController::class, 'myAccount'])->name('my-account');
 Route::post('user-change-password', [FrontController::class, 'userChangePassword'])->name('user-change-password');
+
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+
+    return 'All caches (config, route, view, application) have been cleared!';
+});
