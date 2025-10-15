@@ -36,7 +36,7 @@ Route::get('/bank-info', [CheckoutController::class, 'showBankInfo'])->name('ban
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/about', [FrontController::class, 'about'])->name('about');
 Route::get('/my-account', [FrontController::class, 'myAccount'])->name('my-account');
-Route::post('user-change-password', [FrontController::class, 'userChangePassword'])->name('user-change-password');
+Route::post('/user-change-password', [FrontController::class, 'userChangePassword'])->name('user-change-password');
 
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
@@ -45,4 +45,11 @@ Route::get('/clear-cache', function () {
     Artisan::call('view:clear');
 
     return 'All caches (config, route, view, application) have been cleared!';
+});
+
+Route::get('/migrate', function(){
+    Artisan::call('migrate', [
+        '--force' => true,
+    ]);
+    return response()->json(['message' => 'Migrations run successfully.']);
 });
