@@ -30,6 +30,8 @@ class Setting extends Model
         'branch_name',
         'routing_number',
         'acc_no',
+        'bkash_no',
+        'account_type',
     ];
 
     protected $casts = [

@@ -30,7 +30,7 @@
                 <ul class="mobile-menu">
                     <li><a href="{{url('/')}}">Home</a></li>
                     <li>
-                        <a href="#">Shop</a>
+                        <a href="#">Brands</a>
                         <ul>
                             @if(isset($menuBrands))
                                 @foreach($menuBrands as $brand)

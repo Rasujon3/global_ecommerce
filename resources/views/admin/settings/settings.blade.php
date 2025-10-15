@@ -226,6 +226,7 @@
                         </div>
                     </div>
 
+                    <h4 class="py-2">Delivery Charges:</h4>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -268,6 +269,7 @@
                         </div>
                     </div>
 
+                    <h4 class="py-2">Bank Info's:</h4>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -330,6 +332,45 @@
                                     value="{{old('routing_number', $setting ? $setting->routing_number : "")}}"
                                 >
                                 @error('routing_number')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="py-2">BKash Info's:</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="bkash_no">BKash Number <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="bkash_no"
+                                    class="form-control"
+                                    id="bkash_no"
+                                    required
+                                    placeholder="BKash Number"
+                                    value="{{old('bkash_no', ($setting && $setting->bkash_no !== null) ? $setting->bkash_no : "")}}"
+                                >
+                                @error('bkash_no')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account_type">Account Type (Ex. Personal or Agent) <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="account_type"
+                                    class="form-control"
+                                    id="account_type"
+                                    placeholder="Account Type (Ex. Personal or Agent)"
+                                    required
+                                    value="{{old('account_type', ($setting && $setting->account_type !== null) ? $setting->account_type : "")}}"
+                                >
+                                @error('account_type')
                                 <span class="alert alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>

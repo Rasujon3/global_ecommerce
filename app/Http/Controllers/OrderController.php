@@ -111,7 +111,7 @@ class OrderController extends Controller
 
     public function showOrder($id)
     {
-    	$data = Orderdetail::with('orders.product')->findorfail($id);
+    	$data = Orderdetail::with('orders.product', 'paymentmethod')->findorfail($id);
     	return view('orders.show_invoice', compact('data'));
     }
     public function orderStatusUpdate(Request $request)

@@ -48,6 +48,9 @@ class SettingController extends Controller
                 'branch_name'    => $data ? $data->branch_name : null,
                 'routing_number'    => $data ? $data->routing_number : null,
                 'acc_no'    => $data ? $data->acc_no : null,
+
+                'bkash_no'    => $data ? $data->bkash_no : null,
+                'account_type'    => $data ? $data->account_type : null,
             ];
 
             // Handle file upload
@@ -92,6 +95,9 @@ class SettingController extends Controller
                         'branch_name'   => $request->branch_name ?? $defaults['branch_name'],
                         'routing_number'   => $request->routing_number ?? $defaults['routing_number'],
                         'acc_no'   => $request->acc_no ?? $defaults['acc_no'],
+
+                        'bkash_no'   => $request->bkash_no ?? $defaults['bkash_no'],
+                        'account_type'   => $request->account_type ?? $defaults['account_type'],
                     ]
                 );
             } else {
@@ -117,6 +123,9 @@ class SettingController extends Controller
                         'branch_name'   => $request->branch_name ?? $defaults['branch_name'],
                         'routing_number'   => $request->routing_number ?? $defaults['routing_number'],
                         'acc_no'   => $request->acc_no ?? $defaults['acc_no'],
+
+                        'bkash_no'   => $request->bkash_no ?? $defaults['bkash_no'],
+                        'account_type'   => $request->account_type ?? $defaults['account_type'],
                     ]
                 );
             }

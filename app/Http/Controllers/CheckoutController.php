@@ -95,7 +95,7 @@ class CheckoutController extends Controller
     }
     public function showBankInfo()
     {
-        $settings = \App\Models\Setting::first([
+        $settings = Setting::first([
             'bank_name',
             'branch_name',
             'routing_number',
@@ -103,6 +103,15 @@ class CheckoutController extends Controller
         ]);
 
         return view('fronts.bank_info', compact('settings'));
+    }
+    public function showBkashInfo()
+    {
+        $settings = Setting::first([
+            'bkash_no',
+            'account_type'
+        ]);
+
+        return view('fronts.bkash_info', compact('settings'));
     }
 
 }

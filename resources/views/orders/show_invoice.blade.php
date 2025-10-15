@@ -42,7 +42,8 @@
                     <i class="fas fa-globe"></i> GlamoursWorld
                     <b class="float-right">Order: INV-00-{{$data->id}}</b><br/>
                     <small class="float-right">Date: {{$data->date}}</small><br/>
-                    <small class="float-right">Status: {{$data->status}}</small>
+                    <small class="float-right">Status: {{$data->status}}</small><br/>
+                    <small class="float-right">Payment Method: {{ $data->paymentmethod->name }}</small>
                       @if($data->screen_shot)
                             <br/>
                             <a href="{{asset($data->screen_shot)}}" target="_blank" class="float-right btn btn-sm btn-info">View Screenshot</a>
@@ -116,6 +117,10 @@
                       <tr>
                         <th style="width:50%">Subtotal:</th>
                         <td>{{$data->sub_total}} BDT</td>
+                      </tr>
+                      <tr>
+                          <th style="width:50%">Delivery Charge:</th>
+                          <td>{{$data->delivery_charge}} BDT</td>
                       </tr>
                       <tr class="d-none">
                         <th>Tax (9.3%)</th>

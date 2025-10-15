@@ -353,51 +353,12 @@
                 </div>
             </div>
             <!-- End of PageContent -->
-            <!-- 💳 Bank Info Modal
-            <div class="modal fade" id="bankInfoModal" tabindex="-1" aria-labelledby="bankInfoModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="bankInfoModalLabel">Bank Account Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            @php
-                                $settings = \App\Models\Setting::first(['bank_name', 'branch_name', 'routing_number', 'acc_no']);
-                            @endphp
-                            <table class="table table-bordered mb-0">
-                                <tr>
-                                    <th>Bank Name</th>
-                                    <td>{{ $settings->bank_name ?? 'N/A' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Branch Name</th>
-                                    <td>{{ $settings->branch_name ?? 'N/A' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Routing Number</th>
-                                    <td>{{ $settings->routing_number ?? 'N/A' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Account No.</th>
-                                    <td>{{ $settings->acc_no ?? 'N/A' }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            -->
         </main>
         <!-- End of Main -->
 
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
  	$(document).ready(function(){
@@ -413,7 +374,16 @@
             </a>
 <input type="file" name="image" class="form-control" accept="image/*"  id="image"/></div>
 `);
- 			}else{
+ 			} else if(payment_id == '3'){
+                $('.screenshot').html(`
+<div class="form-group">
+<label for="image"><b>Upload Payment Proof ScreenShot</b></label>
+<a href="{{ route('bkash.info') }}" target="_blank" class="btn btn-sm btn-info ml-2">
+                Show bkash Info
+            </a>
+<input type="file" name="image" class="form-control" accept="image/*"  id="image"/></div>
+`);
+            } else{
  				$('.screenshot').html('');
  			}
  			$('#paymentmethod_id').val(payment_id);
