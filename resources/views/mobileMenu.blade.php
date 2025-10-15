@@ -7,7 +7,7 @@
     <!-- End of .mobile-menu-close -->
 
     <div class="mobile-menu-container scrollable">
-        <form method="get" action="{{url('product-lists')}}" class="input-wrapper d-none">
+        <form method="get" action="{{url('product-lists')}}" class="input-wrapper">
             <input type="text" class="form-control" name="search_product" autocomplete="off" placeholder="Search"
                    required />
             <button class="btn btn-search" type="submit">
@@ -85,3 +85,50 @@
     </div>
 </div>
 <!-- End of Mobile Menu -->
+<script>
+(function() {
+    // Ensure the script runs after the page is fully loaded
+    window.addEventListener('load', function() {
+        var searchInput = document.querySelector('.mobile-menu-container input[name="search_product"]');
+        var body = document.body;
+        var isSearchFocused = false;
+
+        if (!searchInput) {
+            console.log('Mobile menu search input not found.');
+            return;
+        }
+
+        // Flag when the search input is focused
+        searchInput.addEventListener('focus', function() {
+            isSearchFocused = true;
+        });
+
+        searchInput.addEventListener('blur', function() {
+            isSearchFocused = false;
+        });
+
+        // Create an observer to watch for class changes on the body
+        var observer = new MutationObserver(function(mutations) {
+            // Only act if the search input is focused
+            if (isSearchFocused) {
+                mutations.forEach(function(mutation) {
+                    // Check if the 'class' attribute was changed
+                    if (mutation.attributeName === 'class') {
+                        var targetNode = mutation.target;
+
+                        // If the 'mmenu-active' class was removed, add it back
+                        if (!targetNode.classList.contains('mmenu-active')) {
+                            targetNode.classList.add('mmenu-active');
+                        }
+                    }
+                });
+            }
+        });
+
+        // Start observing the body for attribute changes
+        observer.observe(body, {
+            attributes: true
+        });
+    });
+})();
+</script>

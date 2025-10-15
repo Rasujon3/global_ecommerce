@@ -372,7 +372,7 @@
                                         <a href="{{url('/')}}">Home</a>
                                     </li>
                                     <li>
-                                        <a href="#">Shop</a>
+                                        <a href="#">Brand</a>
 
                                         <!-- Start of Megamenu -->
                                         <ul class="megamenu">
@@ -400,7 +400,7 @@
                                 </ul>
                             </nav>
                         </div>
-                        <div class="header-right">
+                        <div class="header-right d-none">
                             <a href="#" class="d-xl-show"><i class="w-icon-map-marker mr-1"></i>Track Order</a>
                             <a href="#"><i class="w-icon-sale"></i>Daily Deals</a>
                         </div>
