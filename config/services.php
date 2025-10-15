@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'meta_pixel' => [
+        'id' => env('META_PIXEL_ID', null),
+    ],
+
 ];
