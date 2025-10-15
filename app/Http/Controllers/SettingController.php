@@ -153,6 +153,180 @@ class SettingController extends Controller
             return redirect()->back()->with($notification);
         }
     }
+    public function bkashInfo()
+    {
+        $setting = Setting::first();
+        return view('admin.settings.bkashInfo',compact('setting'));
+    }
+    public function updateBkashInfo(Request $request)
+    {
+        try
+        {
+            $data = Setting::first();
+
+            $defaults = [
+                'bkash_no'    => $data ? $data->bkash_no : null,
+                'account_type'    => $data ? $data->account_type : null,
+            ];
+
+            if ($data) {
+                Setting::where('id', $data->id)->update(
+                    [
+                        'bkash_no'   => $request->bkash_no ?? $defaults['bkash_no'],
+                        'account_type'   => $request->account_type ?? $defaults['account_type'],
+                    ]
+                );
+            } else {
+                Setting::create(
+                    [
+                        'bkash_no'   => $request->bkash_no ?? $defaults['bkash_no'],
+                        'account_type'   => $request->account_type ?? $defaults['account_type'],
+                    ]
+                );
+            }
+
+            $notification = [
+                'messege'    => 'Successfully updated',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->back()->with($notification);
+
+        } catch (Exception $e) {
+            // Log the error
+            Log::error('Error in updating updateBkashInfo: ', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            $notification=array(
+                'messege' => 'Something went wrong!!!',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+    public function bankInfo()
+    {
+        $setting = Setting::first();
+        return view('admin.settings.bankInfo',compact('setting'));
+    }
+    public function updateBankInfo(Request $request)
+    {
+        try
+        {
+            $data = Setting::first();
+
+            $defaults = [
+                'bank_name'    => $data ? $data->bank_name : null,
+                'branch_name'    => $data ? $data->branch_name : null,
+                'routing_number'    => $data ? $data->routing_number : null,
+                'acc_no'    => $data ? $data->acc_no : null,
+            ];
+
+            if ($data) {
+                Setting::where('id', $data->id)->update(
+                    [
+                        'bank_name'   => $request->bank_name ?? $defaults['bank_name'],
+                        'branch_name'   => $request->branch_name ?? $defaults['branch_name'],
+                        'routing_number'   => $request->routing_number ?? $defaults['routing_number'],
+                        'acc_no'   => $request->acc_no ?? $defaults['acc_no'],
+                    ]
+                );
+            } else {
+                Setting::create(
+                    [
+                        'bank_name'   => $request->bank_name ?? $defaults['bank_name'],
+                        'branch_name'   => $request->branch_name ?? $defaults['branch_name'],
+                        'routing_number'   => $request->routing_number ?? $defaults['routing_number'],
+                        'acc_no'   => $request->acc_no ?? $defaults['acc_no'],
+                    ]
+                );
+            }
+
+            $notification = [
+                'messege'    => 'Successfully updated',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->back()->with($notification);
+
+        } catch (Exception $e) {
+            // Log the error
+            Log::error('Error in updating updateBankInfo: ', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            $notification=array(
+                'messege' => 'Something went wrong!!!',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+    public function deliveryCharges()
+    {
+        $setting = Setting::first();
+        return view('admin.settings.deliveryCharges',compact('setting'));
+    }
+    public function updateDeliveryCharges(Request $request)
+    {
+        try
+        {
+            $data = Setting::first();
+
+            $defaults = [
+                'inside_dhaka_dc'    => $data ? $data->inside_dhaka_dc : null,
+                'outside_dhaka_dc'    => $data ? $data->outside_dhaka_dc : null,
+                'sub_urban_areas_dc'    => $data ? $data->sub_urban_areas_dc : null,
+            ];
+
+            if ($data) {
+                Setting::where('id', $data->id)->update(
+                    [
+                        'inside_dhaka_dc'   => $request->inside_dhaka_dc ?? $defaults['inside_dhaka_dc'],
+                        'outside_dhaka_dc'   => $request->outside_dhaka_dc ?? $defaults['outside_dhaka_dc'],
+                        'sub_urban_areas_dc'   => $request->sub_urban_areas_dc ?? $defaults['sub_urban_areas_dc'],
+                    ]
+                );
+            } else {
+                Setting::create(
+                    [
+                        'inside_dhaka_dc'   => $request->inside_dhaka_dc ?? $defaults['inside_dhaka_dc'],
+                        'outside_dhaka_dc'   => $request->outside_dhaka_dc ?? $defaults['outside_dhaka_dc'],
+                        'sub_urban_areas_dc'   => $request->sub_urban_areas_dc ?? $defaults['sub_urban_areas_dc'],
+                    ]
+                );
+            }
+
+            $notification = [
+                'messege'    => 'Successfully updated',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->back()->with($notification);
+
+        } catch (Exception $e) {
+            // Log the error
+            Log::error('Error in updating updateDeliveryCharges: ', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            $notification=array(
+                'messege' => 'Something went wrong!!!',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
 
     public function aboutUs()
     {

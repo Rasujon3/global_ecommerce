@@ -67,6 +67,16 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     Route::get('/settings', [SettingController::class, 'settings'])->name('settings');
     Route::post('settings-app', [SettingController::class, 'settingApp']);
 
+    // Delivery
+    Route::get('/delivery-charges', [SettingController::class, 'deliveryCharges'])->name('delivery-charges');
+    Route::post('delivery-charges', [SettingController::class, 'updateDeliveryCharges'])->name('delivery-charges.update');
+
+    Route::get('/dc-bank-info', [SettingController::class, 'bankInfo'])->name('dc-bank-info');
+    Route::post('dc-bank-info', [SettingController::class, 'updateBankInfo'])->name('dc-bank-info.update');
+
+    Route::get('/dc-bkash-info', [SettingController::class, 'bkashInfo'])->name('dc-bkash-info');
+    Route::post('dc-bkash-info', [SettingController::class, 'updateBkashInfo'])->name('dc-bkash-info.update');
+
     // about-us
     Route::get('about-us', [SettingController::class, 'aboutUs'])->name('about-us');
     Route::post('about-us', [SettingController::class, 'storeAboutUs'])->name('store-about-us');
