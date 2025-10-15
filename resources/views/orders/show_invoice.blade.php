@@ -43,6 +43,10 @@
                     <b class="float-right">Order: INV-00-{{$data->id}}</b><br/>
                     <small class="float-right">Date: {{$data->date}}</small><br/>
                     <small class="float-right">Status: {{$data->status}}</small>
+                      @if($data->screen_shot)
+                            <br/>
+                            <a href="{{asset($data->screen_shot)}}" target="_blank" class="float-right btn btn-sm btn-info">View Screenshot</a>
+                      @endif
                   </h4>
                 </div>
                 <!-- /.col -->

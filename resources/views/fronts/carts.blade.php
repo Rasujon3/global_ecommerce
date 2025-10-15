@@ -65,14 +65,14 @@
                                         </span></td>
                                         <td class="product-quantity">
                                             <div class="input-group">
-                                                <input 
-                                                class="form-control cart_input" 
-                                                id="cart_input_{{$cart->id}}" 
+                                                <input
+                                                class="form-control cart_input"
+                                                id="cart_input_{{$cart->id}}"
                                                 name="cart_qty_{{$cart->id}}"
-                                                type="number" 
-                                                min="1" 
-                                                max="100000" 
-                                                data-id="{{$cart->id}}" 
+                                                type="number"
+                                                min="1"
+                                                max="100000"
+                                                data-id="{{$cart->id}}"
                                                 value="{{$cart->cart_qty}}"
                                                 />
 
@@ -83,7 +83,7 @@
                                         <td class="product-subtotal">
                                             <span class="amount">
                                              <span class="unit-total" id="unit_total_{{$cart->id}}">{{$cart->unit_total}}</span> BDT
-                                            </span> 
+                                            </span>
                                         </td>
                                     </tr>
                                   @endforeach
@@ -92,7 +92,7 @@
 
                             <div class="cart-action mb-6">
                                 <a href="#" class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto"><i class="w-icon-long-arrow-left"></i>Continue Shopping</a>
-                                <button type="button" class="btn btn-rounded btn-default btn-clear" name="clear_cart" value="Clear Cart">Clear Cart</button> 
+                                <button type="button" class="btn btn-rounded btn-default btn-clear" name="clear_cart" value="Clear Cart">Clear Cart</button>
                                 <button type="submit" class="btn btn-rounded btn-update" name="update_cart" value="Update Cart">Update Cart</button>
                             </div>
                         </form>
@@ -198,7 +198,7 @@
                                     {{-- <a href="{{url('/login-register')}}" class="d-lg-show login sign-in"><i
                                 class="w-icon-account"></i>Sign In</a> --}}
                                     <a href="{{url('/login-register')}}"
-                                        class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout d-lg-show login sign-in checkout-process">
+                                        class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout login sign-in checkout-process">
                                         Proceed to checkout<i class="w-icon-long-arrow-right"></i></a>
                                     @endif
                                 </div>
@@ -237,7 +237,7 @@
           cart_id = $(this).data('id');
           if(inputVal != ""){
             let qty = parseInt(inputVal);
-            
+
             let unitTotal = parseFloat($('#product_price_'+cart_id).text());
             let totalSum = unitTotal * qty;
 
@@ -282,7 +282,7 @@
                         toastr.success(data.message);
 
                 },
-                            
+
             });
         }
       });
@@ -309,7 +309,7 @@
         //         }
 
         //     },
-                            
+
         // });
       });
 

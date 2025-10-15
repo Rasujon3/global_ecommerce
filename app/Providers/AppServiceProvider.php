@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $menuCategories = Category::whereHas('products')
 			    ->with(['subcategories' => function ($query) {
-		
+
 			        $query->whereHas('products')
 			        ->where('is_mega_menu', 1)
 			        ->where('status','Active')
@@ -74,10 +74,14 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $menuBrands = Brand::whereHas('products')->with(['products'=>function($query){
                 $query->where('status','Active');
-            }])->where('status','Active')->where('is_mega_menu',1)->latest()->get();
+            }])
+                ->where('status','Active')
+                ->where('is_mega_menu',1)
+                ->orderBy('brand_name','asc')
+                ->get();
             $view->with('menuBrands', $menuBrands);
         });
-        
+
 
         View::composer('*', function ($view) {
             $topCategories = Category::where('is_top',1)->where('status','Active')->latest()->get();
@@ -106,8 +110,8 @@ class AppServiceProvider extends ServiceProvider
 	                   ->get();
             $view->with('homeCategories', $homeCategories);
         });
-    
-        
+
+
 
         Blade::directive('toastr', function ($expression){
             return "<script>

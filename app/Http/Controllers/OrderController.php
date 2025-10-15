@@ -30,7 +30,7 @@ class OrderController extends Controller
                 ->addColumn('serial', function ($row) {
                 	return $row->id;
                 })
-                
+
                 ->addColumn('payment_method', function ($row) {
                 	return $row->paymentmethod->name;
                 })
@@ -112,12 +112,6 @@ class OrderController extends Controller
     public function showOrder($id)
     {
     	$data = Orderdetail::with('orders.product')->findorfail($id);
-//        dd(
-//            $data->orders[0]->variants,
-//            $data->orders[0]->variant_details
-//        );
-//
-//        dd($data->orders[0]->variants, $data->variants, $data?->variant_details);
     	return view('orders.show_invoice', compact('data'));
     }
     public function orderStatusUpdate(Request $request)
