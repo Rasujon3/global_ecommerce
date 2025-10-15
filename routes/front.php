@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Artisan;
 
 //frontend routes
@@ -31,6 +32,7 @@ Route::get('/wishlists', [WishlistController::class, 'wishlists']);
 //checkout
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
 Route::post('save-order', [CheckoutController::class, 'saveOrder']);
+Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/bank-info', [CheckoutController::class, 'showBankInfo'])->name('bank.info');
 Route::get('/bkash-info', [CheckoutController::class, 'showBkashInfo'])->name('bkash.info');
 

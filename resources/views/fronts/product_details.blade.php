@@ -288,6 +288,9 @@
                                     <li class="nav-item">
                                         <a href="#product-tab-description" class="nav-link active">Description</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="#review-tab" class="nav-link">Review</a>
+                                    </li>
                                     {{-- <li class="nav-item">
                                         <a href="#product-tab-specification" class="nav-link">Specification</a>
                                     </li>
@@ -340,6 +343,84 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane" id="review-tab">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h4 class="title tab-pane-title font-weight-bold mb-4">Customer Reviews</h4>
+                                                <ul class="comments list-style-none">
+                                                    @forelse($product->reviews->where('status', 'approved') as $review)
+                                                        <li class="comment">
+                                                            <div class="comment-body">
+                                                                <figure class="comment-avatar">
+                                                                    <img src="{{ asset('defaults/profile.png') }}" alt="avatar" width="90" height="90">
+                                                                </figure>
+                                                                <div class="comment-content">
+                                                                    <h4 class="comment-author">
+                                                                        <a href="#">{{ $review->user->name }}</a>
+                                                                        <span class="comment-date">{{ $review->created_at->format('M d, Y') }}</span>
+                                                                    </h4>
+                                                                    <div class="ratings-container comment-rating">
+                                                                        <div class="ratings-full">
+                                                                            <span class="ratings" style="width: {{ $review->rating * 20 }}%;"></span>
+                                                                            <span class="tooltiptext tooltip-top"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p>{{ $review->description }}</p>
+                                                                    @if($review->image)
+                                                                        <a href="{{ asset($review->image) }}" target="_blank">
+                                                                            <img src="{{ asset($review->image) }}" alt="review image" width="100">
+                                                                        </a>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    @empty
+                                                        <li class="comment">
+                                                            <p>No reviews for this product yet.</p>
+                                                        </li>
+                                                    @endforelse
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <hr class="mt-6 mb-6">
+                                                @auth
+                                                    <h4 class="title tab-pane-title font-weight-bold mb-4">Add a Review</h4>
+                                                    <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data" class="review-form">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                        <div class="form-group">
+                                                            <label>Your rating for this product</label>
+                                                            <div class="ratings-container">
+                                                                <div class="rating-stars">
+                                                                    <a class="star-1" href="#">1</a>
+                                                                    <a class="star-2" href="#">2</a>
+                                                                    <a class="star-3" href="#">3</a>
+                                                                    <a class="star-4" href="#">4</a>
+                                                                    <a class="star-5" href="#">5</a>
+                                                                </div>
+                                                                <input type="hidden" name="rating" id="rating-value" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="description">Your review</label>
+                                                            <textarea id="description" name="description" cols="30" rows="6" class="form-control" required></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="image">Upload Image (optional)</label>
+                                                            <input type="file" id="image" name="image" class="form-control">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                                                    </form>
+                                                @else
+                                                    <p>Please <a class="login sign-in" href="{{ url('/login-register') }}">login</a> to write a review.</p>
+                                                @endauth
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                 </div>
                             </div>
@@ -750,6 +831,31 @@
 	    });
 
    	 });
-   });
- </script>
-@endpush
+      	 });
+    </script>
+   <script>
+       // Simple star rating script
+       document.addEventListener('DOMContentLoaded', function() {
+           var stars = document.querySelectorAll('.rating-stars a');
+           var ratingInput = document.getElementById('rating-value');
+
+           if (stars.length && ratingInput) {
+               stars.forEach(function(star, index) {
+                   star.addEventListener('click', function(e) {
+                       e.preventDefault();
+                       ratingInput.value = index + 1;
+
+                       // Visual feedback
+                       stars.forEach(function(s, i) {
+                           if (i <= index) {
+                               s.classList.add('active');
+                           } else {
+                               s.classList.remove('active');
+                           }
+                       });
+                   });
+               });
+           }
+       });
+   </script>
+   @endpush

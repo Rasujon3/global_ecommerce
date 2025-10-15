@@ -40,7 +40,8 @@ class FrontController extends Controller
 		    'brand',
 		    'productvariants' => function ($query) {
 		        $query->whereNotNull('image');
-		    }
+		    },
+            'reviews.user'
 		])->findOrFail($id);
 
 
