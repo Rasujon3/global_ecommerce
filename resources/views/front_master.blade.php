@@ -62,32 +62,116 @@
         .login.sign-in:hover, .login.register:hover, .my-account:hover, .user-logout:hover {
             color: #fff !important;
         }
-        .suggestion-box {
+        .search-results-dropdown {
             position: absolute;
-            background: #fff;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            width: 100%;
-            z-index: 9999;
-            display: none;
-            max-height: 250px;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
             overflow-y: auto;
+            z-index: 1000;
+            display: none;
         }
-        .suggestion-item {
-            padding: 8px 12px;
-            cursor: pointer;
+
+        .search-results-dropdown.show {
+            display: block;
+        }
+
+        .search-result-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-decoration: none;
+            color: inherit;
         }
-        .suggestion-item img {
-            width: 40px;
-            height: 40px;
-            border-radius: 5px;
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background: #f8f9fa;
+        }
+
+        .search-result-img {
+            width: 50px;
+            height: 50px;
             object-fit: cover;
+            border-radius: 6px;
+            margin-right: 12px;
+            flex-shrink: 0;
         }
-        .suggestion-item:hover {
-            background: #f4f4f4;
+
+        .search-result-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .search-result-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin: 0 0 4px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .search-result-price {
+            font-size: 14px;
+            font-weight: 600;
+            color: #28a745;
+            margin: 0;
+        }
+
+        .search-result-category {
+            font-size: 12px;
+            color: #999;
+            margin: 0;
+        }
+
+        .search-no-results {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .search-loading {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+
+        /* Make parent form position relative */
+        .header-search {
+            position: relative;
+        }
+
+        /* Scrollbar styling */
+        .search-results-dropdown::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .search-results-dropdown::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .search-results-dropdown::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .search-results-dropdown::-webkit-scrollbar-thumb:hover {
+            background: #999;
         }
     </style>
 
@@ -115,7 +199,7 @@
 
     <noscript>
         <img height="1" width="1" style="display:none"
-             src="https://www.facebook.com/tr?id={{ config('services.meta_pixel.id') }}&ev=PageView&noscript=1"/>
+             src="https://www.facebook.com/tr?id={{ setting()->meta_pixel_script ?? '' }}&ev=PageView&noscript=1"/>
     </noscript>
     <!-- End Meta Pixel Code -->
 
@@ -182,8 +266,9 @@
                         <a href="{{ url('/') }}" class="logo ml-lg-0">
                             <img src="{{ asset(setting()->logo ?? 'front/assets/images/logo.png') }}" alt="logo" width="144" height="45" />
                         </a>
+{{--                        <div style="position: relative;">--}}
                         <form method="get" action="{{url('product-lists')}}"
-                            class="header-search hs-expanded hs-round d-none d-md-flex input-wrapper">
+                              class="header-search hs-expanded hs-round d-none d-md-flex input-wrapper">
                             <div class="select-box">
                                 <select id="category" name="category" class="form-control">
                                     <option value="" selected disabled>All Categories</option>
@@ -192,11 +277,33 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <input type="text" class="form-control" name="search_product" id="search-product" placeholder="Search in..."
-                                required />
-                            <button class="btn btn-search" type="submit"><i class="w-icon-search"></i>
+                            <input type="text" class="form-control" name="search_product" id="search-product"
+                                   placeholder="Search in..." autocomplete="off" />
+                            <button class="btn btn-search" type="submit">
+                                <i class="w-icon-search"></i>
                             </button>
+
+                            <!-- Search Results Dropdown -->
+                            <div class="search-results-dropdown" id="searchResults">
+                                <!-- Loading State -->
+                                <div class="search-loading" id="searchLoading" style="display: none;">
+                                    <i class="fa fa-spinner fa-spin"></i> Searching...
+                                </div>
+
+                                <!-- Results List -->
+                                <div id="searchResultsList" style="display: none;">
+                                    <!-- Results will be populated here -->
+                                </div>
+
+                                <!-- No Results State -->
+                                <div class="search-no-results" id="noResults" style="display: none;">
+                                    <i class="w-icon-exclamation-triangle"></i>
+                                    <p>No products found</p>
+                                </div>
+                            </div>
                         </form>
+                            <div id="search-suggestions-container" class="suggestions-container"></div>
+{{--                        </div>--}}
                     </div>
                     <div id="searchSuggestions" class="suggestion-box"></div>
                     <div class="header-right ml-4">
@@ -993,6 +1100,67 @@
         localStorage.setItem('base_url', base_url);
       })
     </script>
+
+    <style>
+        .suggestions-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: 0;
+            display: none;
+            z-index: 1000;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            var $searchProduct = $('#search-product');
+            var $suggestionsContainer = $('#search-suggestions-container');
+
+            $searchProduct.on('keyup', function() {
+                var query = $(this).val();
+
+                if (query.length > 2) {
+                    $.ajax({
+                        url: '{{ route("search.suggestions") }}',
+                        data: { q: query },
+                        success: function(data) {
+                            $suggestionsContainer.html('').hide();
+
+                            if (data.length) {
+                                $.each(data, function(index, item) {
+                                    var suggestion = '' +
+                                        '<div class="suggestion-item" data-id="' + item.id + '">' +
+                                        '<a href="/product-details/' + item.id + '">' + item.product_name + '</a>' +
+                                        '</div>';
+                                    $suggestionsContainer.append(suggestion);
+                                });
+                                $suggestionsContainer.show();
+                            }
+                        }
+                    });
+                } else {
+                    $suggestionsContainer.hide();
+                }
+            });
+
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.header-search').length) {
+                    $suggestionsContainer.hide();
+                }
+            });
+        });
+    </script>
 </body>
 
  <script>
@@ -1109,48 +1277,99 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 
-        function setupSearch(inputSelector, suggestionBoxSelector) {
+        function setupSearch(inputSelector, resultsDropdownSelector) {
             const input = document.querySelector(inputSelector);
-            const suggestionBox = document.querySelector(suggestionBoxSelector);
+            const resultsDropdown = document.querySelector(resultsDropdownSelector);
+            const resultsList = resultsDropdown?.querySelector('#searchResultsList');
+            const loadingState = resultsDropdown?.querySelector('#searchLoading');
+            const noResultsState = resultsDropdown?.querySelector('#noResults');
 
-            if (!input || !suggestionBox) return;
+            if (!input || !resultsDropdown) return;
 
-            input.addEventListener('keyup', function() {
+            let searchTimeout;
+
+            input.addEventListener('input', function() {
                 const query = this.value.trim();
+
+                // Hide dropdown if query is too short
                 if (query.length < 2) {
-                    suggestionBox.style.display = 'none';
+                    resultsDropdown.classList.remove('show');
                     return;
                 }
 
-                fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.length === 0) {
-                            suggestionBox.innerHTML = '<div class="suggestion-item">No products found</div>';
-                        } else {
-                            suggestionBox.innerHTML = data.map(item => `
-                            <div class="suggestion-item" onclick="window.location.href='{{ url('/product-details') }}/${item.id}'">
-                                <span>${item.product_name}</span>
-                            </div>
-                        `).join('');
-                        }
-                        suggestionBox.style.display = 'block';
-                    })
-                    .catch(err => console.error('Error:', err));
+                // Clear previous timeout
+                clearTimeout(searchTimeout);
+
+                // Show loading state
+                loadingState.style.display = 'block';
+                resultsList.style.display = 'none';
+                noResultsState.style.display = 'none';
+                resultsDropdown.classList.add('show');
+
+                // Debounce search
+                searchTimeout = setTimeout(() => {
+                    fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            loadingState.style.display = 'none';
+
+                            if (data.length === 0) {
+                                resultsList.style.display = 'none';
+                                noResultsState.style.display = 'block';
+                            } else {
+                                noResultsState.style.display = 'none';
+                                resultsList.style.display = 'block';
+
+                                resultsList.innerHTML = data.map(item => `
+                                    <a href="{{ url('/product-details') }}/${item.id}" class="search-result-item">
+                                        <div class="search-result-info">
+                                            <p class="search-result-title">${item.product_name}</p>
+                                        </div>
+                                    </a>
+                                `).join('');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Error:', err);
+                            loadingState.style.display = 'none';
+                            resultsList.style.display = 'none';
+                            noResultsState.innerHTML = '<i class="w-icon-exclamation-triangle"></i><p>Error loading results</p>';
+                            noResultsState.style.display = 'block';
+                        });
+                }, 300); // 300ms debounce
             });
 
-            // Hide suggestions when clicking outside
+            // Show dropdown when input is focused and has value
+            input.addEventListener('focus', function() {
+                if (this.value.trim().length >= 2) {
+                    resultsDropdown.classList.add('show');
+                }
+            });
+
+            // Hide dropdown when clicking outside
             document.addEventListener('click', function(e) {
-                if (!suggestionBox.contains(e.target) && !input.contains(e.target)) {
-                    suggestionBox.style.display = 'none';
+                if (!input.contains(e.target) && !resultsDropdown.contains(e.target)) {
+                    resultsDropdown.classList.remove('show');
+                }
+            });
+
+            // Prevent form submission on Enter if dropdown is visible
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && resultsDropdown.classList.contains('show')) {
+                    const firstResult = resultsList.querySelector('.search-result-item');
+                    if (firstResult) {
+                        e.preventDefault();
+                        window.location.href = firstResult.getAttribute('href');
+                    }
                 }
             });
         }
 
         // Desktop search
-        setupSearch('#search-product', '#searchSuggestions');
-        // Mobile search
-        setupSearch('.mobile-menu-container input[name="search_product"]', '#mobileSearchSuggestions');
+        setupSearch('#search-product', '#searchResults');
+
+        // Mobile search (if you have mobile search)
+        setupSearch('.mobile-menu-container input[name="search_product"]', '#mobileSearchResults');
     });
 </script>
 
