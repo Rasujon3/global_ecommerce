@@ -502,84 +502,105 @@
                                     </div>
                                 </div>
                             </section>
+
                             <section class="related-product-section">
                                 <div class="title-link-wrapper mb-4">
                                     <h4 class="title">Related Products</h4>
-                                    <a href="#" class="btn btn-dark btn-link btn-slide-right btn-icon-right">More
-                                        Products<i class="w-icon-long-arrow-right"></i></a>
+                                    <a href="#" class="btn btn-dark btn-link btn-slide-right btn-icon-right">
+                                        More Products<i class="w-icon-long-arrow-right"></i>
+                                    </a>
                                 </div>
-                                <div class="swiper-container swiper-theme" data-swiper-options="{
-                                    'spaceBetween': 20,
-                                    'slidesPerView': 2,
-                                    'breakpoints': {
-                                        '576': {
-                                            'slidesPerView': 3
-                                        },
-                                        '768': {
-                                            'slidesPerView': 4
-                                        },
-                                        '992': {
-                                            'slidesPerView': 3
-                                        }
-                                    }
-                                }">
-                                    <div class="swiper-wrapper row cols-lg-3 cols-md-4 cols-sm-3 cols-2">
-                                     @foreach($relatedProducts as $product)
-                                        <div class="swiper-slide product">
-                                            @if($product->images && count($product->images) > 0)
-                                                @foreach($product->images as $image)
-                                                    <figure class="product-media">
-                                                        <a href="{{url('/product-details/'.$product->id)}}">
-                                                            <img src="{{URL::to($product->image)}}" alt="Product"
-                                                                 width="300" height="338" />
-                                                        </a>
-                                                        <div class="product-action-vertical">
-                                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart add-to-cart"
-                                                               title="Add to cart" data-id="{{$product->id}}"></a>
-                                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
-                                                               title="Add to wishlist"></a>
-                                                            <a href="#" class="btn-product-icon btn-compare w-icon-compare d-none"
-                                                               title="Add to Compare"></a>
-                                                        </div>
-                                                        <div class="product-action d-none">
-                                                            <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
-                                                                View</a>
-                                                        </div>
-                                                    </figure>
-                                                @endforeach
-                                            @else
-                                                <div class="swiper-slide">
-                                                    <figure class="product-image">
-                                                        <img src="{{ URL::to(setting()->no_img) }}" alt="Default Product Image" width="800" height="900">
-                                                    </figure>
-                                                </div>
-                                            @endif
 
-                                            <div class="product-details">
-                                                <h4 class="product-name"><a href="{{url('/product-details/'.$product->id)}}">{{$product->product_name}}</a></h4>
-                                                <div class="ratings-container d-none">
-                                                    <div class="ratings-full">
-                                                        <span class="ratings" style="width: 100%;"></span>
-                                                        <span class="tooltiptext tooltip-top"></span>
+                                <div class="swiper-container swiper-theme" data-swiper-options="{
+        'spaceBetween': 20,
+        'slidesPerView': 2,
+        'breakpoints': {
+            '576': { 'slidesPerView': 3 },
+            '768': { 'slidesPerView': 4 },
+            '992': { 'slidesPerView': 3 }
+        }
+    }">
+                                    <div class="swiper-wrapper row cols-lg-3 cols-md-4 cols-sm-3 cols-2">
+                                        @foreach($relatedProducts as $product)
+                                            <div class="swiper-slide product">
+                                                <figure class="product-media">
+
+                                                    {{-- Inner Swiper for multiple product images --}}
+                                                    <div class="swiper-container inner-swiper" data-swiper-options="{
+                            'slidesPerView': 1,
+                            'spaceBetween': 0,
+                            'pagination': {
+                                'el': '.swiper-pagination-{{ $product->id }}',
+                                'clickable': true
+                            },
+                            'navigation': {
+                                'nextEl': '.swiper-button-next-{{ $product->id }}',
+                                'prevEl': '.swiper-button-prev-{{ $product->id }}'
+                            }
+                        }">
+                                                        <div class="swiper-wrapper">
+                                                            @if($product->images && count($product->images) > 0)
+                                                                @foreach($product->images as $image)
+                                                                    <div class="swiper-slide">
+                                                                        <a href="{{ url('/product-details/'.$product->id) }}">
+                                                                            <img src="{{ URL::to($image->image) }}"
+                                                                                 alt="{{ $product->product_name }}"
+                                                                                 width="300" height="338">
+                                                                        </a>
+                                                                    </div>
+                                                                @endforeach
+                                                            @else
+                                                                <div class="swiper-slide">
+                                                                    <a href="{{ url('/product-details/'.$product->id) }}">
+                                                                        <img src="{{ URL::to(setting()->no_img) }}"
+                                                                             alt="Default Product Image"
+                                                                             width="300" height="338">
+                                                                    </a>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+
+                                                        <!-- Pagination -->
+                                                        <div class="swiper-pagination swiper-pagination-{{ $product->id }}"></div>
+
+                                                        <!-- Navigation -->
+                                                        <div class="swiper-button-next swiper-button-next-{{ $product->id }}"></div>
+                                                        <div class="swiper-button-prev swiper-button-prev-{{ $product->id }}"></div>
                                                     </div>
-                                                    <a href="product-default.html" class="rating-reviews">(3 reviews)</a>
-                                                </div>
-                                                <div class="product-pa-wrapper">
-                                                    <div class="product-price">
-                                                    	@if($product->discount > 0)
-				                                            <ins class="new-price">{{discount($product)}} BDT</ins><del
-				                                                class="old-price">{{$product->product_price}}BDT</del>
-				                                          @else
-				                                            <ins class="new-price">{{$product->product_price}} BDT</ins>
-				                                          @endif
+                                                    {{-- End inner swiper --}}
+
+                                                    <div class="product-action-vertical">
+                                                        <a href="#" class="btn-product-icon btn-cart w-icon-cart add-to-cart"
+                                                           title="Add to cart" data-id="{{ $product->id }}"></a>
+                                                        <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                                           title="Add to wishlist"></a>
+                                                        <a href="#" class="btn-product-icon btn-compare w-icon-compare d-none"
+                                                           title="Add to Compare"></a>
+                                                    </div>
+                                                </figure>
+
+                                                <div class="product-details">
+                                                    <h4 class="product-name">
+                                                        <a href="{{ url('/product-details/'.$product->id) }}">{{ $product->product_name }}</a>
+                                                    </h4>
+
+                                                    <div class="product-pa-wrapper">
+                                                        <div class="product-price">
+                                                            @if($product->discount > 0)
+                                                                <ins class="new-price">{{ discount($product) }} BDT</ins>
+                                                                <del class="old-price">{{ $product->product_price }} BDT</del>
+                                                            @else
+                                                                <ins class="new-price">{{ $product->product_price }} BDT</ins>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                      @endforeach
+                                        @endforeach
                                     </div>
                                 </div>
                             </section>
+
                         </div>
                         <!-- End of Main Content -->
                         <aside class="sidebar product-sidebar sidebar-fixed right-sidebar sticky-sidebar-wrapper">
