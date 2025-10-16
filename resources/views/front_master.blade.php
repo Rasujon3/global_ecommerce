@@ -173,6 +173,116 @@
         .search-results-dropdown::-webkit-scrollbar-thumb:hover {
             background: #999;
         }
+        /* Mobile Search Form - Make it relative for dropdown positioning */
+        .mobile-search-form {
+            position: relative;
+        }
+
+        /* Mobile Search Results Dropdown */
+        .mobile-menu-container .search-results-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-height: 350px;
+            overflow-y: auto;
+            z-index: 1001;
+            display: none;
+        }
+
+        .mobile-menu-container .search-results-dropdown.show {
+            display: block;
+        }
+
+        .mobile-menu-container .search-result-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .mobile-menu-container .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu-container .search-result-item:hover,
+        .mobile-menu-container .search-result-item:active {
+            background: #f8f9fa;
+        }
+
+        .mobile-menu-container .search-result-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .mobile-menu-container .search-result-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mobile-menu-container .search-result-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+            margin: 0 0 3px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mobile-menu-container .search-result-price {
+            font-size: 13px;
+            font-weight: 600;
+            color: #28a745;
+            margin: 0;
+        }
+
+        .mobile-menu-container .search-result-category {
+            font-size: 11px;
+            color: #999;
+            margin: 0;
+        }
+
+        .mobile-menu-container .search-no-results {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .mobile-menu-container .search-loading {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Scrollbar for mobile */
+        .mobile-menu-container .search-results-dropdown::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .mobile-menu-container .search-results-dropdown::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .mobile-menu-container .search-results-dropdown::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
     </style>
 
     <!-- Meta Pixel Code -->
@@ -1274,6 +1384,7 @@
         Wolmart.setCookie("hideNewsletterPopup", true, 7);
     });
 </script>
+<!--
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 
@@ -1372,7 +1483,110 @@
         setupSearch('.mobile-menu-container input[name="search_product"]', '#mobileSearchResults');
     });
 </script>
+-->
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        function setupSearch(inputSelector, resultsDropdownSelector, resultsListSelector, loadingSelector, noResultsSelector) {
+            const input = document.querySelector(inputSelector);
+            const resultsDropdown = document.querySelector(resultsDropdownSelector);
+            const resultsList = document.querySelector(resultsListSelector);
+            const loadingState = document.querySelector(loadingSelector);
+            const noResultsState = document.querySelector(noResultsSelector);
+
+            if (!input || !resultsDropdown) return;
+
+            let searchTimeout;
+
+            input.addEventListener('input', function() {
+                const query = this.value.trim();
+
+                if (query.length < 2) {
+                    resultsDropdown.classList.remove('show');
+                    return;
+                }
+
+                clearTimeout(searchTimeout);
+
+                loadingState.style.display = 'block';
+                resultsList.style.display = 'none';
+                noResultsState.style.display = 'none';
+                resultsDropdown.classList.add('show');
+
+                searchTimeout = setTimeout(() => {
+                    fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            loadingState.style.display = 'none';
+
+                            if (data.length === 0) {
+                                resultsList.style.display = 'none';
+                                noResultsState.style.display = 'block';
+                            } else {
+                                noResultsState.style.display = 'none';
+                                resultsList.style.display = 'block';
+
+                                resultsList.innerHTML = data.map(item => `
+                                    <a href="{{ url('/product-details') }}/${item.id}" class="search-result-item">
+                                            <p class="search-result-title">${item.product_name}</p>
+                                        </div>
+                                    </a>
+                                `).join('');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Error:', err);
+                            loadingState.style.display = 'none';
+                            resultsList.style.display = 'none';
+                            noResultsState.innerHTML = '<i class="w-icon-exclamation-triangle"></i><p>Error loading results</p>';
+                            noResultsState.style.display = 'block';
+                        });
+                }, 300);
+            });
+
+            input.addEventListener('focus', function() {
+                if (this.value.trim().length >= 2) {
+                    resultsDropdown.classList.add('show');
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!input.contains(e.target) && !resultsDropdown.contains(e.target)) {
+                    resultsDropdown.classList.remove('show');
+                }
+            });
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && resultsDropdown.classList.contains('show')) {
+                    const firstResult = resultsList.querySelector('.search-result-item');
+                    if (firstResult) {
+                        e.preventDefault();
+                        window.location.href = firstResult.getAttribute('href');
+                    }
+                }
+            });
+        }
+
+        // Desktop search
+        setupSearch(
+            '#search-product',
+            '#searchResults',
+            '#searchResultsList',
+            '#searchLoading',
+            '#noResults'
+        );
+
+        // Mobile search
+        setupSearch(
+            '#mobile-search-input',
+            '#mobileSearchResults',
+            '#mobileSearchResultsList',
+            '#mobileSearchLoading',
+            '#mobileNoResults'
+        );
+    });
+</script>
 
 
 
