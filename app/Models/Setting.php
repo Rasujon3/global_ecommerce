@@ -32,6 +32,14 @@ class Setting extends Model
         'acc_no',
         'bkash_no',
         'account_type',
+
+        'welcome_msg',
+        'shop_name',
+        'copyright_msg',
+        'footer_title',
+        'footer_description',
+
+        'meta_pixel_script',
     ];
 
     protected $casts = [

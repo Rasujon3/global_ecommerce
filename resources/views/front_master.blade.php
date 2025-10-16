@@ -58,11 +58,16 @@
     <!-- Default CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('front/assets/css/style.min.css')}}">
 
+    <style>
+        .login.sign-in:hover, .login.register:hover, .my-account:hover, .user-logout:hover {
+            color: #fff !important;
+        }
+    </style>
+
     <!-- Meta Pixel Code -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Pixel ID Laravel থেকে নিচ্ছে
-            var pixelId = "{{ config('services.meta_pixel.id') }}";
+            var pixelId = {{ setting()->meta_pixel_script ?? null }};
 
             if (pixelId) {
                 !function(f,b,e,v,n,t,s)
@@ -98,7 +103,7 @@
             <div class="header-top" style="background-color: #e5757e !important;">
                 <div class="container">
                     <div class="header-left">
-                        <p class="welcome-msg">Welcome to Glamours World message or remove it!</p>
+                        <p class="welcome-msg">{{ setting()->welcome_msg ?? 'Welcome to Glamours World message or remove it!' }}</p>
                     </div>
                     <div class="header-right">
                         <div class="dropdown d-none">
@@ -121,18 +126,20 @@
                         <span class="divider d-lg-show d-none"></span>
                         <a href="{{ route('contact') }}" class="d-lg-show d-none">Contact Us</a>
                         @if(Auth::check())
-                          <a href="{{ route('my-account') }}" class="d-lg-show">My Account</a>
+                          <a href="{{ route('my-account') }}" class="d-lg-show my-account">My Account</a>
 
-                         <a href="{{'/user-logout'}}" class="d-lg-show">{{Auth::user()->name}} ( Logout )</a>
+                         <a href="{{'/user-logout'}}" class="d-lg-show user-logout">{{Auth::user()->name}} ( Logout )</a>
 
                         @else
                         {{-- <a href="front/assets/ajax/login.html" class="d-lg-show login sign-in"><i
                                 class="w-icon-account"></i>Sign In</a> --}}
 
-                        <a href="{{url('/login-register')}}" class="d-lg-show  login sign-in"><i
-                                class="w-icon-account"></i>Sign In</a>
+                        <a href="{{url('/login-register')}}" class="d-lg-show login sign-in" style=":hover{color:#fff !important;}">
+                            <i class="w-icon-account"></i>
+                            Sign In
+                        </a>
                         <span class="delimiter d-lg-show ">/</span>
-                        <a href="{{url('/login-register')}}" class="ml-0 d-lg-show  login register">Register</a>
+                        <a href="{{url('/login-register')}}" class="ml-0 d-lg-show login register">Register</a>
                         @endif
 
                     </div>
@@ -463,10 +470,9 @@
                                         height="45" />
                                 </a>
                                 <div class="widget-body">
-                                    <p class="widget-about-title">Got Question? Call us 24/7</p>
+                                    <p class="widget-about-title">{{ setting()->footer_title ?? 'Got Question? Call us 24/7'}}</p>
                                     <a href="tel:{{ setting()->phone ?? '' }}" class="widget-about-call">{{ setting()->phone ?? '' }}</a>
-                                    <p class="widget-about-desc">Register now to get updates on pronot get up icons
-                                        & coupons ster now toon.
+                                    <p class="widget-about-desc">{{ setting()->footer_description ?? 'Register now to get updates on pronot get up icons & coupons ster now toon.'}}
                                     </p>
 
                                     <div class="social-icons social-icons-colored">
@@ -484,11 +490,11 @@
                                 <h3 class="widget-title">Company</h3>
                                 <ul class="widget-body">
                                     <li><a href="{{ route('about') }}">About Us</a></li>
-                                    <li><a href="#">Team Member</a></li>
-                                    <li><a href="#">Career</a></li>
+{{--                                    <li><a href="#">Team Member</a></li>--}}
+{{--                                    <li><a href="#">Career</a></li>--}}
                                     <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                                    <li><a href="#">Affilate</a></li>
-                                    <li><a href="#">Order History</a></li>
+{{--                                    <li><a href="#">Affilate</a></li>--}}
+{{--                                    <li><a href="#">Order History</a></li>--}}
                                 </ul>
                             </div>
                         </div>
@@ -496,12 +502,14 @@
                             <div class="widget">
                                 <h4 class="widget-title">My Account</h4>
                                 <ul class="widget-body">
-                                    <li><a href="#">Track My Order</a></li>
+                                    @if(Auth::check())
+                                    <li><a href="{{ route('my-account') }}">Track My Order</a></li>
+                                    @endif
                                     <li><a href="{{url('/carts')}}">View Cart</a></li>
-                                    <li><a href="login.html">Sign In</a></li>
-                                    <li><a href="#">Help</a></li>
+{{--                                    <li><a href="#">Sign In</a></li>--}}
+{{--                                    <li><a href="#">Help</a></li>--}}
                                     <li><a href="{{url('/wishlists')}}">My Wishlist</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
+{{--                                    <li><a href="#">Privacy Policy</a></li>--}}
                                 </ul>
                             </div>
                         </div>
@@ -509,98 +517,96 @@
                             <div class="widget">
                                 <h4 class="widget-title">Customer Service</h4>
                                 <ul class="widget-body">
-                                    <li><a href="#">Payment Methods</a></li>
-                                    <li><a href="#">Money-back guarantee!</a></li>
-                                    <li><a href="#">Product Returns</a></li>
-                                    <li><a href="#">Support Center</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Term and Conditions</a></li>
+                                    <li><a href="{{ route('bank.info') }}">Payment Methods (Bank)</a></li>
+                                    <li><a href="{{ route('bkash.info') }}">Payment Methods (BKash)</a></li>
+{{--                                    <li><a href="#">Support Center</a></li>--}}
+{{--                                    <li><a href="#">Term and Conditions</a></li>--}}
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-{{--                <div class="footer-middle">--}}
-{{--                    <div class="widget widget-category">--}}
-{{--                        <div class="category-box">--}}
-{{--                            <h6 class="category-name">Consumer Electric:</h6>--}}
-{{--                            <a href="#">TV Television</a>--}}
-{{--                            <a href="#">Air Condition</a>--}}
-{{--                            <a href="#">Refrigerator</a>--}}
-{{--                            <a href="#">Washing Machine</a>--}}
-{{--                            <a href="#">Audio Speaker</a>--}}
-{{--                            <a href="#">Security Camera</a>--}}
-{{--                            <a href="#">View All</a>--}}
-{{--                        </div>--}}
-{{--                        <div class="category-box">--}}
-{{--                            <h6 class="category-name">Clothing & Apparel:</h6>--}}
-{{--                            <a href="#">Men's T-shirt</a>--}}
-{{--                            <a href="#">Dresses</a>--}}
-{{--                            <a href="#">Men's Sneacker</a>--}}
-{{--                            <a href="#">Leather Backpack</a>--}}
-{{--                            <a href="#">Watches</a>--}}
-{{--                            <a href="#">Jeans</a>--}}
-{{--                            <a href="#">Sunglasses</a>--}}
-{{--                            <a href="#">Boots</a>--}}
-{{--                            <a href="#">Rayban</a>--}}
-{{--                            <a href="#">Acccessories</a>--}}
-{{--                        </div>--}}
-{{--                        <div class="category-box">--}}
-{{--                            <h6 class="category-name">Home, Garden & Kitchen:</h6>--}}
-{{--                            <a href="#">Sofa</a>--}}
-{{--                            <a href="#">Chair</a>--}}
-{{--                            <a href="#">Bed Room</a>--}}
-{{--                            <a href="#">Living Room</a>--}}
-{{--                            <a href="#">Cookware</a>--}}
-{{--                            <a href="#">Utensil</a>--}}
-{{--                            <a href="#">Blender</a>--}}
-{{--                            <a href="#">Garden Equipments</a>--}}
-{{--                            <a href="#">Decor</a>--}}
-{{--                            <a href="#">Library</a>--}}
-{{--                        </div>--}}
-{{--                        <div class="category-box">--}}
-{{--                            <h6 class="category-name">Health & Beauty:</h6>--}}
-{{--                            <a href="#">Skin Care</a>--}}
-{{--                            <a href="#">Body Shower</a>--}}
-{{--                            <a href="#">Makeup</a>--}}
-{{--                            <a href="#">Hair Care</a>--}}
-{{--                            <a href="#">Lipstick</a>--}}
-{{--                            <a href="#">Perfume</a>--}}
-{{--                            <a href="#">View all</a>--}}
-{{--                        </div>--}}
-{{--                        <div class="category-box">--}}
-{{--                            <h6 class="category-name">Jewelry & Watches:</h6>--}}
-{{--                            <a href="#">Necklace</a>--}}
-{{--                            <a href="#">Pendant</a>--}}
-{{--                            <a href="#">Diamond Ring</a>--}}
-{{--                            <a href="#">Silver Earing</a>--}}
-{{--                            <a href="#">Leather Watcher</a>--}}
-{{--                            <a href="#">Rolex</a>--}}
-{{--                            <a href="#">Gucci</a>--}}
-{{--                            <a href="#">Australian Opal</a>--}}
-{{--                            <a href="#">Ammolite</a>--}}
-{{--                            <a href="#">Sun Pyrite</a>--}}
-{{--                        </div>--}}
-{{--                        <div class="category-box">--}}
-{{--                            <h6 class="category-name">Computer & Technologies:</h6>--}}
-{{--                            <a href="#">Laptop</a>--}}
-{{--                            <a href="#">iMac</a>--}}
-{{--                            <a href="#">Smartphone</a>--}}
-{{--                            <a href="#">Tablet</a>--}}
-{{--                            <a href="#">Apple</a>--}}
-{{--                            <a href="#">Asus</a>--}}
-{{--                            <a href="#">Drone</a>--}}
-{{--                            <a href="#">Wireless Speaker</a>--}}
-{{--                            <a href="#">Game Controller</a>--}}
-{{--                            <a href="#">View all</a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="footer-middle d-none">
+                    <div class="widget widget-category">
+                        <div class="category-box">
+                            <h6 class="category-name">Consumer Electric:</h6>
+                            <a href="#">TV Television</a>
+                            <a href="#">Air Condition</a>
+                            <a href="#">Refrigerator</a>
+                            <a href="#">Washing Machine</a>
+                            <a href="#">Audio Speaker</a>
+                            <a href="#">Security Camera</a>
+                            <a href="#">View All</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">Clothing & Apparel:</h6>
+                            <a href="#">Men's T-shirt</a>
+                            <a href="#">Dresses</a>
+                            <a href="#">Men's Sneacker</a>
+                            <a href="#">Leather Backpack</a>
+                            <a href="#">Watches</a>
+                            <a href="#">Jeans</a>
+                            <a href="#">Sunglasses</a>
+                            <a href="#">Boots</a>
+                            <a href="#">Rayban</a>
+                            <a href="#">Acccessories</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">Home, Garden & Kitchen:</h6>
+                            <a href="#">Sofa</a>
+                            <a href="#">Chair</a>
+                            <a href="#">Bed Room</a>
+                            <a href="#">Living Room</a>
+                            <a href="#">Cookware</a>
+                            <a href="#">Utensil</a>
+                            <a href="#">Blender</a>
+                            <a href="#">Garden Equipments</a>
+                            <a href="#">Decor</a>
+                            <a href="#">Library</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">Health & Beauty:</h6>
+                            <a href="#">Skin Care</a>
+                            <a href="#">Body Shower</a>
+                            <a href="#">Makeup</a>
+                            <a href="#">Hair Care</a>
+                            <a href="#">Lipstick</a>
+                            <a href="#">Perfume</a>
+                            <a href="#">View all</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">Jewelry & Watches:</h6>
+                            <a href="#">Necklace</a>
+                            <a href="#">Pendant</a>
+                            <a href="#">Diamond Ring</a>
+                            <a href="#">Silver Earing</a>
+                            <a href="#">Leather Watcher</a>
+                            <a href="#">Rolex</a>
+                            <a href="#">Gucci</a>
+                            <a href="#">Australian Opal</a>
+                            <a href="#">Ammolite</a>
+                            <a href="#">Sun Pyrite</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">Computer & Technologies:</h6>
+                            <a href="#">Laptop</a>
+                            <a href="#">iMac</a>
+                            <a href="#">Smartphone</a>
+                            <a href="#">Tablet</a>
+                            <a href="#">Apple</a>
+                            <a href="#">Asus</a>
+                            <a href="#">Drone</a>
+                            <a href="#">Wireless Speaker</a>
+                            <a href="#">Game Controller</a>
+                            <a href="#">View all</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="footer-bottom">
                     <div class="footer-left">
-                        <p class="copyright">Copyright © 2021 Wolmart Store. All Rights Reserved.</p>
+                        <p class="copyright">{{setting()->copyright_msg ?? 'Copyright © 2025 Glamours World. All Rights Reserved.'}}</p>
                     </div>
-                    <div class="footer-right">
+                    <div class="footer-right d-none">
                         <span class="payment-label mr-lg-8">We're using safe payment for</span>
                         <figure class="payment">
                             <img src="front/assets/images/payment.png" alt="payment" width="159" height="25" />
@@ -910,7 +916,8 @@
     <!-- End of Quick view -->
 
     <!-- Plugin JS File -->
-    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{{asset('front/assets/vendor/jquery/jquery.min.js')}}"></script>
+{{--    <script data-cfasync="false" src="{{asset('../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')}}"></script>--}}
+    <script src="{{asset('front/assets/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/jquery.plugin/jquery.plugin.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/zoom/jquery.zoom.js')}}"></script>
@@ -1065,6 +1072,13 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        // Set the cookie to true immediately when page loads
+        Wolmart.setCookie("hideNewsletterPopup", true, 7);
+    });
+</script>
+
 
 
 

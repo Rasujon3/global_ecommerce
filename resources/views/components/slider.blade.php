@@ -21,7 +21,7 @@
                                         data-bottom-top="transform: translateY(10vh);"
                                         data-top-bottom="transform: translateY(-10vh);" width="474" height="397">
                                 </figure>
-                                <div class="banner-content y-50 text-right">
+                                <div class="banner-content y-50 text-center">
                                     <h5 class="banner-subtitle font-weight-normal text-default ls-50 lh-1 mb-2 slide-animate"
                                         data-animation-options="{
                                     'name': 'fadeInRightShorter',
@@ -47,12 +47,16 @@
                                     </p>
 
                                     <a href="{{url('/product-lists?category_id='.$slider->category_id)}}"
-                                        class="btn btn-dark btn-outline btn-rounded btn-icon-right slide-animate"
+                                        class="btn btn-primary btn-primary-outline btn-rounded btn-icon-right slide-animate"
                                         data-animation-options="{
-                                    'name': 'fadeInRightShorter',
-                                    'duration': '1s',
-                                    'delay': '.8s'
-                                }">SHOP NOW<i class="w-icon-long-arrow-right"></i></a>
+                                            'name': 'fadeInRightShorter',
+                                            'duration': '1s',
+                                            'delay': '.8s'
+                                        }"
+                                    >
+                                        SHOP NOW
+                                        <i class="w-icon-long-arrow-right"></i>
+                                    </a>
 
                                 </div>
                                 <!-- End of .banner-content -->

@@ -51,6 +51,14 @@ class SettingController extends Controller
 
                 'bkash_no'    => $data ? $data->bkash_no : null,
                 'account_type'    => $data ? $data->account_type : null,
+
+                'welcome_msg'  => $data ? $data->welcome_msg : null,
+                'shop_name'    => $data ? $data->shop_name : null,
+                'copyright_msg'    => $data ? $data->copyright_msg : null,
+                'footer_title'    => $data ? $data->footer_title : null,
+                'footer_description'    => $data ? $data->footer_description : null,
+
+                'meta_pixel_script'    => $data ? $data->meta_pixel_script : null,
             ];
 
             // Handle file upload
@@ -98,6 +106,14 @@ class SettingController extends Controller
 
                         'bkash_no'   => $request->bkash_no ?? $defaults['bkash_no'],
                         'account_type'   => $request->account_type ?? $defaults['account_type'],
+
+                        'welcome_msg'     => $request->welcome_msg ?? $defaults['welcome_msg'],
+                        'shop_name'   => $request->shop_name ?? $defaults['shop_name'],
+                        'copyright_msg'   => $request->copyright_msg ?? $defaults['copyright_msg'],
+                        'footer_title'   => $request->footer_title ?? $defaults['footer_title'],
+                        'footer_description'   => $request->footer_description ?? $defaults['footer_description'],
+
+                        'meta_pixel_script'   => $request->meta_pixel_script ?? $defaults['meta_pixel_script'],
                     ]
                 );
             } else {
@@ -126,6 +142,14 @@ class SettingController extends Controller
 
                         'bkash_no'   => $request->bkash_no ?? $defaults['bkash_no'],
                         'account_type'   => $request->account_type ?? $defaults['account_type'],
+
+                        'welcome_msg'     => $request->welcome_msg ?? $defaults['welcome_msg'],
+                        'shop_name'   => $request->shop_name ?? $defaults['shop_name'],
+                        'copyright_msg'   => $request->copyright_msg ?? $defaults['copyright_msg'],
+                        'footer_title'   => $request->footer_title ?? $defaults['footer_title'],
+                        'footer_description'   => $request->footer_description ?? $defaults['footer_description'],
+
+                        'meta_pixel_script'   => $request->meta_pixel_script ?? $defaults['meta_pixel_script'],
                     ]
                 );
             }

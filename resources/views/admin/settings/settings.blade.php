@@ -11,8 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{URL::to('/dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{URL::to('/settings')}}">Settings
-                                </a></li>
+                        <li class="breadcrumb-item"><a href="{{URL::to('/settings')}}">Settings</a></li>
                         <li class="breadcrumb-item active">Settings</li>
                     </ol>
                 </div><!-- /.col -->
@@ -31,6 +30,44 @@
             <form action="{{url('settings-app')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="shop_name">Shop Name <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="shop_name"
+                                    class="form-control"
+                                    id="shop_name"
+                                    required
+                                    placeholder="Shop Name"
+                                    value="{{old('shop_name', ($setting && $setting->shop_name) ? $setting->shop_name : "")}}"
+                                >
+                                @error('shop_name')
+                                    <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="welcome_msg">Welcome Message <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="welcome_msg"
+                                    class="form-control"
+                                    id="welcome_msg"
+                                    placeholder="Welcome Message"
+                                    required
+                                    value="{{old('welcome_msg', $setting ? $setting->welcome_msg : "")}}"
+                                >
+                                @error('welcome_msg')
+                                    <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -226,6 +263,93 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="copyright_msg">Copyright Message <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="copyright_msg"
+                                    class="form-control"
+                                    id="copyright_msg"
+                                    required
+                                    placeholder="Copyright Message"
+                                    value="{{old('copyright_msg', ($setting && $setting->copyright_msg) ? $setting->copyright_msg : "")}}"
+                                >
+                                @error('copyright_msg')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="footer_title">Footer Title <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="footer_title"
+                                    class="form-control"
+                                    id="footer_title"
+                                    placeholder="Footer Title"
+                                    required
+                                    value="{{old('footer_title', $setting ? $setting->footer_title : "")}}"
+                                >
+                                @error('footer_title')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="footer_description">Footer Description <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="footer_description"
+                                    class="form-control"
+                                    id="footer_description"
+                                    placeholder="Footer Description"
+                                    required
+                                    value="{{old('footer_description', $setting ? $setting->footer_description : "")}}"
+                                >
+                                @error('footer_description')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="meta_pixel_script">Meta Pixel ID</label>
+                                <input
+                                    type="text"
+                                    name="meta_pixel_script"
+                                    class="form-control"
+                                    id="meta_pixel_script"
+                                    placeholder="Meta Pixel ID"
+                                    required
+                                    value="{{old('meta_pixel_script', $setting ? $setting->meta_pixel_script : "")}}"
+                                >
+                                @error('meta_pixel_script')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+{{--                            <div class="form-group">--}}
+{{--                                <label for="meta_pixel_script">Meta Pixel Script</label>--}}
+{{--                                <textarea--}}
+{{--                                    id="meta_pixel_script"--}}
+{{--                                    name="meta_pixel_script"--}}
+{{--                                    class="form-control"--}}
+{{--                                    style="display:none;"--}}
+{{--                                >{!! old('meta_pixel_script', $settings->meta_pixel_script ?? '') !!}</textarea>--}}
+{{--                                <div id="code-editor" style="height: 300px; border: 1px solid #ddd;"></div>--}}
+{{--                            </div>--}}
+                        </div>
+                    </div>
+
                     <div class="form-group w-100">
                         <button type="submit" class="btn btn-success">Save Changes</button>
                     </div>
@@ -236,3 +360,20 @@
     </section>
 </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script>
+        var editor = ace.edit("code-editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/html");
+
+        // Load existing value
+        editor.setValue({!! json_encode(old('meta_pixel_script', $settings->meta_pixel_script ?? '')) !!});
+
+        // Update textarea on form submit
+        $('form').on('submit', function() {
+            $('#meta_pixel_script').val(editor.getValue());
+        });
+    </script>
+@endpush

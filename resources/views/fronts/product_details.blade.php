@@ -402,11 +402,17 @@
                                                                     <a class="star-5" href="#">5</a>
                                                                 </div>
                                                                 <input type="hidden" name="rating" id="rating-value" required>
+                                                                @error('rating')
+                                                                <span class="alert alert-danger">{{ $message }}</span>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="description">Your review</label>
                                                             <textarea id="description" name="description" cols="30" rows="6" class="form-control" required></textarea>
+                                                            @error('bkash_no')
+                                                            <span class="alert alert-danger">{{ $message }}</span>
+                                                            @enderror
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="image">Upload Image (optional)</label>

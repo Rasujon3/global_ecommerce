@@ -58,7 +58,7 @@
                       </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
-                      <a href="#account-downloads" class="link-to-tab">
+                      <a href="#account-orders" class="link-to-tab">
                         <div class="icon-box text-center">
                           <span class="icon-box-icon icon-download">
                             <i class="w-icon-download"></i>
@@ -71,7 +71,7 @@
                       </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
-                      <a href="#account-addresses" class="link-to-tab">
+                      <a href="#account-orders" class="link-to-tab">
                         <div class="icon-box text-center">
                           <span class="icon-box-icon icon-address">
                             <i class="w-icon-map-marker"></i>
