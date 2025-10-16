@@ -21,7 +21,7 @@ class Product extends Model
         'discount',
         'product_price',
         'stock_qty',
-        'description', 
+        'description',
     ];
 
 
@@ -49,7 +49,7 @@ class Product extends Model
     {
     	return $this->hasMany(Productvariant::class);
     }
-    
+
     public function carts()
     {
         return $this->hasMany(Cart::class);
@@ -68,6 +68,10 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }
 

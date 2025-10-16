@@ -1,5 +1,75 @@
 @extends('admin_master')
 @section('content')
+    <style>
+        #image-previews {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .preview-image {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .drop-container {
+            border: 2px solid #3498db;
+            background-color: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .upload-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: green;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button{
+            cursor: pointer;
+            background: red;
+            padding: 8px;
+            color: white;
+            border-radius: 5%;
+        }
+
+        .dislike{
+            color: red;
+        }
+
+        .like{
+            color: green;
+        }
+        .preview-image {
+            display: inline-block;
+            margin: 10px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        #file-input {
+            display: none; /* Hide the default file input */
+        }
+        .delete-button{
+            cursor: pointer;
+            background: red;
+            padding: 8px;
+            color: white;
+            border-radius: 5%;
+        }
+    </style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -64,7 +134,7 @@
                                 <span class="alert alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
@@ -155,14 +225,41 @@
                             </div>
                         </div>
 
+                        {{--
                         <div class="col-md-12">
                           <div class="form-group">
                             <label for="image">Image <span class="required">*</span></label>
-                            <input name="image" type="file" id="image" accept="image/*" class="dropify" data-height="200" data-default-file="{{ URL::to($product->image) }}"/> 
+                            <input name="image" type="file" id="image" accept="image/*" class="dropify" data-height="200" data-default-file="{{ URL::to($product->image) }}"/>
                             @error('image')
                             <span class="alert alert-danger">{{ $message }}</span>
                             @enderror
                           </div>
+                        </div>
+                        --}}
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Product Images</label>
+                                <div class="drop-container">
+                                    <label for="file-input" class="upload-button">Upload Product Images</label>
+                                    <div class="preview-images" id="preview-container">
+                                        @if(count($product->images) > 0)
+                                            @foreach($product->images as $image)
+                                                <div class="preview-image" id="row_{{$image->id}}">
+                                                    <img src="{{URL::to($image->image)}}" alt="Product Image">
+                                                    <span
+                                                        class="btn btn-danger btn-sm delete-button delete-gallery-image my-2"
+                                                        data-id="{{$image->id}}"
+                                                    >
+                                                    Delete
+                                                </span>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <input type="file" name="images[]" id="file-input" multiple>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-md-12">
@@ -175,7 +272,7 @@
                           </div>
                         </div>
 
-                        
+
                         <div class="form-group w-100 px-2">
                             <button type="submit" class="btn btn-success">Save Changes</button>
                         </div>
@@ -188,6 +285,7 @@
 </div>
 @endsection
 @push('scripts')
+    <script src="{{asset('custom/multiple_files.js')}}"></script>
  <script>
  	$(document).ready(function(){
  		$(document).on('change', '#category_id', function(){
@@ -208,9 +306,41 @@
                 		});
                 	}
                 },
-                            
-            }); 
+
+            });
  		});
  	});
  </script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.delete-gallery-image', function(e) {
+                e.preventDefault();
+                let button = $(this);
+                let imageId = button.data('id');
+
+                if(!confirm('Are you sure you want to delete this image?')) return;
+
+                $.ajax({
+                    url: '{{ route("product.image.delete", ":id") }}'.replace(':id', imageId),
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            $('#row_' + imageId).fadeOut(300, function() {
+                                $(this).remove();
+                            });
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                        alert('Something went wrong while deleting.');
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

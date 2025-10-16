@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Subcategory;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use DataTables;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -103,23 +106,17 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreProductRequest $request)
     {
         try
         {
-            if($request->file('image')){
-                $file = $request->file('image');
-                $name = time() . auth()->user()->id . $file->getClientOriginalName();
-                $file->move(public_path() . '/uploads/products/', $name);
-                $path = 'uploads/products/' . $name;
-            }
-            Product::create([
+//            if($request->file('image')){
+//                $file = $request->file('image');
+//                $name = time() . auth()->user()->id . $file->getClientOriginalName();
+//                $file->move(public_path() . '/uploads/products/', $name);
+//                $path = 'uploads/products/' . $name;
+//            }
+            $product = Product::create([
                 'user_id' => user()->id,
                 'unit_id' => $request->unit_id,
                 'category_id' => $request->category_id,
@@ -129,20 +126,48 @@ class ProductController extends Controller
                 'product_price' => $request->product_price,
                 'discount' => $request->discount,
                 'status' => $request->status,
-                'image' => $path,
+                # 'image' => $path,
                 'description' => $request->description,
                 'stock_qty' => $request->stock_qty,
             ]);
+
+            if($request->hasFile('images') && count($request->file('images')) > 0) {
+                foreach ($request->file('images') as $image) {
+                    $file = $image;
+                    $name = time() . auth()->user()->id . $file->getClientOriginalName();
+                    $file->move(public_path() . '/uploads/products/', $name);
+                    $path = 'uploads/products/' . $name;
+
+                    $productImage = new ProductImage();
+                    $productImage->product_id = $product->id;
+                    $productImage->user_id = user()->id;
+                    $productImage->image = $path;
+                    $productImage->save();
+                }
+            }
 
             $notification=array(
                 'messege'=>"Successfully a product has been added",
                 'alert-type'=>"success",
             );
 
-            return redirect()->back()->with($notification);
+            return redirect()->route('products.index')->with($notification);
 
-        }catch(Exception $e){
-            return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
+        } catch(Exception $e) {
+
+            Log::error('Error in store:', [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'line'    => $e->getLine(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            $notification=array(
+                'messege'=>"Something went wrong!",
+                'alert-type'=>"error",
+            );
+
+            return redirect()->route('products.index')->with($notification);
         }
     }
 
@@ -169,26 +194,20 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(UpdateProductRequest $request, Product $product)
     {
         try
         {
-            if($request->file('image')){
-                $file = $request->file('image');
-                $name = time() . auth()->user()->id . $file->getClientOriginalName();
-                $file->move(public_path() . '/uploads/products/', $name);
-                unlink(public_path($product->image));
-                $path = 'uploads/products/' . $name;
-            }else{
-                $path = $product->image;
-            }
+//            if($request->file('image')){
+//                $file = $request->file('image');
+//                $name = time() . auth()->user()->id . $file->getClientOriginalName();
+//                $file->move(public_path() . '/uploads/products/', $name);
+//                unlink(public_path($product->image));
+//                $path = 'uploads/products/' . $name;
+//            }else{
+//                $path = $product->image;
+//            }
 
             $product->unit_id = $request->unit_id;
             $product->category_id = $request->category_id;
@@ -197,10 +216,26 @@ class ProductController extends Controller
             $product->product_name = $request->product_name;
             $product->discount = $request->discount;
             $product->status = $request->status;
-            $product->image = $path;
+            # $product->image = $path;
             $product->description = $request->description;
             $product->stock_qty = $request->stock_qty;
             $product->update();
+
+            if($request->hasFile('images') && count($request->file('images')) > 0) {
+                $product->images()->delete();
+                foreach ($request->file('images') as $image) {
+                    $file = $image;
+                    $name = time() . auth()->user()->id . $file->getClientOriginalName();
+                    $file->move(public_path() . '/uploads/products/', $name);
+                    $path = 'uploads/products/' . $name;
+
+                    $productImage = new ProductImage();
+                    $productImage->product_id = $product->id;
+                    $productImage->user_id = user()->id;
+                    $productImage->image = $path;
+                    $productImage->save();
+                }
+            }
 
             $notification=array(
                 'messege'=>"Successfully the product has been updated",
@@ -210,7 +245,19 @@ class ProductController extends Controller
             return redirect('/products')->with($notification);
 
         }catch(Exception $e){
-            return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
+            Log::error('Error in update:', [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'line'    => $e->getLine(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            $notification=array(
+                'messege'=>"Something went wrong!",
+                'alert-type'=>"error",
+            );
+
+            return redirect()->route('products.index')->with($notification);
         }
     }
 
@@ -224,11 +271,12 @@ class ProductController extends Controller
     {
         try
         {
-            unlink(public_path($product->image));
+//            unlink(public_path($product->image));
 
             $product->carts()->delete();
             $product->whishlist()->delete();
             $product->orders()->delete();
+            $product->images()->delete();
             $product->delete();
 
             return response()->json(['status'=>true, 'message'=>"Successfully the product has been deleted"]);
@@ -236,4 +284,23 @@ class ProductController extends Controller
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
         }
     }
+    public function deleteImage($id)
+    {
+        try {
+            $image = ProductImage::findOrFail($id);
+
+            // Delete the image file from storage
+            if (file_exists(public_path($image->image))) {
+                unlink(public_path($image->image));
+            }
+
+            // Delete DB record
+            $image->delete();
+
+            return response()->json(['status' => true, 'message' => 'Image deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
 }

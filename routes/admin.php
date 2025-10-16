@@ -47,7 +47,8 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 	Route::resource('variants', VariantController::class);
 	//products
 	Route::resource('products', ProductController::class);
-	Route::get('/add-product-variant/{id}', [AjaxController::class, 'addProductVariant']);
+    Route::delete('/product-image/{id}', [ProductController::class, 'deleteImage'])->name('product.image.delete');
+    Route::get('/add-product-variant/{id}', [AjaxController::class, 'addProductVariant']);
 	Route::post('save-product-variant', [AjaxController::class, 'saveProductVariant']);
 
 	//sliders
