@@ -13,6 +13,7 @@
             <button class="btn btn-search" type="submit">
                 <i class="w-icon-search"></i>
             </button>
+            <div id="mobileSearchSuggestions" class="suggestion-box"></div>
         </form>
         <!-- End of Search Form -->
         <div class="tab">

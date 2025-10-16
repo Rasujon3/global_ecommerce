@@ -62,6 +62,33 @@
         .login.sign-in:hover, .login.register:hover, .my-account:hover, .user-logout:hover {
             color: #fff !important;
         }
+        .suggestion-box {
+            position: absolute;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            width: 100%;
+            z-index: 9999;
+            display: none;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .suggestion-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .suggestion-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+        .suggestion-item:hover {
+            background: #f4f4f4;
+        }
     </style>
 
     <!-- Meta Pixel Code -->
@@ -171,6 +198,7 @@
                             </button>
                         </form>
                     </div>
+                    <div id="searchSuggestions" class="suggestion-box"></div>
                     <div class="header-right ml-4">
                         <div class="header-call d-xs-show d-lg-flex align-items-center">
                             <a href="tel:#{{ setting()->phone ?? '' }}" class="w-icon-call"></a>
@@ -1078,6 +1106,54 @@
         Wolmart.setCookie("hideNewsletterPopup", true, 7);
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        function setupSearch(inputSelector, suggestionBoxSelector) {
+            const input = document.querySelector(inputSelector);
+            const suggestionBox = document.querySelector(suggestionBoxSelector);
+
+            if (!input || !suggestionBox) return;
+
+            input.addEventListener('keyup', function() {
+                const query = this.value.trim();
+                if (query.length < 2) {
+                    suggestionBox.style.display = 'none';
+                    return;
+                }
+
+                fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.length === 0) {
+                            suggestionBox.innerHTML = '<div class="suggestion-item">No products found</div>';
+                        } else {
+                            suggestionBox.innerHTML = data.map(item => `
+                            <div class="suggestion-item" onclick="window.location.href='{{ url('/product-details') }}/${item.id}'">
+                                <span>${item.product_name}</span>
+                            </div>
+                        `).join('');
+                        }
+                        suggestionBox.style.display = 'block';
+                    })
+                    .catch(err => console.error('Error:', err));
+            });
+
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!suggestionBox.contains(e.target) && !input.contains(e.target)) {
+                    suggestionBox.style.display = 'none';
+                }
+            });
+        }
+
+        // Desktop search
+        setupSearch('#search-product', '#searchSuggestions');
+        // Mobile search
+        setupSearch('.mobile-menu-container input[name="search_product"]', '#mobileSearchSuggestions');
+    });
+</script>
+
 
 
 

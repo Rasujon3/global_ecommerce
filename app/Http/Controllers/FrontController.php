@@ -184,4 +184,20 @@ class FrontController extends Controller
             return redirect()->route('home')->with($notification);
         }
     }
+    public function searchSuggestions(Request $request)
+    {
+        $keyword = $request->get('q', '');
+
+        if (!$keyword) {
+            return response()->json([]);
+        }
+
+        $products = Product::where('product_name', 'LIKE', "%{$keyword}%")
+            ->select('id', 'product_name')
+            ->take(8)
+            ->get();
+
+        return response()->json($products);
+    }
+
 }
