@@ -36,6 +36,7 @@ class FrontController extends Controller
     public function productDetails($id)
     {
     	$product = Product::with([
+		    'images',
 		    'category',
 		    'brand',
 		    'productvariants' => function ($query) {
@@ -54,7 +55,11 @@ class FrontController extends Controller
 	    ->where('status', 'Active')
 	    ->get();
 
-	    $relatedProducts = Product::where('category_id',$product->category->id)->where('status','Active')->latest()->get();
+	    $relatedProducts = Product::with('images')
+            ->where('category_id',$product->category->id)
+            ->where('status','Active')
+            ->latest()
+            ->get();
 
     	return view('fronts.product_details', compact('product', 'variants','relatedProducts'));
     }

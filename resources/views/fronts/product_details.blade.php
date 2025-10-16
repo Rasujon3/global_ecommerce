@@ -48,25 +48,30 @@
                                             }
                                         }">
                                             <div class="swiper-wrapper row cols-1 gutter-no">
-                                                <div class="swiper-slide">
-                                                    <figure class="product-image" id="product_image">
-                                                        <img src="{{URL::to($product->image)}}"
-                                                            data-zoom-image="{{URL::to($product->image)}}"
-                                                            alt="Electronics Black Wrist Watch" width="800" height="900">
-                                                    </figure>
-                                                </div>
-                                               @if(count($product->productvariants) > 0)
-                                                @foreach($product->productvariants as $variant)
-                                                <div class="swiper-slide">
-                                                    <figure class="product-image">
-                                                        <img src="{{URL::to($variant->image)}}"
-                                                            data-zoom-image="{{URL::to($variant->image)}}"
-                                                            alt="Electronics Black Wrist Watch" width="488" height="549">
-                                                    </figure>
-                                                </div>
-                                               @endforeach
-                                              @endif
-
+                                                @if($product->images && count($product->images) > 0)
+                                                    @foreach($product->images as $image)
+                                                        <div class="swiper-slide">
+                                                            <figure class="product-image">
+                                                                <img src="{{ URL::to($image->image) }}" data-zoom-image="{{ URL::to($image->image) }}" alt="{{ $product->product_name }}" width="800" height="900">
+                                                            </figure>
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="swiper-slide">
+                                                        <figure class="product-image">
+                                                            <img src="{{ URL::to(setting()->no_img) }}" alt="Default Product Image" width="800" height="900">
+                                                        </figure>
+                                                    </div>
+                                                @endif
+                                                @if(count($product->productvariants) > 0)
+                                                    @foreach($product->productvariants as $variant)
+                                                        <div class="swiper-slide">
+                                                            <figure class="product-image">
+                                                                <img src="{{URL::to($variant->image)}}" data-zoom-image="{{URL::to($variant->image)}}" alt="Electronics Black Wrist Watch" width="488" height="549">
+                                                            </figure>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                             <button class="swiper-button-next"></button>
                                             <button class="swiper-button-prev"></button>
@@ -78,21 +83,25 @@
                                                 'prevEl': '.swiper-button-prev'
                                             }
                                         }">
-
                                             <div class="product-thumbs swiper-wrapper row cols-4 gutter-sm">
-                                              <div class="product-thumb swiper-slide">
-                                                    <img src="{{URL::to($product->image)}}"
-                                                        alt="Product Thumb" width="800" height="900">
-                                                </div>
-                                              @if(count($product->productvariants) > 0)
-                                               @foreach($product->productvariants as $variant)
-                                                <div class="product-thumb swiper-slide">
-                                                    <img src="{{URL::to($variant->image)}}"
-                                                        alt="Product Thumb" width="800" height="900">
-                                                </div>
-                                               @endforeach
-                                              @endif
-
+                                                @if($product->images && count($product->images) > 0)
+                                                    @foreach($product->images as $image)
+                                                        <div class="product-thumb swiper-slide">
+                                                            <img src="{{ URL::to($image->image) }}" alt="{{ $product->product_name }}" width="800" height="900">
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="product-thumb swiper-slide">
+                                                        <img src="{{ URL::to($product->image) }}" alt="Default Product Image" width="800" height="900">
+                                                    </div>
+                                                @endif
+                                                @if(count($product->productvariants) > 0)
+                                                    @foreach($product->productvariants as $variant)
+                                                        <div class="product-thumb swiper-slide">
+                                                            <img src="{{URL::to($variant->image)}}" alt="Product Thumb" width="800" height="900">
+                                                        </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                             <button class="swiper-button-next"></button>
                                             <button class="swiper-button-prev"></button>
@@ -517,24 +526,35 @@
                                     <div class="swiper-wrapper row cols-lg-3 cols-md-4 cols-sm-3 cols-2">
                                      @foreach($relatedProducts as $product)
                                         <div class="swiper-slide product">
-                                            <figure class="product-media">
-                                                <a href="{{url('/product-details/'.$product->id)}}">
-                                                    <img src="{{URL::to($product->image)}}" alt="Product"
-                                                        width="300" height="338" />
-                                                </a>
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-cart w-icon-cart add-to-cart"
-                                                title="Add to cart" data-id="{{$product->id}}"></a>
-                                                    <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
-                                                        title="Add to wishlist"></a>
-                                                    <a href="#" class="btn-product-icon btn-compare w-icon-compare d-none"
-                                                        title="Add to Compare"></a>
+                                            @if($product->images && count($product->images) > 0)
+                                                @foreach($product->images as $image)
+                                                    <figure class="product-media">
+                                                        <a href="{{url('/product-details/'.$product->id)}}">
+                                                            <img src="{{URL::to($product->image)}}" alt="Product"
+                                                                 width="300" height="338" />
+                                                        </a>
+                                                        <div class="product-action-vertical">
+                                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart add-to-cart"
+                                                               title="Add to cart" data-id="{{$product->id}}"></a>
+                                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                                               title="Add to wishlist"></a>
+                                                            <a href="#" class="btn-product-icon btn-compare w-icon-compare d-none"
+                                                               title="Add to Compare"></a>
+                                                        </div>
+                                                        <div class="product-action d-none">
+                                                            <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
+                                                                View</a>
+                                                        </div>
+                                                    </figure>
+                                                @endforeach
+                                            @else
+                                                <div class="swiper-slide">
+                                                    <figure class="product-image">
+                                                        <img src="{{ URL::to(setting()->no_img) }}" alt="Default Product Image" width="800" height="900">
+                                                    </figure>
                                                 </div>
-                                                <div class="product-action d-none">
-                                                    <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
-                                                        View</a>
-                                                </div>
-                                            </figure>
+                                            @endif
+
                                             <div class="product-details">
                                                 <h4 class="product-name"><a href="{{url('/product-details/'.$product->id)}}">{{$product->product_name}}</a></h4>
                                                 <div class="ratings-container d-none">
@@ -793,11 +813,18 @@
                 dataType:"json",
                 success:function(data) {
                 	if(data.status == true){
-                		$('#product_image').html(`
-                    	<img src=${base_url}/${data.variant.image}
-                            data-zoom-image=${base_url}/${data.variant.image}
-                            alt=${data.variant.variant_value} height="900">
-                        `);
+                        var newImage = base_url + '/' + data.variant.image;
+                        var $productImage = $('.product-single-swiper .swiper-slide:first-child .product-image img');
+                        $productImage.attr('src', newImage);
+                        $productImage.attr('data-zoom-image', newImage);
+
+                        // Update swiper
+                        if (Wolmart.slider) {
+                            var $slider = $('.product-single-swiper');
+                            if ($slider.data('slider')) {
+                                $slider.data('slider').update();
+                            }
+                        }
                 	}
 
                     productvariant_ids.push(variant_id);
