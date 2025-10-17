@@ -39,7 +39,7 @@
                                                 <a href="{{url('/product-details/'.$cart->product->id)}}">
                                                     <figure>
                                                        @if($cart->productvariant == null)
-                                                        <img src="{{URL::to($cart->product->image)}}" alt="product"
+                                                        <img src="{{URL::to($cart->product->images[0]->image)}}" alt="product"
                                                             width="300" height="338">
                                                        @else
                                                         <img src="{{URL::to($cart->productvariant->image)}}" alt="product"

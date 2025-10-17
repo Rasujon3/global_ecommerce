@@ -5,10 +5,10 @@
             <!-- Start of Breadcrumb -->
             <nav class="breadcrumb-nav container">
                 <ul class="breadcrumb bb-no">
-                    <li><a href="demo1.html">Home</a></li>
+                    <li><a href="{{ route('home') }}">Home</a></li>
                     <li>Products</li>
                 </ul>
-                <ul class="product-nav list-style-none">
+                <ul class="product-nav list-style-none d-none">
                     <li class="product-nav-prev">
                         <a href="#">
                             <i class="w-icon-angle-left"></i>
@@ -145,7 +145,7 @@
                                                 <span class="ratings" style="width: 80%;"></span>
                                                 <span class="tooltiptext tooltip-top"></span>
                                             </div>
-                                            <a href="#product-tab-reviews" class="rating-reviews scroll-to">(3
+                                            <a href="#" class="rating-reviews scroll-to">(3
                                                 Reviews)</a>
                                         </div>
 
@@ -640,7 +640,7 @@
                                     </div>
                                     <!-- End of Widget Icon Box -->
 
-                                    <div class="widget widget-banner mb-9">
+                                    <div class="widget widget-banner mb-9 d-none">
                                         <div class="banner banner-fixed br-sm">
                                             <figure>
                                                 <img src="{{asset('front/assets')}}/images/shop/banner3.jpg" alt="Banner" width="266"

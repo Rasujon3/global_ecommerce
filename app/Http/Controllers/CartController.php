@@ -7,14 +7,14 @@ use App\Models\Cart;
 use Session;
 
 class CartController extends Controller
-{   
+{
     public function carts()
-    {    
-        $carts = Cart::with('product','productvariant')->where('cart_session_id',Session::get('cart_session_id'))->latest()->get();
+    {
+        $carts = Cart::with('product','productvariant', 'product.images')->where('cart_session_id',Session::get('cart_session_id'))->latest()->get();
         $sum = Cart::where('cart_session_id',Session::get('cart_session_id'))->sum('unit_total');
         return view('fronts.carts', compact('carts','sum'));
     }
-    
+
 
     public function cartUpdate(Request $request)
     {
@@ -38,7 +38,7 @@ class CartController extends Controller
 
                     $cart->cart_qty = $qtyInput;
                     $cart->unit_total = number_format($unitTotal, 2, '.', '');
-                    $cart->save(); 
+                    $cart->save();
                 }
             }
 

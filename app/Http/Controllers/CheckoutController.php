@@ -16,6 +16,14 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
+        $cart = Cart::where('cart_session_id',Session::get('cart_session_id'))->exists();
+        if (!$cart) {
+            $notification=array(
+                'messege' => "Add product on cart.",
+                'alert-type' => "error",
+            );
+            return redirect()->route('home')->with($notification);
+        }
     	if(auth()->check()){
     		$carts = Cart::with('product')->where('cart_session_id',Session::get('cart_session_id'))->get();
 	    	$sum = Cart::where('cart_session_id',Session::get('cart_session_id'))->sum('unit_total');

@@ -1,7 +1,7 @@
 <div class="container">
-    @include('fronts.components.featuredCategories')
+{{--    @include('fronts.components.featuredCategories')--}}
 
-    @include('fronts.components.cosmetic')
+{{--    @include('fronts.components.cosmetic')--}}
 
     @include('fronts.components.homeCategories')
 

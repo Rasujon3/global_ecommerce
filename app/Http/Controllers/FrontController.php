@@ -89,14 +89,13 @@ class FrontController extends Controller
 	        });
 	    }
 
-	    $products = $query->with('category')->latest()->paginate(4);
+	    $products = $query->with('category', 'images')->latest()->paginate(4);
 
 	    $products->appends($request->query());
 
 	    $products->appends($request->only(['category_id', 'brand_id', 'product_id', 'search_product']));
 
 	    return view('fronts.product_page', compact('products'));
-    	//return view('fronts.product_page', compact('products'));
     }
     public function contact()
     {
