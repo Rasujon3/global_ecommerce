@@ -91,21 +91,32 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $featuredCategories = Category::whereHas('products')
-	                   ->with(['products'=>function($query){
-	                   	    $query->where('status','Active');
-	                   }])
-	                   ->where('status','Active')
-	                   ->where('is_featured',1)
-	                   ->get();
+                ->with([
+                    'products' => function($query) {
+                        $query->where('status', 'Active');
+                    },
+                    'products.images' => function($query) {
+                        $query->where('image', '!=', null);
+                    }
+                ])
+                ->where('status', 'Active')
+                ->where('is_featured', 1)
+                ->get();
+
             $view->with('featuredCategories', $featuredCategories);
         });
 
 
         View::composer('*', function ($view) {
             $homeCategories = Category::whereHas('products')
-	                   ->with(['products'=>function($query){
+	                   ->with([
+                           'products'=>function($query){
 	                   	    $query->where('status','Active');
-	                   }])
+	                   },
+                           'products.images' => function($query) {
+                               $query->where('image', '!=', null);
+                           }
+                       ])
 	                   ->where('status','Active')
 	                   ->where('is_featured',1)
 	                   ->get();
