@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Banner;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Cart;
 use App\Models\Whishlist;
@@ -109,6 +110,12 @@ class AppServiceProvider extends ServiceProvider
 	                   ->where('is_featured',1)
 	                   ->get();
             $view->with('homeCategories', $homeCategories);
+        });
+
+
+        View::composer('*', function ($view) {
+            $banners = Banner::get();
+            $view->with('banners', $banners);
         });
 
 

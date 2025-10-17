@@ -227,6 +227,31 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            Banners
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('banners.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Banner One</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('brands.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Banner Two</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Delivery

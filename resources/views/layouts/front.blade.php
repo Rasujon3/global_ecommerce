@@ -58,40 +58,21 @@
                 <!-- End of Iocn Box Wrapper -->
 
                 <div class="row category-banner-wrapper appear-animate pt-6 pb-8">
+                    @foreach($banners as $banner)
                     <div class="col-md-6 mb-4">
                         <div class="banner banner-fixed br-xs">
                             <figure>
-                                <img src="front/assets/images/demos/demo1/categories/1-1.jpg" alt="Category Banner"
+                                <img src="{{ $banner->image ?? '' }}" alt="Category Banner"
                                     width="610" height="160" style="background-color: #ecedec;" />
                             </figure>
                             <div class="banner-content y-50 mt-0">
-                                <h5 class="banner-subtitle font-weight-normal text-dark">Get up to <span
-                                        class="text-secondary font-weight-bolder text-uppercase ls-25">20% Off</span>
-                                </h5>
-                                <h3 class="banner-title text-uppercase">Sports Outfits<br><span
-                                        class="font-weight-normal                       text-capitalize">Collection</span>
-                                </h3>
-                                <div class="banner-price-info font-weight-normal">Starting at <span
-                                        class="text-secondary                       font-weight-bolder">$170.00</span>
-                                </div>
+                                {!! $banner->title ?? '' !!}
+                                {!! $banner->description ?? '' !!}
+                                {!! $banner->price ?? '' !!}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="banner banner-fixed br-xs">
-                            <figure>
-                                <img src="front/assets/images/demos/demo1/categories/1-2.jpg" alt="Category Banner"
-                                    width="610" height="160" style="background-color: #636363;" />
-                            </figure>
-                            <div class="banner-content y-50 mt-0">
-                                <h5 class="banner-subtitle font-weight-normal text-capitalize">New Arrivals</h5>
-                                <h3 class="banner-title text-white text-uppercase">Accessories<br><span
-                                        class="font-weight-normal text-capitalize">Collection</span></h3>
-                                <div class="banner-price-info text-white font-weight-normal text-capitalize">Only From
-                                    <span class="text-secondary font-weight-bolder">$90.00</span></div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <!-- End of Category Banner Wrapper -->
 
@@ -737,7 +718,7 @@
             <div class="container">
                 <h2 class="title justify-content-center ls-normal mb-4 mt-10 pt-1 appear-animate">Featured Products
                 </h2>
-                
+
                 <div class="tab tab-nav-boxed tab-nav-outline appear-animate">
                     <ul class="nav nav-tabs justify-content-center" role="tablist">
                       @foreach($featuredCategories as $key=>$category)
@@ -761,7 +742,7 @@
 
                     </ul>
                 </div>
-                
+
                 <!-- End of Tab -->
                 <div class="tab-content product-wrapper appear-animate">
                    @foreach($featuredCategories as $key=>$category)
@@ -1218,7 +1199,7 @@
                     </div>
                     <div class="row">
                         {{-- <div class="col-lg-3 col-sm-4 mb-4 d-none">
-                            <div class="banner h-100 br-sm" style="background-image: url(front/assets/images/demos/demo1/banners/2.jpg); 
+                            <div class="banner h-100 br-sm" style="background-image: url(front/assets/images/demos/demo1/banners/2.jpg);
                                 background-color: #ebeced;">
                                 <div class="banner-content content-top">
                                     <h5 class="banner-subtitle font-weight-normal mb-2">Weekend Sale</h5>
@@ -1304,7 +1285,7 @@
                     }
                 }">
                     <div class="swiper-wrapper row cols-xl-8 cols-lg-6 cols-md-4 cols-2">
-                      @foreach($menuBrands as $brand) 
+                      @foreach($menuBrands as $brand)
                         <div class="swiper-slide product-wrap mb-0">
                             <div class="product text-center product-absolute">
                                 <figure class="product-media">
@@ -1356,7 +1337,7 @@
                         toastr.success(data.message);
                     }
             },
-                                
+
          });
       });
 
@@ -1384,10 +1365,10 @@
                         toastr.success(data.message);
                     }
             },
-                                
+
          });
       });
 
-   });  
+   });
  </script>
 @endpush

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -81,4 +82,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     // about-us
     Route::get('about-us', [SettingController::class, 'aboutUs'])->name('about-us');
     Route::post('about-us', [SettingController::class, 'storeAboutUs'])->name('store-about-us');
+
+    //banner
+    Route::resource('banners', BannerController::class);
 });
