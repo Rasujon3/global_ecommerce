@@ -19,7 +19,7 @@
                 <div class="container">
                     <div class="row gutter-lg mb-10">
                         <div class="col-lg-8 pr-lg-4 mb-6">
-                         <form action="{{url('/cart-update')}}" method="POST">
+                         <form id="cartUpdateForm" action="{{url('/cart-update')}}" method="POST">
                             @csrf
                             <table class="shop-table cart-table">
                                 <thead>
@@ -230,6 +230,9 @@
 
         $('#unit_total_'+cart_id).text(totalSum.toFixed(2));
         cartCal();
+
+          // ✅ submit form after calculation
+          $('#cartUpdateForm').submit();
       });
 
       $(document).on('input', '.cart_input', function(){
@@ -243,6 +246,8 @@
 
             $('#unit_total_'+cart_id).text(totalSum.toFixed(2));
             cartCal();
+              // ✅ submit form after calculation
+              $('#cartUpdateForm').submit();
           }
       });
 
@@ -261,6 +266,8 @@
 
         $('#unit_total_'+cart_id).text(totalSum.toFixed(2));
         cartCal();
+          // ✅ submit form after calculation
+          $('#cartUpdateForm').submit();
       });
 
       $(document).on('click', '.remove-cart', function(e){

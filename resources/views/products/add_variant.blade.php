@@ -56,8 +56,8 @@
                                                                    name="variant_values[{{ $variant->id }}][]"
                                                                    placeholder="Value"></td>
                                                         {{-- <td><input type="text" class="form-control"
-                                                                   name="variant_prices[{{ $variant->id }}][]" --}}
-                                                                   placeholder="Price"></td>
+                                                                   name="variant_prices[{{ $variant->id }}][]"
+                                                                   placeholder="Price"></td> --}}
                                                         <td><input type="text" class="form-control"
                                                                    name="stock_qtys[{{ $variant->id }}][]"
                                                                    placeholder="Stock Qty"></td>
@@ -151,7 +151,7 @@ $(document).ready(function(){
                         $('#variant_id_'+variant_id).remove();
 
                 },
-                            
+
           });
        }
     });

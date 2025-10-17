@@ -101,7 +101,7 @@
                                       <!-- Product Action Buttons (OUTSIDE Swiper) -->
                                       <div class="product-action-vertical">
                                           <a href="#"
-                                             class="btn-product-icon btn-cart add-to-cart"
+                                             class="btn-product-icon btn-cart add-cart"
                                              title="Add to cart"
                                              data-id="{{ $product->id }}">
                                               <i class="w-icon-cart"></i>
