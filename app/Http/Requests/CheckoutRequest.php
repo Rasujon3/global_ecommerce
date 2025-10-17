@@ -11,7 +11,7 @@ class CheckoutRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() 
+    public function authorize()
     {
         return true;
     }
@@ -29,8 +29,8 @@ class CheckoutRequest extends FormRequest
             'phone' => 'nullable|string|unique:users,phone,' . user()->id,
             'full_address' => 'required',
             'zip_code' => 'nullable|numeric',
-            'paymentmethod_id' => 'required|integer|exists:paymentmethods,id', 
-            'image' => 'nullable', 
+            'paymentmethod_id' => 'required|integer|exists:paymentmethods,id',
+            'image' => 'nullable',
         ];
     }
 
@@ -46,6 +46,10 @@ class CheckoutRequest extends FormRequest
 
             if (isset($data['paymentmethod_id']) && $data['paymentmethod_id'] == 2 && empty($data['image'])) {
                 $validator->errors()->add('image', 'Image is required when payment method is Bank Payment.');
+            }
+
+            if (isset($data['paymentmethod_id']) && $data['paymentmethod_id'] == 3 && empty($data['image'])) {
+                $validator->errors()->add('image', 'Image is required when payment method is bKash Payment.');
             }
         });
     }

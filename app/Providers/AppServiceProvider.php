@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Banner;
+use App\Models\Intro;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Cart;
 use App\Models\Whishlist;
@@ -127,6 +128,12 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $banners = Banner::get();
             $view->with('banners', $banners);
+        });
+
+
+        View::composer('*', function ($view) {
+            $intros = Intro::get();
+            $view->with('intros', $intros);
         });
 
 

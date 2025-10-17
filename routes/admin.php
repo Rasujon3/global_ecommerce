@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\IntroController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -85,4 +86,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
     //banner
     Route::resource('banners', BannerController::class);
+
+    //intro
+    Route::resource('intros', IntroController::class);
 });

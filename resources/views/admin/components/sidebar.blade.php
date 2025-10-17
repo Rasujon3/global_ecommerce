@@ -308,6 +308,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is('intros') ? 'menu-open' : '' }}">
+                    <a href="{{ route('intros.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>
+                            Intro
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item {{ Request::is('settings') ? 'menu-open' : '' }}">
                     <a href="{{ route('settings') }}" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
