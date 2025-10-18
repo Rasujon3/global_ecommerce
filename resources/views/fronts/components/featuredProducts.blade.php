@@ -1,10 +1,9 @@
 <div class="container">
-{{--    @include('fronts.components.featuredCategories')--}}
+    @include('fronts.components.featuredCategories')
 
-{{--    @include('fronts.components.cosmetic')--}}
+    @include('fronts.components.cosmetic')
 
     @include('fronts.components.homeCategories')
-
 
     <!-- End of Product Wrapper 1 -->
 

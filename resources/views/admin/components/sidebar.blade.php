@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="{{URL::to('/dashboard')}}" class="brand-link">
         <img src="{{asset('back/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">GlamoursWorld</span>
+        <span class="brand-text font-weight-light">{{ setting()->shop_name ?? 'Glamours World' }}</span>
     </a>
 
     <!-- Sidebar -->
@@ -241,7 +241,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('brands.index')}}" class="nav-link">
+                            <a href="{{route('cosmetics.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Banner Two</p>
                             </a>

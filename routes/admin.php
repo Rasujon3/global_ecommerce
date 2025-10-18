@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CosmeticController;
 use App\Http\Controllers\IntroController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
@@ -86,6 +87,9 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
     //banner
     Route::resource('banners', BannerController::class);
+
+    // Cosmetic
+    Route::resource('cosmetics', CosmeticController::class);
 
     //intro
     Route::resource('intros', IntroController::class);

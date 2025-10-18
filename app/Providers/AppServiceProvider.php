@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Banner;
+use App\Models\Cosmetic;
 use App\Models\Intro;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Cart;
@@ -124,12 +125,15 @@ class AppServiceProvider extends ServiceProvider
             $view->with('homeCategories', $homeCategories);
         });
 
-
         View::composer('*', function ($view) {
-            $banners = Banner::get();
+            $banners = Banner::latest()->get();
             $view->with('banners', $banners);
         });
 
+        View::composer('*', function ($view) {
+            $cosmetics = Cosmetic::latest()->get();
+            $view->with('cosmetics', $cosmetics);
+        });
 
         View::composer('*', function ($view) {
             $intros = Intro::get();
