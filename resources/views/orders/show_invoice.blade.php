@@ -39,7 +39,7 @@
               <div class="row">
                 <div class="col-12">
                   <h4>
-                    <i class="fas fa-globe"></i> GlamoursWorld
+                    <i class="fas fa-globe"></i> {{ setting()->shop_name }}
                     <b class="float-right">Order: INV-00-{{$data->id}}</b><br/>
                     <small class="float-right">Date: {{$data->date}}</small><br/>
                     <small class="float-right">Status: {{$data->status}}</small><br/>
@@ -48,6 +48,10 @@
                             <br/>
                             <a href="{{asset($data->screen_shot)}}" target="_blank" class="float-right btn btn-sm btn-info">View Screenshot</a>
                       @endif
+                      <br/>
+                      <button onclick="window.print()" class="btn btn-primary float-right" style="margin-right: 5px;">
+                        <i class="fas fa-print"></i> Print Invoice
+                      </button>
                   </h4>
                 </div>
                 <!-- /.col -->
