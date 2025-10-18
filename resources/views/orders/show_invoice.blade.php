@@ -62,7 +62,7 @@
                   {{-- From --}}
                   <address>
                     <strong>{{$data->name}}</strong><br>
-                   {{$data->full_address}}
+                   {{$data->full_address}}<br/>
                     Email: {{$data->email}}<br/>
                     Phone: {{$data->phone}}
                   </address>

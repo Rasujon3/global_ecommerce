@@ -360,7 +360,7 @@
                                                     @forelse($product->reviews->where('status', 'approved') as $review)
                                                         <li class="comment">
                                                             <div class="comment-body">
-                                                                <figure class="comment-avatar">
+                                                                <figure class="comment-avatar d-none">
                                                                     <img src="{{ asset('defaults/profile.png') }}" alt="avatar" width="90" height="90">
                                                                 </figure>
                                                                 <div class="comment-content">

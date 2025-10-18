@@ -118,7 +118,8 @@ data-swiper-options="{
 </div>
 <div class="col-lg-6 mb-8">
   <h4 class="title mb-3">Send Us a Message</h4>
-  <form class="form contact-us-form" action="#" method="post">
+{{--  <form class="form contact-us-form" action="#" method="post">--}}
+  <form class="form contact-us-form">
     <div class="form-group">
       <label for="username">Your Name</label>
       <input
