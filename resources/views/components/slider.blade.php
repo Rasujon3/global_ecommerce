@@ -16,11 +16,11 @@
                         <div class="swiper-slide banner banner-fixed intro-slide intro-slide-1"
                             style="background-image: url({{ $slider->image }}); background-color: #ebeef2;">
                             <div class="container">
-                                <figure class="slide-image skrollable slide-animate">
-                                    <img src="{{ $slider->image }}" alt="Banner"
-                                        data-bottom-top="transform: translateY(10vh);"
-                                        data-top-bottom="transform: translateY(-10vh);" width="474" height="397">
-                                </figure>
+{{--                                <figure class="slide-image skrollable slide-animate">--}}
+{{--                                    <img src="{{ $slider->image }}" alt="Banner"--}}
+{{--                                        data-bottom-top="transform: translateY(10vh);"--}}
+{{--                                        data-top-bottom="transform: translateY(-10vh);" width="474" height="397">--}}
+{{--                                </figure>--}}
                                 <div class="banner-content y-50 text-center">
                                     <h5 class="banner-subtitle font-weight-normal text-default ls-50 lh-1 mb-2 slide-animate"
                                         data-animation-options="{

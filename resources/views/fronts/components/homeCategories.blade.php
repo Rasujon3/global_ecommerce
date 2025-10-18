@@ -27,6 +27,13 @@
                         <div class="product-wrap">
                             <div class="product text-center">
                                 <figure class="product-media">
+                                    <div class="product-label-group">
+                                        @if($product->stock_qty == 0)
+                                            <label class="product-label label-out">Stock Out</label>
+                                        @else
+                                            <label class="product-label label-in">In Stock</label>
+                                        @endif
+                                    </div>
                                     <!-- Swiper Container -->
                                     <div class="swiper-container product-swiper">
                                         <div class="swiper-wrapper">

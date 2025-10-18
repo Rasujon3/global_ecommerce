@@ -74,6 +74,13 @@ class CheckoutController extends Controller
     		$detail->save();
 
     		foreach($carts as $cart){
+                // product stock decrease
+                $product = Product::find($cart->product_id);
+                if($product) {
+                    $product->stock_qty = $product->stock_qty - $cart->cart_qty;
+                    $product->update();
+                }
+
     			$order = new Order();
     			$order->orderdetail_id = $detail->id;
                 $order->variants = $cart->productvariant_ids;

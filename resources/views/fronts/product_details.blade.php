@@ -1,5 +1,30 @@
 @extends('front_master')
 @section('front_content')
+    <style>
+
+        .product-label-group {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+
+        .product-label {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .label-in {
+            background-color: #28a745;
+        }
+
+        .label-out {
+            background-color: #dc3545;
+        }
+    </style>
  <!-- Start of Main -->
         <main class="main mb-10 pb-1">
             <!-- Start of Breadcrumb -->
@@ -52,6 +77,13 @@
                                                     @foreach($product->images as $image)
                                                         <div class="swiper-slide">
                                                             <figure class="product-image">
+                                                                <div class="product-label-group">
+                                                                    @if($product->stock_qty == 0)
+                                                                        <label class="product-label label-out">Stock Out</label>
+                                                                    @else
+                                                                        <label class="product-label label-in">In Stock</label>
+                                                                    @endif
+                                                                </div>
                                                                 <img src="{{ URL::to($image->image) }}" data-zoom-image="{{ URL::to($image->image) }}" alt="{{ $product->product_name }}" width="800" height="900">
                                                             </figure>
                                                         </div>
@@ -527,6 +559,13 @@
                                         @foreach($relatedProducts as $product)
                                             <div class="swiper-slide product">
                                                 <figure class="product-media">
+                                                    <div class="product-label-group">
+                                                        @if($product->stock_qty == 0)
+                                                            <label class="product-label label-out">Stock Out</label>
+                                                        @else
+                                                            <label class="product-label label-in">In Stock</label>
+                                                        @endif
+                                                    </div>
 
                                                     {{-- Inner Swiper for multiple product images --}}
                                                     <div class="swiper-container inner-swiper" data-swiper-options="{

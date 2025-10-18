@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use Session;
@@ -26,6 +27,14 @@ class CartController extends Controller
 
             foreach ($cartItems as $cart) {
                 $qtyInput = $request->input('cart_qty_' . $cart->id);
+
+                $product = Product::where('id', $cart->product_id)->first();
+                if ($product && $product->stock_qty && $qtyInput > $product->stock_qty) {
+                    return redirect()->back()->with([
+                        'messege' => 'Requested quantity for "' . $product->product_name . '" exceeds available stock.',
+                        'alert-type' => "error"
+                    ]);
+                }
 
                 if ($qtyInput && $qtyInput > 0) {
                     if ($cart->productvariant_id) {

@@ -38,6 +38,29 @@
             color: white;
             transform: scale(1.1);
         }
+
+        .product-label-group {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+
+        .product-label {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .label-in {
+            background-color: #28a745;
+        }
+
+        .label-out {
+            background-color: #dc3545;
+        }
     </style>
 <!-- Start of Main -->
         <main class="main wishlist-page">
@@ -68,6 +91,13 @@
                     <div class="product-wrap">
                               <div class="product text-center">
                                   <figure class="product-media">
+                                      <div class="product-label-group">
+                                          @if($product->stock_qty == 0)
+                                              <label class="product-label label-out">Stock Out</label>
+                                          @else
+                                              <label class="product-label label-in">In Stock</label>
+                                          @endif
+                                      </div>
                                       <!-- Swiper Container -->
                                       <div class="swiper-container product-swiper">
                                           <div class="swiper-wrapper">
