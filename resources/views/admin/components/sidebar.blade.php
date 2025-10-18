@@ -251,6 +251,15 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{route('newsletters.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-envelope"></i>
+                        <p>
+                            Subscribers
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>

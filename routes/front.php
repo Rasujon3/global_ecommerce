@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsletterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\CartController;
@@ -41,6 +42,8 @@ Route::get('/about', [FrontController::class, 'about'])->name('about');
 Route::get('/my-account', [FrontController::class, 'myAccount'])->name('my-account');
 Route::post('/user-change-password', [FrontController::class, 'userChangePassword'])->name('user-change-password');
 Route::get('/search-suggestions', [FrontController::class, 'searchSuggestions'])->name('search.suggestions');
+
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.subscribe');
 
 
 Route::get('/clear-cache', function () {
