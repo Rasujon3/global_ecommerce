@@ -143,6 +143,19 @@
                                 <div class="col-md-6 mb-4 mb-md-6">
                                     <div class="product-details" data-sticky-options="{'minWidth': 767}">
                                         <h1 class="product-title">{{$product->product_name}}</h1>
+                                        <div class="product-rating-details">
+                                            @php
+                                                $avg_rating = $product->reviews->avg('rating');
+                                                $total_reviews = $product->reviews->count();
+                                            @endphp
+                                            <div class="ratings-container">
+                                                <div class="ratings-full">
+                                                    <span class="ratings" style="width: {{ $avg_rating * 20 }}%;"></span>
+                                                    <span class="tooltiptext tooltip-top">{{ number_format($avg_rating, 1) }}</span>
+                                                </div>
+                                                <a href="#review-tab" class="rating-reviews scroll-to">({{ $total_reviews }} Reviews)</a>
+                                            </div>
+                                        </div>
                                         <div class="product-bm-wrapper">
                                             <figure class="brand">
                                                 <img src="{{URL::to($product->brand->image ?? '')}}" alt="Brand"

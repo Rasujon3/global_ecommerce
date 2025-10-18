@@ -18,6 +18,19 @@ class ReviewController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $exists = Review::where('user_id',auth()->id())
+            ->where('product_id', $request->product_id)
+            ->exists();
+
+        if ($exists) {
+            $notification=array(
+                'messege' => 'Already submitted review.',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
         try {
             $review = new Review();
             $review->product_id = $request->product_id;

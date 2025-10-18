@@ -421,7 +421,8 @@
                             <a href="tel:#{{ setting()->phone ?? '' }}" class="w-icon-call"></a>
                             <div class="call-info d-lg-show">
                                 <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
-                                    <a href="https://portotheme.com/cdn-cgi/l/email-protection#99ba" class="text-capitalize">Live Chat</a> or :</h4>
+                                    <a href="https://portotheme.com/cdn-cgi/l/email-protection#99ba" class="text-capitalize">Phone</a>
+                                </h4>
                                 <a href="tel:#{{ setting()->phone ?? '' }}" class="phone-number font-weight-bolder ls-50">{{ setting()->phone ?? '' }}</a>
                             </div>
                         </div>
