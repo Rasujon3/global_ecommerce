@@ -419,13 +419,16 @@
                                                         <div class="form-group">
                                                             <label for="description">Your review</label>
                                                             <textarea id="description" name="description" cols="30" rows="6" class="form-control" required></textarea>
-                                                            @error('bkash_no')
+                                                            @error('description')
                                                             <span class="alert alert-danger">{{ $message }}</span>
                                                             @enderror
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="image">Upload Image (optional)</label>
                                                             <input type="file" id="image" name="image" class="form-control">
+                                                            @error('image')
+                                                            <span class="alert alert-danger">{{ $message }}</span>
+                                                            @enderror
                                                         </div>
                                                         <button type="submit" class="btn btn-primary">Submit Review</button>
                                                     </form>
@@ -506,7 +509,7 @@
                             <section class="related-product-section">
                                 <div class="title-link-wrapper mb-4">
                                     <h4 class="title">Related Products</h4>
-                                    <a href="#" class="btn btn-dark btn-link btn-slide-right btn-icon-right">
+                                    <a href="{{ URL::to('/product-lists') }}" class="btn btn-dark btn-link btn-slide-right btn-icon-right">
                                         More Products<i class="w-icon-long-arrow-right"></i>
                                     </a>
                                 </div>

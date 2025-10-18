@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ReviewController extends Controller
 {
@@ -16,21 +18,43 @@ class ReviewController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $review = new Review();
-        $review->product_id = $request->product_id;
-        $review->user_id = auth()->id();
-        $review->rating = $request->rating;
-        $review->description = $request->description;
-        $review->status = 'approved';
+        try {
+            $review = new Review();
+            $review->product_id = $request->product_id;
+            $review->user_id = auth()->id();
+            $review->rating = $request->rating;
+            $review->description = $request->description;
+            $review->status = 'approved';
 
-        if ($request->hasFile('image')) {
-            $imageName = $this->storeFile($request->file('image'));
-            $review->image = $imageName;
+            if ($request->hasFile('image')) {
+                $imageName = $this->storeFile($request->file('image'));
+                $review->image = $imageName;
+            }
+
+            $review->save();
+
+            $notification=array(
+                'messege'=>"Review submitted successfully.",
+                'alert-type'=>"success",
+            );
+
+            return redirect()->back()->with($notification);
+        } catch(Exception $e) {
+            // Log the error
+            Log::error('Error in store: ', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            $notification=array(
+                'messege' => 'Something went wrong!!!',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
         }
-
-        $review->save();
-
-        return back()->with('success', 'Review submitted successfully. It will be visible after approval.');
     }
     private function storeFile($file)
     {

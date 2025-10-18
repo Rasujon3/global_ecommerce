@@ -42,8 +42,12 @@
                                     <div class="p-relative">
                                         <a href="{{url('/product-details/'.$row->id)}}">
                                             <figure>
-                                                <img src="{{URL::to($row->product->image)}}" alt="product" width="300"
-                                                    height="338">
+                                                <img
+                                                    src="{{URL::to($row->product?->images?->first()?->image ?? '')}}"
+                                                    alt="product"
+                                                    width="300"
+                                                    height="338"
+                                                >
                                             </figure>
                                         </a>
                                         <button type="button" class="btn btn-close remove-wishlist" data-id="{{$row->id}}"><i
@@ -62,7 +66,7 @@
                                   @else
                                     <ins class="new-price">{{$row->product->product_price}} BDT</ins>
                                   @endif
-                                </td> 
+                                </td>
                                 <td class="product-stock-status">
                                 	@if($row->product->stock_qty > 0)
                                     <span class="wishlist-in-stock">In Stock</span>
@@ -81,9 +85,9 @@
                         </tbody>
                     </table>
                     <div style="margin-top: 5px; margin-bottom: 5px;">
-                     {{$data->links()}}	
+                     {{$data->links()}}
                     </div>
-                    
+
                     <div class="social-links d-none">
                         <label>Share On:</label>
                         <div class="social-icons social-no-color border-thin">
@@ -122,7 +126,7 @@
                         toastr.success(data.message);
 
                 },
-                            
+
             });
         }
       });

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2025 at 01:20 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Oct 18, 2025 at 08:38 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,52 @@ SET time_zone = "+00:00";
 --
 -- Database: `global_ecommerce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `about_us`
+--
+
+CREATE TABLE `about_us` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) DEFAULT NULL,
+  `desc` text DEFAULT NULL,
+  `img` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `about_us`
+--
+
+INSERT INTO `about_us` (`id`, `title`, `desc`, `img`, `created_at`, `updated_at`) VALUES
+(1, 'We Boost Our Clients’ Bottom Line by Optimizing Their Growth Potential', '<p><span style=\"color: rgb(102, 102, 102); font-family: Poppins, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Venenatis tellus in. metus vulputate eu scelerisque felis. Vel pretium lectus qua . Arpis massa. Nunc id cursus metus ididunt ut labore metus vulputate episcing.</span></p>', 'uploads/logo/logo_68eba6af6a32f8.49424164.jpg', '2025-10-12 07:01:35', '2025-10-12 07:01:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banners`
+--
+
+CREATE TABLE `banners` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `price` text DEFAULT NULL,
+  `image` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `banners`
+--
+
+INSERT INTO `banners` (`id`, `title`, `description`, `price`, `image`, `created_at`, `updated_at`) VALUES
+(2, '<h5 class=\"banner-subtitle font-weight-normal text-dark\" style=\"box-sizing: inherit; font-weight: 400 !important; margin: 0px 0px 0.7rem; font-family: Poppins, sans-serif; line-height: 1.2; color: rgb(196, 196, 197); letter-spacing: normal; font-size: 1.8em; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: start; text-indent: 0px; text-transform: none; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Get up to<span>&nbsp;</span><span class=\"text-secondary font-weight-bolder text-uppercase ls-25\" style=\"box-sizing: inherit; text-transform: uppercase !important; font-weight: 700 !important; color: rgb(255, 153, 51) !important; letter-spacing: -0.025em !important;\">20% Off</span></h5>', '<h3 class=\"banner-title text-uppercase\" style=\"box-sizing: inherit; font-weight: 800; margin: 0px 0px 2rem; font-family: Poppins, sans-serif; line-height: 1.17; color: rgb(51, 51, 51); letter-spacing: normal; font-size: 2.6em; text-transform: uppercase !important; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: start; text-indent: 0px; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Sports Outfits<br style=\"box-sizing: inherit;\"><span class=\"font-weight-normal                       text-capitalize\" style=\"box-sizing: inherit; text-transform: capitalize !important; font-weight: 400 !important;\">Collection</span></h3>', '<span style=\"color: rgb(102, 102, 102); font-family: Poppins, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">Starting at<span>&nbsp;</span></span><span class=\"text-secondary                       font-weight-bolder\" style=\"box-sizing: inherit; font-weight: 700 !important; color: rgb(255, 153, 51) !important; font-family: Poppins, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">$170.00</span>', 'uploads/banner/176070893211-1.jpg', '2025-10-17 07:48:52', '2025-10-17 23:26:32'),
+(3, '<h5 class=\"banner-subtitle font-weight-bold text-uppercase\" style=\"box-sizing: inherit; font-weight: 600 !important; margin: 0px 0px 0.8rem; font-family: Poppins, sans-serif; line-height: 1.2; color: rgb(51, 51, 51); letter-spacing: normal; font-size: 1.4em; text-transform: uppercase !important; opacity: 0.8; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: start; text-indent: 0px; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Trending Now</h5>', '<h3 class=\"banner-title font-weight-bolder text-capitalize\" style=\"box-sizing: inherit; font-weight: 700 !important; margin: 0px 0px 3rem; font-family: Poppins, sans-serif; line-height: 1.1; color: rgb(51, 51, 51); letter-spacing: normal; font-size: 2.8em; text-transform: capitalize !important; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: start; text-indent: 0px; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Women\'s Lifestyle<br style=\"box-sizing: inherit;\">Collection</h3>', '<span style=\"color: rgb(102, 102, 102); font-family: Poppins, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\"><span>Only from&nbsp;</span></span><span class=\"text-secondary                       font-weight-bolder\" style=\"box-sizing: inherit; font-weight: 700 !important; color: rgb(255, 153, 51) !important; font-family: Poppins, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">$90.00</span>', 'uploads/banner/176070922213-2.jpg', '2025-10-17 07:53:42', '2025-10-17 23:25:51');
 
 -- --------------------------------------------------------
 
@@ -43,11 +89,11 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `user_id`, `brand_name`, `is_mega_menu`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'NS8', 1, 'uploads/brands/175974336211.png', 'Active', '2025-10-06 03:36:02', '2025-10-06 03:36:02'),
 (2, 1, 'Elegant Auto Group', 1, 'uploads/brands/175974338312.png', 'Active', '2025-10-06 03:36:23', '2025-10-06 03:36:23'),
 (3, 1, 'Sky Suite', 1, 'uploads/brands/175974339813.png', 'Active', '2025-10-06 03:36:38', '2025-10-06 03:36:38'),
 (4, 1, 'RED', 1, 'uploads/brands/175974340714.png', 'Active', '2025-10-06 03:36:47', '2025-10-06 03:36:47'),
-(5, 1, 'Green Grass', 1, 'uploads/brands/175974376615.png', 'Active', '2025-10-06 03:37:02', '2025-10-06 03:42:46');
+(5, 1, 'Green Grass', 1, 'uploads/brands/175974376615.png', 'Active', '2025-10-06 03:37:02', '2025-10-06 03:42:46'),
+(9, 1, 'Anua', 1, 'uploads/brands/17601880241Batman Mask Wallpaper.jpeg', 'Active', '2025-10-11 07:07:04', '2025-10-13 05:29:35');
 
 -- --------------------------------------------------------
 
@@ -87,7 +133,23 @@ CREATE TABLE `carts` (
 
 INSERT INTO `carts` (`id`, `cart_session_id`, `product_id`, `productvariant_id`, `productvariant_ids`, `cart_qty`, `unit_total`, `created_at`, `updated_at`) VALUES
 (3, '49321', 6, NULL, '[\"1\",\"1\",\"4\"]', 3, '2840.04', '2025-10-11 01:01:00', '2025-10-11 01:01:00'),
-(4, '49321', 4, NULL, 'null', 2, '703.50', '2025-10-11 03:08:35', '2025-10-11 03:09:02');
+(4, '49321', 4, NULL, 'null', 2, '703.50', '2025-10-11 03:08:35', '2025-10-11 03:09:02'),
+(5, '72763', 2, NULL, NULL, 1, '138.18', '2025-10-12 07:38:39', '2025-10-12 07:38:39'),
+(6, '64464', 2, NULL, NULL, 1, '138.18', '2025-10-12 11:23:16', '2025-10-12 11:23:16'),
+(8, '67205', 2, NULL, NULL, 1, '138.18', '2025-10-13 05:06:37', '2025-10-13 05:06:37'),
+(9, '67205', 1, NULL, NULL, 2, '1907.02', '2025-10-13 05:06:42', '2025-10-13 05:06:56'),
+(10, '88887', 5, NULL, NULL, 1, '111', '2025-10-13 05:10:51', '2025-10-13 05:10:51'),
+(11, '88887', 7, NULL, NULL, 1, '840', '2025-10-13 05:11:00', '2025-10-13 05:11:00'),
+(12, '81439', 2, NULL, NULL, 1, '138.18', '2025-10-13 05:22:07', '2025-10-13 05:22:07'),
+(13, '181010', 1, NULL, NULL, 2, '1907.02', '2025-10-13 05:34:42', '2025-10-13 05:35:04'),
+(14, '181010', 3, NULL, NULL, 4, '2608.00', '2025-10-13 05:34:46', '2025-10-13 05:35:04'),
+(15, '123312', 2, NULL, NULL, 1, '138.18', '2025-10-14 11:44:18', '2025-10-14 11:44:18'),
+(16, '372113', 2, NULL, NULL, 1, '138.18', '2025-10-17 06:43:40', '2025-10-17 06:43:40'),
+(17, '372113', 4, NULL, NULL, 1, '351.75', '2025-10-17 10:37:53', '2025-10-17 10:37:53'),
+(18, '372113', 8, NULL, NULL, 1, '2205', '2025-10-17 10:49:11', '2025-10-17 10:49:11'),
+(19, '272216', 1, NULL, NULL, 2, '1907.02', '2025-10-17 11:05:39', '2025-10-17 11:14:20'),
+(20, '121517', 2, NULL, NULL, 2, '276.36', '2025-10-17 11:19:13', '2025-10-17 11:19:43'),
+(21, '775618', 1, NULL, '[\"12\",\"13\"]', 1, '953.51', '2025-10-18 00:12:30', '2025-10-18 00:12:30');
 
 -- --------------------------------------------------------
 
@@ -124,6 +186,29 @@ INSERT INTO `categories` (`id`, `user_id`, `category_name`, `image`, `is_top`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cosmetics`
+--
+
+CREATE TABLE `cosmetics` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `image` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cosmetics`
+--
+
+INSERT INTO `cosmetics` (`id`, `title`, `description`, `image`, `created_at`, `updated_at`) VALUES
+(2, '<h5 class=\"banner-subtitle font-weight-bold text-uppercase\" style=\"box-sizing: inherit; font-weight: 600 !important; margin: 0px 0px 0.8rem; font-family: Poppins, sans-serif; line-height: 1.2; color: rgb(51, 51, 51); letter-spacing: normal; font-size: 1.4em; text-transform: uppercase !important; opacity: 0.8; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: start; text-indent: 0px; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Trending Now</h5>', '<h3 class=\"banner-title font-weight-bolder text-capitalize\" style=\"box-sizing: inherit; font-weight: 700 !important; margin: 0px 0px 3rem; font-family: Poppins, sans-serif; line-height: 1.1; color: rgb(51, 51, 51); letter-spacing: normal; font-size: 2.8em; text-transform: capitalize !important; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: start; text-indent: 0px; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Women\'s Lifestyle<br style=\"box-sizing: inherit;\">Collection</h3>', 'uploads/cosmetics/176076433013-2.jpg', '2025-10-17 23:12:10', '2025-10-17 23:25:04'),
+(3, '<h5 class=\"banner-subtitle font-weight-bold text-uppercase\" style=\"box-sizing: inherit; margin: 0px 0px 0.8rem; font-family: Poppins, sans-serif; line-height: 1.2; color: rgb(238, 238, 238); letter-spacing: normal; font-size: 1.4em; text-transform: uppercase !important; opacity: 0.8; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: start; text-indent: 0px; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Natural Process</h5>', '<h3 class=\"banner-title font-weight-bolder text-capitalize text-white\" style=\"box-sizing: inherit; font-weight: 700 !important; margin: 0px 0px 3rem; font-family: Poppins, sans-serif; line-height: 1.1; color: rgb(255, 255, 255) !important; letter-spacing: normal; font-size: 2.8em; text-transform: capitalize !important; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: start; text-indent: 0px; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Cosmetic Makeup<br style=\"box-sizing: inherit;\">Professional</h3>', 'uploads/cosmetics/176076435713-1.jpg', '2025-10-17 23:12:37', '2025-10-17 23:23:53');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -136,6 +221,31 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `intros`
+--
+
+CREATE TABLE `intros` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `icon` varchar(191) DEFAULT NULL,
+  `title` varchar(191) DEFAULT NULL,
+  `description` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `intros`
+--
+
+INSERT INTO `intros` (`id`, `icon`, `title`, `description`, `created_at`, `updated_at`) VALUES
+(2, 'w-icon-truck', 'Free Shipping & Returns', 'For all orders over 99 BDT', '2025-10-17 12:23:30', '2025-10-17 12:29:06'),
+(3, 'w-icon-bag', 'Secure Payment', 'We ensure secure payment', '2025-10-17 12:30:27', '2025-10-17 12:30:27'),
+(4, 'w-icon-money', 'Money Back Guarantee', 'Any back within 30 days', '2025-10-17 12:30:52', '2025-10-17 12:30:52'),
+(5, 'w-icon-chat', 'Customer Support', 'Call or email us 24/7', '2025-10-17 12:31:12', '2025-10-17 12:31:12');
 
 -- --------------------------------------------------------
 
@@ -171,7 +281,42 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2025_10_07_085949_create_paymentmethods_table', 4),
 (16, '2025_10_07_092154_create_sliders_table', 5),
 (17, '2025_10_09_081518_create_carts_table', 5),
-(18, '2025_10_11_082810_create_whishlists_table', 6);
+(18, '2025_10_11_082810_create_whishlists_table', 6),
+(19, '2025_10_12_061533_create_settings_table', 7),
+(20, '2025_10_12_064420_add_columns_to_settings_table', 7),
+(21, '2025_10_12_075254_create_about_us_table', 7),
+(22, '2025_10_14_102900_add_columns_to_settings_table', 8),
+(23, '2025_10_14_112726_add_columns_to_settings_table', 8),
+(24, '2025_10_15_174243_create_reviews_table', 9),
+(25, '2025_10_15_115814_add_columns_to_settings_table', 10),
+(26, '2025_10_16_054515_add_columns_to_settings_table', 10),
+(27, '2025_10_16_063006_add_columns_to_settings_table', 10),
+(28, '2025_10_16_095622_create_product_imgs_table', 10),
+(29, '2025_10_16_120045_add_columns_to_settings_table', 10),
+(30, '2025_10_17_125221_create_banners_table', 11),
+(31, '2025_10_17_175508_create_intros_table', 12),
+(32, '2025_10_18_043310_create_cosmetics_table', 13),
+(33, '2025_10_18_054410_create_newsletters_table', 14);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `newsletters`
+--
+
+CREATE TABLE `newsletters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(191) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `newsletters`
+--
+
+INSERT INTO `newsletters` (`id`, `email`, `created_at`, `updated_at`) VALUES
+(2, 'sujon.egov@gmail.com', '2025-10-18 00:01:37', '2025-10-18 00:01:37');
 
 -- --------------------------------------------------------
 
@@ -206,7 +351,11 @@ CREATE TABLE `orderdetails` (
 --
 
 INSERT INTO `orderdetails` (`id`, `user_id`, `paymentmethod_id`, `name`, `email`, `phone`, `zip_code`, `full_address`, `screen_shot`, `sub_total`, `delivery_charge`, `vat_tax`, `total`, `date`, `time`, `timestamp`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 2, 'Md. Ekram Hossain', 'ekramhossainekram28@gmail.com', '01799327845', NULL, 'East Boxanagr, Sarulia, Demra, Dhaka', NULL, '3543.54', '0', '0', '3543.54', '2025-10-11', '11:15: am', '1760181335', 'Pending', '2025-10-11 05:15:35', '2025-10-11 05:15:35');
+(1, 2, 1, 'Md. Ekram Hossain', 'ekramhossainekram28@gmail.com', '01799327845', '1361', 'East Boxanagr, Sarulia, Demra, Dhaka', NULL, '4515.02', '0', '0', '4515.02', '2025-10-13', '05:37: pm', '1760355455', 'In_Transit', '2025-10-13 11:37:35', '2025-10-13 05:39:41'),
+(2, 2, 2, 'Md. Ekram Hossain', 'ekramhossainekram28@gmail.com', '01799327845', '76679', 'Dhanaruha', 'uploads/order/1760464010217479054141-ebf4d8058eb9c21b73348607d6ac72f0.jpg_720x720q80.jpg', '138.18', '150', '0', '288.18', '2025-10-14', '11:46: pm', '1760464010', 'Pending', '2025-10-14 17:46:50', '2025-10-14 17:46:50'),
+(3, 2, 3, 'Md. Ekram Hossain', 'ekramhossainekram28@gmail.com', '01799327845', '76679', 'Dhanaruha', NULL, '2694.93', '80', '0', '2774.93', '2025-10-17', '11:00: pm', '1760720432', 'Pending', '2025-10-17 17:00:32', '2025-10-17 17:00:32'),
+(4, 2, 3, 'Md. Ekram Hossain', 'ekramhossainekram28@gmail.com', '01799327845', '76679', 'Dhanaruha', NULL, '1907.02', '120', '0', '2027.02', '2025-10-17', '11:15: pm', '1760721353', 'Pending', '2025-10-17 17:15:53', '2025-10-17 17:15:53'),
+(5, 2, 3, 'Md. Ekram Hossain', 'ekramhossainekram28@gmail.com', '01799327845', '56909', 'fd', 'uploads/order/17607679982no_image.png', '953.51', '150', '0', '1103.51', '2025-10-18', '12:13: pm', '1760767998', 'Pending', '2025-10-18 06:13:18', '2025-10-18 06:13:18');
 
 -- --------------------------------------------------------
 
@@ -219,6 +368,7 @@ CREATE TABLE `orders` (
   `orderdetail_id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `varaint_id` int(11) DEFAULT NULL,
+  `variants` varchar(191) DEFAULT NULL,
   `price` varchar(191) NOT NULL,
   `discount` varchar(191) DEFAULT '0',
   `qty` varchar(191) NOT NULL,
@@ -231,9 +381,15 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `orderdetail_id`, `product_id`, `varaint_id`, `price`, `discount`, `qty`, `unit_total`, `created_at`, `updated_at`) VALUES
-(1, 1, 6, NULL, '946.68', '0', '3', '2840.04', '2025-10-11 05:15:35', '2025-10-11 05:15:35'),
-(2, 1, 4, NULL, '351.75', '0', '2', '703.50', '2025-10-11 05:15:35', '2025-10-11 05:15:35');
+INSERT INTO `orders` (`id`, `orderdetail_id`, `product_id`, `varaint_id`, `variants`, `price`, `discount`, `qty`, `unit_total`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL, '953.51', '0', '2', '1907.02', '2025-10-13 11:37:35', '2025-10-13 11:37:35'),
+(2, 1, 3, NULL, NULL, '652', '0', '4', '2608.00', '2025-10-13 11:37:35', '2025-10-13 11:37:35'),
+(3, 2, 2, NULL, NULL, '138.18', '0', '1', '138.18', '2025-10-14 17:46:50', '2025-10-14 17:46:50'),
+(4, 3, 2, NULL, NULL, '138.18', '0', '1', '138.18', '2025-10-17 17:00:32', '2025-10-17 17:00:32'),
+(5, 3, 4, NULL, NULL, '351.75', '0', '1', '351.75', '2025-10-17 17:00:32', '2025-10-17 17:00:32'),
+(6, 3, 8, NULL, NULL, '2205', '0', '1', '2205', '2025-10-17 17:00:32', '2025-10-17 17:00:32'),
+(7, 4, 1, NULL, NULL, '953.51', '0', '2', '1907.02', '2025-10-17 17:15:53', '2025-10-17 17:15:53'),
+(8, 5, 1, NULL, '[\"12\",\"13\"]', '953.51', '0', '1', '953.51', '2025-10-18 06:13:18', '2025-10-18 06:13:18');
 
 -- --------------------------------------------------------
 
@@ -270,7 +426,8 @@ CREATE TABLE `paymentmethods` (
 
 INSERT INTO `paymentmethods` (`id`, `user_id`, `name`, `api_key`, `secret_key`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Cash On Delivery', NULL, NULL, 'Active', NULL, NULL),
-(2, 1, 'Bank', NULL, NULL, 'Active', NULL, NULL);
+(2, 1, 'Bank', NULL, NULL, 'Active', NULL, NULL),
+(3, 1, 'bKash', NULL, NULL, 'Active', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -319,13 +476,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `user_id`, `category_id`, `brand_id`, `subcategory_id`, `unit_id`, `product_name`, `product_price`, `discount`, `stock_qty`, `image`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 5, 4, NULL, 5, 'Ray Cruz', '983', '3', '946', 'uploads/products/175974958316-800x900.jpg', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:19:43', '2025-10-06 05:51:12'),
-(2, 1, 1, 3, 2, 5, 'Aiko Freeman', '141', '2', '798', 'uploads/products/17597496331review-img-1.jpg', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:20:33', '2025-10-06 05:51:10'),
-(3, 1, 7, NULL, NULL, 4, 'Elaine Morin', '652', NULL, '283', 'uploads/products/175974971512.jpg', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:21:55', '2025-10-07 00:03:54'),
-(4, 1, 7, 3, NULL, 2, 'Iliana Prince', '469', '25', '378', 'uploads/products/175975037714-1.jpg', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:32:57', '2025-10-09 01:57:28'),
-(5, 1, 7, 3, 3, 2, 'Walker Knowles', '111', NULL, '619', 'uploads/products/175975045318.jpg', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:34:13', '2025-10-07 04:26:23'),
-(6, 1, 7, 1, 3, 5, 'Tamekah Marquez', '966', '2', '995', 'uploads/products/175975133913.jpg', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:35:11', '2025-10-07 04:26:13'),
-(7, 1, 7, NULL, 9, 5, 'Stephanie Webster', '840', NULL, '930', 'uploads/products/17598323131bought-2.jpg', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a commodo quam, sit amet dignissim velit. Mauris in massa nec metus varius condimentum eu et tortor. In hac habitasse platea dictumst. Vivamus tristique, lectus non pharetra vestibulum, sapien nisl faucibus orci, ut semper quam ex feugiat tortor. Nulla at urna ut ipsum luctus vestibulum sit amet vel arcu. Nullam sed lacus odio. Proin a ex lectus. Vestibulum ac finibus felis. Vivamus porta porttitor tempor. Etiam facilisis, nisi volutpat convallis dictum, ante ante mollis lectus, sed euismod nunc lorem et nisi. Nullam sed porttitor ligula.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Etiam id lacus vel eros cursus mattis eu eget turpis. Quisque quis pretium magna. Sed laoreet, nisi id gravida tincidunt, lacus ipsum luctus arcu, non venenatis nulla mauris non arcu. Praesent vel ipsum justo. Phasellus tempor diam sed varius sollicitudin. Pellentesque vel urna risus. Duis fermentum, nunc vel gravida hendrerit, ante nunc semper sem, quis dapibus nibh augue vel erat. Nullam pulvinar velit quis nisl viverra, at cursus odio fringilla.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Mauris auctor ipsum eros, quis interdum est mollis nec. Vestibulum dignissim tellus interdum, suscipit mi vel, sollicitudin elit. Mauris luctus ex in ex sodales mattis. Aliquam porttitor ipsum in purus varius, quis sollicitudin nisl sagittis. Cras elementum ligula nisl, porttitor pretium leo sodales non. Ut facilisis varius interdum. In ac vulputate orci.</p>', 'Active', '2025-10-07 04:18:33', '2025-10-07 04:19:23');
+(1, 1, 5, 4, NULL, 5, 'Ray Cruz', '983', '3', '946', '', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:19:43', '2025-10-06 05:51:12'),
+(2, 1, 1, 3, 2, 5, 'Aiko Freeman', '141', '2', '798', '', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:20:33', '2025-10-17 09:26:29'),
+(3, 1, 7, NULL, NULL, 4, 'Elaine Morin', '652', NULL, '283', '', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:21:55', '2025-10-17 09:26:13'),
+(4, 1, 7, 3, NULL, 2, 'Iliana Prince', '469', '25', '378', '', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:32:57', '2025-10-09 01:57:28'),
+(5, 1, 7, 3, 3, 2, 'Walker Knowles', '111', NULL, '619', '', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis risus ante, id cursus arcu varius quis. In diam orci, consequat sed venenatis ut, bibendum et justo. Nulla vestibulum, ante sed lobortis tincidunt, eros mauris ornare turpis, non ultrices nibh leo nec libero. Cras porttitor faucibus felis nec vestibulum. Integer eu ligula vitae magna interdum facilisis sit amet vitae velit. Nunc interdum eros ornare, mollis turpis vitae, commodo est. Donec a dictum orci. Aliquam turpis urna, sodales sed aliquet sit amet, egestas non risus. Quisque sit amet hendrerit sem, in ornare purus. Vestibulum sed erat luctus, sagittis eros non, porta odio. Nunc molestie id odio quis sodales.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Aliquam lectus turpis, sagittis et sapien vitae, feugiat pulvinar neque. Mauris suscipit ut augue iaculis tincidunt. Vivamus sagittis, mauris ac consequat lacinia, felis risus lobortis ipsum, eget vehicula risus nisl eu dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mollis auctor est, auctor pellentesque tortor faucibus eget. Nulla facilisi. Nullam ornare dictum magna. Donec aliquam, est nec maximus convallis, justo est vehicula orci, ac malesuada sem quam a diam. Vestibulum in mauris urna. In ultricies sodales orci sed lobortis. Maecenas auctor arcu a nulla fringilla, non consequat metus mollis.</p>', 'Active', '2025-10-06 05:34:13', '2025-10-07 04:26:23'),
+(7, 1, 7, NULL, 9, 5, 'Stephanie Webster', '840', NULL, '930', '', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a commodo quam, sit amet dignissim velit. Mauris in massa nec metus varius condimentum eu et tortor. In hac habitasse platea dictumst. Vivamus tristique, lectus non pharetra vestibulum, sapien nisl faucibus orci, ut semper quam ex feugiat tortor. Nulla at urna ut ipsum luctus vestibulum sit amet vel arcu. Nullam sed lacus odio. Proin a ex lectus. Vestibulum ac finibus felis. Vivamus porta porttitor tempor. Etiam facilisis, nisi volutpat convallis dictum, ante ante mollis lectus, sed euismod nunc lorem et nisi. Nullam sed porttitor ligula.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Etiam id lacus vel eros cursus mattis eu eget turpis. Quisque quis pretium magna. Sed laoreet, nisi id gravida tincidunt, lacus ipsum luctus arcu, non venenatis nulla mauris non arcu. Praesent vel ipsum justo. Phasellus tempor diam sed varius sollicitudin. Pellentesque vel urna risus. Duis fermentum, nunc vel gravida hendrerit, ante nunc semper sem, quis dapibus nibh augue vel erat. Nullam pulvinar velit quis nisl viverra, at cursus odio fringilla.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">Mauris auctor ipsum eros, quis interdum est mollis nec. Vestibulum dignissim tellus interdum, suscipit mi vel, sollicitudin elit. Mauris luctus ex in ex sodales mattis. Aliquam porttitor ipsum in purus varius, quis sollicitudin nisl sagittis. Cras elementum ligula nisl, porttitor pretium leo sodales non. Ut facilisis varius interdum. In ac vulputate orci.</p>', 'Active', '2025-10-07 04:18:33', '2025-10-07 04:19:23'),
+(8, 1, 6, 2, NULL, 4, 'Eqqualberry', '2250', '2', '50', '', '<p>Hello</p>', 'Active', '2025-10-11 12:19:18', '2025-10-11 12:19:18');
 
 -- --------------------------------------------------------
 
@@ -357,7 +514,119 @@ INSERT INTO `productvariants` (`id`, `product_id`, `variant_id`, `variant_value`
 (6, 6, 2, 'L', NULL, '25', NULL, '2025-10-07 02:46:59', '2025-10-07 02:46:59'),
 (7, 6, 1, 'Black', '25', '65', 'uploads/variants/1759826878_68e4d3bef1250_7-2.jpg', '2025-10-07 02:47:46', '2025-10-07 02:47:58'),
 (10, 6, 2, 'XL', NULL, '30', NULL, '2025-10-09 01:00:48', '2025-10-09 01:00:48'),
-(11, 6, 2, 'XXL', NULL, '40', NULL, '2025-10-09 01:00:49', '2025-10-09 01:00:49');
+(11, 6, 2, 'XXL', NULL, '40', NULL, '2025-10-09 01:00:49', '2025-10-09 01:00:49'),
+(12, 1, 1, 'Red', NULL, '10', NULL, '2025-10-17 11:05:01', '2025-10-17 11:05:01'),
+(13, 1, 2, 'S', NULL, '1', NULL, '2025-10-17 11:05:01', '2025-10-17 11:05:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_imgs`
+--
+
+CREATE TABLE `product_imgs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `image` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_imgs`
+--
+
+INSERT INTO `product_imgs` (`id`, `product_id`, `user_id`, `image`, `created_at`, `updated_at`) VALUES
+(1, 8, 1, 'uploads/products/1760714710117597496331review-img-1.jpg', '2025-10-17 09:25:10', '2025-10-17 09:25:10'),
+(2, 8, 1, 'uploads/products/1760714710117598323131bought-2.jpg', '2025-10-17 09:25:10', '2025-10-17 09:25:10'),
+(5, 5, 1, 'uploads/products/17607147381175974958316-800x900.jpg', '2025-10-17 09:25:38', '2025-10-17 09:25:38'),
+(6, 5, 1, 'uploads/products/17607147381175974971512.jpg', '2025-10-17 09:25:38', '2025-10-17 09:25:38'),
+(7, 4, 1, 'uploads/products/17607147591175975037714-1.jpg', '2025-10-17 09:25:59', '2025-10-17 09:25:59'),
+(8, 4, 1, 'uploads/products/17607147591175975045318.jpg', '2025-10-17 09:25:59', '2025-10-17 09:25:59'),
+(9, 3, 1, 'uploads/products/176071477311760714710117597496331review-img-1.jpg', '2025-10-17 09:26:13', '2025-10-17 09:26:13'),
+(10, 3, 1, 'uploads/products/176071477311760714710117598323131bought-2.jpg', '2025-10-17 09:26:13', '2025-10-17 09:26:13'),
+(16, 2, 1, 'uploads/products/17607162531175974958316-800x900.jpg', '2025-10-17 09:50:53', '2025-10-17 09:50:53'),
+(17, 2, 1, 'uploads/products/17607162531175974971512.jpg', '2025-10-17 09:50:53', '2025-10-17 09:50:53'),
+(18, 2, 1, 'uploads/products/17607162531175975037714-1.jpg', '2025-10-17 09:50:53', '2025-10-17 09:50:53'),
+(19, 7, 1, 'uploads/products/176076822513-800x900.jpg', '2025-10-18 00:17:05', '2025-10-18 00:17:05'),
+(20, 7, 1, 'uploads/products/176076822514-800x900.jpg', '2025-10-18 00:17:05', '2025-10-18 00:17:05'),
+(21, 1, 1, 'uploads/products/176076827611-800x900.jpg', '2025-10-18 00:17:56', '2025-10-18 00:17:56'),
+(22, 1, 1, 'uploads/products/176076827612-800x900.jpg', '2025-10-18 00:17:56', '2025-10-18 00:17:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `rating` tinyint(3) UNSIGNED NOT NULL,
+  `description` text NOT NULL,
+  `image` varchar(191) DEFAULT NULL,
+  `status` enum('pending','approved') NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `product_id`, `user_id`, `rating`, `description`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 3, 'first review', 'uploads/image/image_68efe1e51b3421.85402408.jpg', 'approved', '2025-10-15 12:03:17', '2025-10-15 12:03:17'),
+(2, 2, 2, 4, 'fdsa', NULL, 'approved', '2025-10-15 12:10:54', '2025-10-15 12:10:54'),
+(3, 5, 2, 5, 'Good', NULL, 'approved', '2025-10-18 00:27:16', '2025-10-18 00:27:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `logo` varchar(191) DEFAULT NULL,
+  `favicon` varchar(191) DEFAULT NULL,
+  `phone` varchar(191) DEFAULT NULL,
+  `email` varchar(191) DEFAULT NULL,
+  `address` varchar(191) DEFAULT NULL,
+  `established` varchar(191) DEFAULT NULL,
+  `facebook` varchar(191) DEFAULT NULL,
+  `twitter` varchar(191) DEFAULT NULL,
+  `instagram` varchar(191) DEFAULT NULL,
+  `youtube` varchar(191) DEFAULT NULL,
+  `pinterest` varchar(191) DEFAULT NULL,
+  `contact_us_img` varchar(191) DEFAULT NULL,
+  `inside_dhaka_dc` int(11) DEFAULT 80,
+  `outside_dhaka_dc` int(11) DEFAULT 150,
+  `sub_urban_areas_dc` int(11) DEFAULT 120,
+  `acc_no` varchar(191) DEFAULT NULL,
+  `routing_number` varchar(191) DEFAULT NULL,
+  `branch_name` varchar(191) DEFAULT NULL,
+  `bank_name` varchar(191) DEFAULT NULL,
+  `no_img` varchar(191) DEFAULT NULL,
+  `footer_description` varchar(191) DEFAULT NULL,
+  `meta_pixel_script` longtext DEFAULT NULL,
+  `footer_title` varchar(191) DEFAULT NULL,
+  `copyright_msg` varchar(191) DEFAULT NULL,
+  `shop_name` varchar(191) DEFAULT NULL,
+  `welcome_msg` varchar(191) DEFAULT NULL,
+  `bkash_no` varchar(191) DEFAULT NULL,
+  `account_type` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `logo`, `favicon`, `phone`, `email`, `address`, `established`, `facebook`, `twitter`, `instagram`, `youtube`, `pinterest`, `contact_us_img`, `inside_dhaka_dc`, `outside_dhaka_dc`, `sub_urban_areas_dc`, `acc_no`, `routing_number`, `branch_name`, `bank_name`, `no_img`, `footer_description`, `meta_pixel_script`, `footer_title`, `copyright_msg`, `shop_name`, `welcome_msg`, `bkash_no`, `account_type`, `created_at`, `updated_at`) VALUES
+(1, 'uploads/logo/logo_68f3171f515223.75285263.jpeg', 'uploads/logo/logo_68eba58f952aa3.56981447.jpg', '01855179222', 'admin@gmail.com', 'Gaibandha', '2019', 'https://www.facebook.com/groups/4562053240493346', 'https://www.twitter.com', 'https://www.ig.com', 'https://www.yt.com', 'https://www.pt.com', 'uploads/logo/logo_68eba58f953217.51179880.jpg', 80, 150, 120, '984533', '123456789', 'Branch Name', 'Bank Name', NULL, 'Register now to get updates on pronot get up icons & coupons ster now toon.', '1144797380466787', 'Got Question? Call us 24/7', 'Copyright © 2025 Glamours World. All Rights Reserved.', 'Glamours World', 'Welcome to Glamours World message or remove it!', NULL, NULL, '2025-10-12 06:56:47', '2025-10-17 22:27:11');
 
 -- --------------------------------------------------------
 
@@ -492,7 +761,7 @@ CREATE TABLE `variants` (
 
 INSERT INTO `variants` (`id`, `user_id`, `variant_name`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Color', 'Active', '2025-10-07 02:45:39', '2025-10-07 02:45:39'),
-(2, 1, 'Size', 'Active', '2025-10-07 02:45:49', '2025-10-07 02:45:49');
+(2, 1, 'Size', 'Active', '2025-10-07 02:45:49', '2025-10-13 05:31:25');
 
 -- --------------------------------------------------------
 
@@ -519,6 +788,18 @@ INSERT INTO `whishlists` (`id`, `user_id`, `product_id`, `created_at`, `updated_
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `about_us`
+--
+ALTER TABLE `about_us`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `banners`
+--
+ALTER TABLE `banners`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `brands`
@@ -549,6 +830,12 @@ ALTER TABLE `categories`
   ADD UNIQUE KEY `categories_category_name_unique` (`category_name`);
 
 --
+-- Indexes for table `cosmetics`
+--
+ALTER TABLE `cosmetics`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -556,10 +843,23 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `intros`
+--
+ALTER TABLE `intros`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `newsletters`
+--
+ALTER TABLE `newsletters`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `newsletters_email_unique` (`email`);
 
 --
 -- Indexes for table `orderdetails`
@@ -608,6 +908,28 @@ ALTER TABLE `productvariants`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `product_imgs`
+--
+ALTER TABLE `product_imgs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_imgs_product_id_foreign` (`product_id`),
+  ADD KEY `product_imgs_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reviews_product_id_foreign` (`product_id`),
+  ADD KEY `reviews_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sliders`
 --
 ALTER TABLE `sliders`
@@ -653,10 +975,22 @@ ALTER TABLE `whishlists`
 --
 
 --
+-- AUTO_INCREMENT for table `about_us`
+--
+ALTER TABLE `about_us`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `banners`
+--
+ALTER TABLE `banners`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `brand_category`
@@ -668,7 +1002,7 @@ ALTER TABLE `brand_category`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -677,34 +1011,52 @@ ALTER TABLE `categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `cosmetics`
+--
+ALTER TABLE `cosmetics`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `intros`
+--
+ALTER TABLE `intros`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `newsletters`
+--
+ALTER TABLE `newsletters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `paymentmethods`
 --
 ALTER TABLE `paymentmethods`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -716,13 +1068,31 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `productvariants`
 --
 ALTER TABLE `productvariants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `product_imgs`
+--
+ALTER TABLE `product_imgs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sliders`
@@ -770,6 +1140,20 @@ ALTER TABLE `whishlists`
 ALTER TABLE `brand_category`
   ADD CONSTRAINT `brand_category_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `brand_category_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_imgs`
+--
+ALTER TABLE `product_imgs`
+  ADD CONSTRAINT `product_imgs_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_imgs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD CONSTRAINT `reviews_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `reviews_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -275,7 +275,7 @@ class ProductController extends Controller
 
             $product->carts()->delete();
             $product->whishlist()->delete();
-            $product->orders()->delete();
+            # $product->orders()->delete();
             $product->images()->delete();
             $product->delete();
 
