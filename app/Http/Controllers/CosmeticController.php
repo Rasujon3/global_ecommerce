@@ -34,7 +34,7 @@ class CosmeticController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $brands = Cosmetic::latest();
+            $brands = Cosmetic::with('brand')->latest();
 
             return DataTables::of($brands)
                 ->addIndexColumn()
@@ -45,6 +45,10 @@ class CosmeticController extends Controller
 
                 ->addColumn('description', function($row){
                     return strip_tags($row->description);
+                })
+
+                ->addColumn('brand', function($row){
+                    return $row->brand?->brand_name ?? 'N/A';
                 })
 
                 ->addColumn('action', function ($row) {
@@ -68,7 +72,7 @@ class CosmeticController extends Controller
                 ->rawColumns([
                     'title',
                     'description',
-                    'status',
+                    'brand',
                     'action'
                 ])
                 ->make(true);
@@ -93,6 +97,7 @@ class CosmeticController extends Controller
             }
 
             Cosmetic::create([
+                'brand_id' => $request->brand_id,
                 'title' => $request->title,
                 'description' => $request->description,
                 'image' => $path,
@@ -151,6 +156,7 @@ class CosmeticController extends Controller
                 $path = $cosmetic->image;
             }
 
+            $cosmetic->brand_id = $request->brand_id;
             $cosmetic->title = $request->title;
             $cosmetic->description = $request->description;
             $cosmetic->image = $path;

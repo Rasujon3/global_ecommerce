@@ -10,7 +10,7 @@
             <div class="banner-content y-50 pt-1">
                 {!! $cosmetic->title ?? '' !!}
                 {!! $cosmetic->description ?? '' !!}
-                <a href="{{ URL::to('/product-lists') }}"
+                <a href="{{url('/product-lists?brand_id='.$cosmetic->brand_id)}}"
                    class="btn btn-primary btn-link btn-underline btn-icon-right">
                     Shop Now
                     <i class="w-icon-long-arrow-right"></i>

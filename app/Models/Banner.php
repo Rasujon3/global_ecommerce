@@ -12,6 +12,7 @@ class Banner extends Model
     protected $table = 'banners';
 
     protected $fillable = [
+        'brand_id',
         'title',
         'description',
         'price',
@@ -19,9 +20,9 @@ class Banner extends Model
     ];
 
 
-    public function products()
+    public function brand()
     {
-    	return $this->hasMany(Product::class);
+    	return $this->belongsTo(Brand::class);
     }
 
     // public function categories()

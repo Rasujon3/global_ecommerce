@@ -24,6 +24,7 @@ class UpdateBannerRequest extends FormRequest
     public function rules()
     {
         return [
+            'brand_id' => 'required|numeric|exists:brands,id',
             'title' => 'required|string',
             'description' => 'required|string',
             'price' => 'required|string',

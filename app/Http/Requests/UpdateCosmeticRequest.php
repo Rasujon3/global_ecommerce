@@ -24,6 +24,7 @@ class UpdateCosmeticRequest extends FormRequest
     public function rules()
     {
         return [
+            'brand_id' => 'required|integer|exists:brands,id',
             'title' => 'required|string',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',

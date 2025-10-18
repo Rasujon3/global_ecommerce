@@ -36,6 +36,7 @@
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Price</th>
+                                <th>Brand</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -69,6 +70,7 @@
 		            {data: 'title', name: 'title'},
 		            {data: 'description', name: 'description'},
 		            {data: 'price', name: 'price'},
+		            {data: 'brand', name: 'brand'},
 		            {data: 'action', name: 'action', orderable: false, searchable: false},
 		        ]
         });

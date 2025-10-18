@@ -66,6 +66,21 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="brand_id">Select Brand <span class="required">*</span></label>
+                                    <select class="form-control select2bs4" name="brand_id" id="brand_id" required="">
+                                        <option value="" selected="" disabled="">Select Brand</option>
+                                        @foreach(brands() as $brand)
+                                            <option value="{{$brand->id}}" <?php if($cosmetic->brand_id == $brand->id){echo "selected";} ?>>{{ $brand->brand_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('brand_id')
+                                    <span class="alert alert-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="image">Image <span class="required">*</span></label>
                                     <input name="image" type="file" id="image" accept="image/*" class="dropify"
                                            data-height="200"

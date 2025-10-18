@@ -12,15 +12,16 @@ class Cosmetic extends Model
     protected $table = 'cosmetics';
 
     protected $fillable = [
+        'brand_id',
         'title',
         'description',
         'image'
     ];
 
 
-    public function products()
+    public function brand()
     {
-    	return $this->hasMany(Product::class);
+        return $this->belongsTo(Brand::class);
     }
 
     // public function categories()

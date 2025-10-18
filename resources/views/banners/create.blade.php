@@ -32,7 +32,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="title">Title <span class="required">*</span></label>
                                 <textarea
@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="description">Description <span class="required">*</span></label>
                                 <textarea
@@ -64,7 +64,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="price">Price <span class="required">*</span></label>
                                 <textarea
@@ -75,6 +75,21 @@
                                     {!!old('price')!!}
                                 </textarea>
                                 @error('price')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="brand_id">Select Brand <span class="required">*</span></label>
+                                <select class="form-control select2bs4" name="brand_id" id="brand_id" required="">
+                                    <option value="" selected="" disabled="">Select Brand</option>
+                                    @foreach(brands() as $brand)
+                                        <option value="{{$brand->id}}">{{ $brand->brand_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('brand_id')
                                 <span class="alert alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>

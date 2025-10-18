@@ -31,7 +31,7 @@ class BannerController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $brands = Banner::latest();
+            $brands = Banner::with('brand')->latest();
 
             return DataTables::of($brands)
                 ->addIndexColumn()
@@ -46,6 +46,10 @@ class BannerController extends Controller
 
                 ->addColumn('price', function($row){
                     return strip_tags($row->price);
+                })
+
+                ->addColumn('brand', function($row){
+                    return $row->brand?->brand_name ?? 'N/A';
                 })
 
                 ->addColumn('action', function ($row) {
@@ -70,7 +74,7 @@ class BannerController extends Controller
                     'title',
                     'description',
                     'price',
-                    'status',
+                    'brand',
                     'action'
                 ])
                 ->make(true);
@@ -94,6 +98,7 @@ class BannerController extends Controller
                 $path = 'uploads/banner/' . $name;
             }
             Banner::create([
+                'brand_id' => $request->brand_id,
                 'title' => $request->title,
                 'description' => $request->description,
                 'price' => $request->price,
@@ -153,6 +158,7 @@ class BannerController extends Controller
                 $path = $banner->image;
             }
 
+            $banner->brand_id = $request->brand_id;
             $banner->title = $request->title;
             $banner->description = $request->description;
             $banner->price = $request->price;

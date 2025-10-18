@@ -24,6 +24,7 @@ class StoreCosmeticRequest extends FormRequest
     public function rules()
     {
         return [
+            'brand_id' => 'required|integer|exists:brands,id',
             'title' => 'required|string',
             'description' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
