@@ -2,6 +2,22 @@
 @php
  $sliders = \App\Models\Slider::latest()->get();
 @endphp
+<style>
+    .slide-image {
+        position: absolute !important;
+        /*top: 50%;*/
+        left: 40%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        text-align: center;
+    }
+
+    .slide-image img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
  <section class="intro-section">
                 <div class="swiper-container swiper-theme nav-inner pg-inner swiper-nav-lg animation-slider pg-xxl-hide nav-xxl-show nav-hide"
                     data-swiper-options="{
@@ -14,13 +30,18 @@
                     <div class="swiper-wrapper">
                       @foreach($sliders as $key=>$slider)
                         <div class="swiper-slide banner banner-fixed intro-slide intro-slide-1"
-                            style="background-image: url({{ $slider->image }}); background-color: #ebeef2;">
+                            style="background-image: url({{ asset('front/assets/images/sliders/slider_4.jpg') }}); background-color: #ebeef2;">
                             <div class="container">
-{{--                                <figure class="slide-image skrollable slide-animate">--}}
-{{--                                    <img src="{{ $slider->image }}" alt="Banner"--}}
-{{--                                        data-bottom-top="transform: translateY(10vh);"--}}
-{{--                                        data-top-bottom="transform: translateY(-10vh);" width="474" height="397">--}}
-{{--                                </figure>--}}
+                                <figure class="slide-image skrollable slide-animate">
+                                    <img
+                                        src="{{ $slider->image }}"
+                                        alt="Banner"
+                                        data-bottom-top="transform: translateY(10vh);"
+                                        data-top-bottom="transform: translateY(-10vh);"
+                                        width="474"
+                                        height="397"
+                                    >
+                                </figure>
                                 <div class="banner-content y-50 text-center">
                                     <h5 class="banner-subtitle font-weight-normal text-default ls-50 lh-1 mb-2 slide-animate"
                                         data-animation-options="{
@@ -46,7 +67,7 @@
                                         {{$slider->sub_title}}
                                     </p>
 
-                                    <a href="{{url('/product-lists?category_id='.$slider->category_id)}}"
+                                    <a href="{{url('/product-lists?brand_id='.$slider->brand_id)}}"
                                         class="btn btn-primary btn-primary-outline btn-rounded btn-icon-right slide-animate"
                                         data-animation-options="{
                                             'name': 'fadeInRightShorter',

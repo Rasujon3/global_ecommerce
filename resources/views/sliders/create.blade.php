@@ -42,7 +42,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="sub_title">Sub Title <span class="required">*</span></label>
@@ -55,20 +55,36 @@
                         </div>
 
 
+{{--                        <div class="col-md-12">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="category_id">Select Category <span class="required">*</span></label>--}}
+{{--                                <select class="form-control select2bs4" name="category_id" id="category_id" required="">--}}
+{{--                                    <option value="" selected="" disabled="">Select Category</option>--}}
+{{--                                    @foreach(categories() as $category)--}}
+{{--                                      <option value="{{$category->id}}">{{$category->category_name}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                                @error('category_id')--}}
+{{--                                <span class="alert alert-danger">{{ $message }}</span>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
+{{--                        </div> --}}
+
+
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="category_id">Select Category <span class="required">*</span></label>
-                                <select class="form-control select2bs4" name="category_id" id="category_id" required="">
-                                    <option value="" selected="" disabled="">Select Category</option>
-                                    @foreach(categories() as $category)
-                                      <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                <label for="brand_id">Select Brand <span class="required">*</span></label>
+                                <select class="form-control select2bs4" name="brand_id" id="brand_id" required="">
+                                    <option value="" selected="" disabled="">Select Brand</option>
+                                    @foreach(brands() as $brand)
+                                      <option value="{{$brand->id}}">{{ $brand->brand_name }}</option>
                                     @endforeach
                                 </select>
-                                @error('category_id')
+                                @error('brand_id')
                                 <span class="alert alert-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="col-md-12">
                           <div class="form-group">
@@ -80,7 +96,7 @@
                           </div>
                         </div>
 
-                        
+
                         <div class="form-group w-100 px-2">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

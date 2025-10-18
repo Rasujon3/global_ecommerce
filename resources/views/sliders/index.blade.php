@@ -32,13 +32,14 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Category</th>
+{{--                                <th>Category</th>--}}
+                                <th>Brand</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="conts"> 
+                        <tbody class="conts">
                         </tbody>
-                    </table> 
+                    </table>
                 </div>
             </div>
         </div>
@@ -47,7 +48,7 @@
 @endsection
 
 @push('scripts')
-  
+
   <script>
   	$(document).ready(function(){
       let slider_id;
@@ -64,7 +65,8 @@
 
 		        columns: [
 		            {data: 'title', name: 'title'},
-		            {data: 'category', name: 'category'},
+		            // {data: 'category', name: 'category'},
+		            {data: 'brand', name: 'brand'},
 		            {data: 'action', name: 'action', orderable: false, searchable: false},
 		        ]
         });
@@ -92,7 +94,7 @@
                             $('.data-table').DataTable().ajax.reload(null, false);
 
                     },
-                                
+
               });
            }
 

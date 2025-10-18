@@ -24,7 +24,8 @@ class UpdateSliderRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_id' => 'required|integer|exists:categories,id',
+//            'category_id' => 'required|integer|exists:categories,id',
+            'brand_id' => 'required|integer|exists:brands,id',
             'title' => 'required|string',
             'sub_title' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',

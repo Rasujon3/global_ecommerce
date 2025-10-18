@@ -12,6 +12,7 @@ class Slider extends Model
     protected $fillable = [
         'user_id',
         'category_id',
+        'brand_id',
         'title',
         'sub_title',
         'image'
@@ -20,6 +21,10 @@ class Slider extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 
 }
