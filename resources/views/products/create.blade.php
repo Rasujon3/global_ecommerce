@@ -213,6 +213,44 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="is_arrival_product">Is Arrival Product <span class="required">*</span></label>
+                                <select
+                                    class="form-control select2bs4"
+                                    name="is_arrival_product"
+                                    id="is_arrival_product"
+                                    required=""
+                                >
+                                    <option value="" selected="" disabled="">Choose Option</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                                @error('is_arrival_product')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="is_best_seller">Is Best Seller <span class="required">*</span></label>
+                                <select
+                                    class="form-control select2bs4"
+                                    name="is_best_seller"
+                                    id="is_best_seller"
+                                    required=""
+                                >
+                                    <option value="" selected="" disabled="">Choose Option</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                                @error('is_best_seller')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
                         {{-- <div class="col-md-12">
                           <div class="form-group">
                             <label for="image">Image <span class="required">*</span></label>

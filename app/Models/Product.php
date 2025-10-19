@@ -22,6 +22,8 @@ class Product extends Model
         'product_price',
         'stock_qty',
         'description',
+        'is_best_seller',
+        'is_arrival_product',
     ];
 
 

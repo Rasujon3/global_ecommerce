@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
@@ -108,6 +109,7 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
+        DB::beginTransaction();
         try
         {
 //            if($request->file('image')){
@@ -129,6 +131,8 @@ class ProductController extends Controller
                 # 'image' => $path,
                 'description' => $request->description,
                 'stock_qty' => $request->stock_qty,
+                'is_arrival_product' => $request->is_arrival_product,
+                'is_best_seller' => $request->is_best_seller,
             ]);
 
             if($request->hasFile('images') && count($request->file('images')) > 0) {
@@ -146,6 +150,8 @@ class ProductController extends Controller
                 }
             }
 
+            DB::commit();
+
             $notification=array(
                 'messege'=>"Successfully a product has been added",
                 'alert-type'=>"success",
@@ -154,7 +160,7 @@ class ProductController extends Controller
             return redirect()->route('products.index')->with($notification);
 
         } catch(Exception $e) {
-
+            DB::rollBack();
             Log::error('Error in store:', [
                 'message' => $e->getMessage(),
                 'code'    => $e->getCode(),
@@ -197,6 +203,7 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
+        DB::beginTransaction();
         try
         {
 //            if($request->file('image')){
@@ -219,6 +226,8 @@ class ProductController extends Controller
             # $product->image = $path;
             $product->description = $request->description;
             $product->stock_qty = $request->stock_qty;
+            $product->is_arrival_product = $request->is_arrival_product;
+            $product->is_best_seller = $request->is_best_seller;
             $product->update();
 
             if($request->hasFile('images') && count($request->file('images')) > 0) {
@@ -237,6 +246,8 @@ class ProductController extends Controller
                 }
             }
 
+            DB::commit();
+
             $notification=array(
                 'messege'=>"Successfully the product has been updated",
                 'alert-type'=>"success",
@@ -244,7 +255,8 @@ class ProductController extends Controller
 
             return redirect('/products')->with($notification);
 
-        }catch(Exception $e){
+        } catch(Exception $e) {
+            DB::rollBack();
             Log::error('Error in update:', [
                 'message' => $e->getMessage(),
                 'code'    => $e->getCode(),
@@ -260,15 +272,9 @@ class ProductController extends Controller
             return redirect()->route('products.index')->with($notification);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
+        DB::beginTransaction();
         try
         {
 //            unlink(public_path($product->image));
@@ -279,8 +285,11 @@ class ProductController extends Controller
             $product->images()->delete();
             $product->delete();
 
+            DB::commit();
+
             return response()->json(['status'=>true, 'message'=>"Successfully the product has been deleted"]);
-        }catch(Exception $e){
+        } catch(Exception $e) {
+            DB::rollBack();
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
         }
     }

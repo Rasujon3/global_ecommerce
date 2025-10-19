@@ -5,6 +5,8 @@
 
     @include('fronts.components.homeCategories')
 
+    @include('fronts.components.arrivalProducts')
+
     <!-- End of Product Wrapper 1 -->
 
     @include('fronts.components.brands')

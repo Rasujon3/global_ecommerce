@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Banner;
 use App\Models\Cosmetic;
 use App\Models\Intro;
+use App\Models\Product;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Cart;
 use App\Models\Whishlist;
@@ -138,6 +139,24 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $intros = Intro::get();
             $view->with('intros', $intros);
+        });
+
+        View::composer('*', function ($view) {
+            $arrivalProducts = Product::where('is_arrival_product',1)
+                ->where('status','Active')
+                ->latest()
+                ->get();
+
+            $view->with('arrivalProducts', $arrivalProducts);
+        });
+
+        View::composer('*', function ($view) {
+            $bestSellers = Product::where('is_best_seller',1)
+                ->where('status','Active')
+                ->latest()
+                ->get();
+
+            $view->with('bestSellers', $bestSellers);
         });
 
 
