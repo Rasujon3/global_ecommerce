@@ -950,7 +950,7 @@
                 data:{'element_id':product_id,'productvariant_ids':productvariant_ids,'use_for':use_for,'qty':qty},
                 dataType:"json",
                 success:function(data) {
-                if (data.status == 'true') {
+                if (data.status == true) {
                     toastr.success(data.message);
                     setTimeout(function() {
                         window.location.href = redirectUrl;

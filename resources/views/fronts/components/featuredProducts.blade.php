@@ -5,7 +5,7 @@
 
     @include('fronts.components.homeCategories')
 
-    @include('fronts.components.arrivalProducts')
+{{--    @include('fronts.components.arrivalProducts')--}}
 
     <!-- End of Product Wrapper 1 -->
 

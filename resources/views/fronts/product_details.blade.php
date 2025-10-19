@@ -903,7 +903,7 @@
                 data:{'element_id':product_id,'productvariant_ids':productvariant_ids,'use_for':use_for,'qty':qty},
                 dataType:"json",
                 success:function(data) {
-                if (data.status == 'false') {
+                if (data.status == false) {
                     toastr.error(data.message);
                 } else {
                     toastr.success(data.message);
