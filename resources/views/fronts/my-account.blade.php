@@ -105,6 +105,7 @@
                         <th class="order-date">Date</th>
                         <th class="order-status">Status</th>
                         <th class="order-total">Total</th>
+                        <th class="order-total">Invoice</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -115,6 +116,11 @@
                         <td class="order-date" style="text-align: center !important;">{{ $order->created_at ?? '' }}</td>
                         <td class="order-status" style="text-align: center !important;">{{ $order->status ?? '' }}</td>
                         <td class="order-total" style="text-align: center !important;">{{ $order->total ?? 0 }}</td>
+                        <td class="order-total" style="text-align: center !important;">
+                            <a href="{{ route('front.invoice', $order->id) }}" target="_blank" class="btn btn-link btn-underline btn-icon-right text-primary">
+                                <i class="w-icon-download"></i>
+                            </a>
+                        </td>
                       </tr>
                     @endforeach
                     @else

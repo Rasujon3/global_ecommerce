@@ -47,6 +47,7 @@
                       @if($data->screen_shot)
                             <br/>
                             <a href="{{asset($data->screen_shot)}}" target="_blank" class="float-right btn btn-sm btn-info">View Screenshot</a>
+                          <br/>
                       @endif
                       <br/>
                       <button onclick="window.print()" class="btn btn-primary float-right" style="margin-right: 5px;">

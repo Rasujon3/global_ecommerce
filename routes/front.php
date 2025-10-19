@@ -40,6 +40,7 @@ Route::get('/bkash-info', [CheckoutController::class, 'showBkashInfo'])->name('b
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/about', [FrontController::class, 'about'])->name('about');
 Route::get('/my-account', [FrontController::class, 'myAccount'])->name('my-account');
+Route::get('/invoice/{id}', [FrontController::class, 'showInvoice'])->name('front.invoice');
 Route::post('/user-change-password', [FrontController::class, 'userChangePassword'])->name('user-change-password');
 Route::get('/search-suggestions', [FrontController::class, 'searchSuggestions'])->name('search.suggestions');
 

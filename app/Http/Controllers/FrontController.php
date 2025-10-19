@@ -188,6 +188,13 @@ class FrontController extends Controller
             return redirect()->route('home')->with($notification);
         }
     }
+
+    public function showInvoice($id)
+    {
+        $data = Orderdetail::with('orders.product', 'paymentmethod')->findorfail($id);
+        return view('fronts.orders.show_invoice', compact('data'));
+    }
+
     public function searchSuggestions(Request $request)
     {
         $keyword = $request->get('q', '');
