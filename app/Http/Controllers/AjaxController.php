@@ -211,6 +211,10 @@ class AjaxController extends Controller
                 return response()->json(['status'=>false, 'message'=>'The product is sold out']);
             }
 
+            if($request->qty > $product->stock_qty) {
+                return response()->json(['status'=>false, 'message'=>'The requested quantity is not available in stock']);
+            }
+
             if (empty($cart_session_id)) {
                 $new_session_id = rand(1000, 9000) . $count;
                 Session::put('cart_session_id', $new_session_id);

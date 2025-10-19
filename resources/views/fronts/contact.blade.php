@@ -950,10 +950,14 @@
                 data:{'element_id':product_id,'productvariant_ids':productvariant_ids,'use_for':use_for,'qty':qty},
                 dataType:"json",
                 success:function(data) {
-                	toastr.success(data.message);
-                	setTimeout(function() {
-					    window.location.href = redirectUrl;
-					}, 1000);
+                if (data.status == 'true') {
+                    toastr.success(data.message);
+                    setTimeout(function() {
+                        window.location.href = redirectUrl;
+                    }, 1000);
+                } else {
+                    toastr.error(data.message);
+                }
             },
 
 	    });
