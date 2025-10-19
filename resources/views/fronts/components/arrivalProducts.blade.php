@@ -3,7 +3,7 @@
         <div class="container pb-2">
             <div class="product-wrapper-1 appear-animate mb-5">
                 <div class="title-link-wrapper pb-1 mb-4">
-                    <h2 class="title w-100 justify-content-center pt-1 ls-normal mb-5">Arrival Products</h2>
+                    <h2 class="title w-100 justify-content-center pt-1 ls-normal mb-5">New Arrival Products</h2>
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-sm-4 mb-4 d-none">

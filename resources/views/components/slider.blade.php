@@ -30,20 +30,20 @@
                     <div class="swiper-wrapper">
                       @foreach($sliders as $key=>$slider)
                         <div class="swiper-slide banner banner-fixed intro-slide intro-slide-1"
-                            style="background-image: url({{ asset('front/assets/images/sliders/slider_4.jpg') }}); background-color: #ebeef2;">
+                            style="background-image: url({{ asset($slider->image) }}); background-color: #ebeef2;">
                             <div class="container">
-                                <figure class="slide-image skrollable slide-animate">
-                                    <img
-                                        src="{{ $slider->image }}"
-                                        alt="Banner"
-                                        data-bottom-top="transform: translateY(10vh);"
-                                        data-top-bottom="transform: translateY(-10vh);"
-                                        width="474"
-                                        height="397"
-                                    >
-                                </figure>
+{{--                                <figure class="slide-image skrollable slide-animate">--}}
+{{--                                    <img--}}
+{{--                                        src="{{ $slider->image }}"--}}
+{{--                                        alt="Banner"--}}
+{{--                                        data-bottom-top="transform: translateY(10vh);"--}}
+{{--                                        data-top-bottom="transform: translateY(-10vh);"--}}
+{{--                                        width="474"--}}
+{{--                                        height="397"--}}
+{{--                                    >--}}
+{{--                                </figure>--}}
                                 <div class="banner-content y-50 text-center">
-                                    <h5 class="banner-subtitle font-weight-normal text-default ls-50 lh-1 mb-2 slide-animate"
+                                    <h5 class="banner-subtitle font-weight-normal text-default ls-50 lh-1 mb-2 slide-animate d-none"
                                         data-animation-options="{
                                     'name': 'fadeInRightShorter',
                                     'duration': '1s',
@@ -51,7 +51,7 @@
                                 }">
                                         {{$slider->title}}
                                     </h5>
-                                    <h3 class="banner-title font-weight-bolder ls-25 lh-1 slide-animate"
+                                    <h3 class="banner-title font-weight-bolder ls-25 lh-1 slide-animate d-none"
                                         data-animation-options="{
                                     'name': 'fadeInRightShorter',
                                     'duration': '1s',
@@ -59,7 +59,7 @@
                                 }">
                                         {{$slider->title}}
                                     </h3>
-                                    <p class="font-weight-normal text-default slide-animate" data-animation-options="{
+                                    <p class="font-weight-normal text-default slide-animate d-none" data-animation-options="{
                                     'name': 'fadeInRightShorter',
                                     'duration': '1s',
                                     'delay': '.6s'
