@@ -55,7 +55,7 @@
                             @if(isset($menuBrands))
                                 @foreach($menuBrands as $brand)
                                     <li>
-                                        <a href="#">{{ $brand->brand_name }}</a>
+                                        <a href="{{ url('/product-lists?brand_id='.$brand->id) }}">{{ $brand->brand_name }}</a>
                                         <ul>
                                             @foreach($brand->products as $product)
                                                 <li>

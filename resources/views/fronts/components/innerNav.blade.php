@@ -120,7 +120,9 @@
                                 @if(isset($menuBrands))
                                     @foreach($menuBrands as $brand)
                                         <li>
-                                            <h4 class="menu-title">{{$brand->brand_name}}</h4>
+                                            <a href="{{url('/product-lists?brand_id='.$brand->id)}}">
+                                                <h4 class="menu-title">{{$brand->brand_name}}</h4>
+                                            </a>
                                             <ul>
                                                 @foreach($brand->products as $product)
                                                     <li><a href="{{url('/product-details/'.$product->id)}}">{{$product->product_name}}</a></li>
