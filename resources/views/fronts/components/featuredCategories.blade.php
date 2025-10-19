@@ -88,6 +88,19 @@
                                         <ins class="new-price">{{$product->product_price}} BDT</ins>
                                     @endif
                                 </div>
+                                <div class="product-rating-details">
+                                    @php
+                                        $avg_rating = $product->reviews->avg('rating');
+                                        $total_reviews = $product->reviews->count();
+                                    @endphp
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width: {{ $avg_rating * 20 }}%;"></span>
+                                            <span class="tooltiptext tooltip-top">{{ number_format($avg_rating, 1) }}</span>
+                                        </div>
+                                        <a href="{{ URL::to('/product-details/'.$product->id) }}" class="rating-reviews scroll-to">({{ $total_reviews }} Reviews)</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

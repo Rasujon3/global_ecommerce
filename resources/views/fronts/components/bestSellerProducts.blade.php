@@ -3,7 +3,7 @@
         <div class="container pb-2">
             <div class="product-wrapper-1 appear-animate mb-5">
                 <div class="title-link-wrapper pb-1 mb-4">
-                    <h2 class="title w-100 justify-content-center pt-1 ls-normal mb-5">Best Seller Products</h2>
+                    <h2 class="title w-100 justify-content-center pt-1 ls-normal mb-5">Best Seller</h2>
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-sm-4 mb-4 d-none">
@@ -94,6 +94,19 @@
                                             @else
                                                 <ins class="new-price">{{$product->product_price}} BDT</ins>
                                             @endif
+                                        </div>
+                                        <div class="product-rating-details">
+                                            @php
+                                                $avg_rating = $product->reviews->avg('rating');
+                                                $total_reviews = $product->reviews->count();
+                                            @endphp
+                                            <div class="ratings-container">
+                                                <div class="ratings-full">
+                                                    <span class="ratings" style="width: {{ $avg_rating * 20 }}%;"></span>
+                                                    <span class="tooltiptext tooltip-top">{{ number_format($avg_rating, 1) }}</span>
+                                                </div>
+                                                <a href="{{ URL::to('/product-details/'.$product->id) }}" class="rating-reviews scroll-to">({{ $total_reviews }} Reviews)</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

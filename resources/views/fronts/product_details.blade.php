@@ -512,7 +512,7 @@
                                       @foreach($relatedProducts as $product)
                                         <div class="swiper-slide product">
                                             <figure class="product-media">
-                                                <a href="product-default.html">
+                                                <a href="{{ url('/product-details/'.$product->id) }}">
                                                     <img src="{{URL::to($product->image)}}" alt="Product"
                                                         width="300" height="338" />
                                                     <img src="{{URL::to($product->image)}}" alt="Product"
