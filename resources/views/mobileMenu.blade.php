@@ -217,45 +217,127 @@
         background: #ccc;
         border-radius: 2px;
     }
+    .search-section-header {
+        font-weight: 600;
+        font-size: 13px;
+        color: #444;
+        padding: 6px 12px;
+        background: #f8f9fa;
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+
+    .mobile-menu-container .search-result-item hr {
+        margin: 6px 0;
+    }
 </style>
 
 <script>
-    (function() {
-        // Keep menu open when search is focused
-        window.addEventListener('load', function() {
-            var searchInput = document.querySelector('.mobile-menu-container input[name="search_product"]');
-            var body = document.body;
-            var isSearchFocused = false;
+    document.addEventListener("DOMContentLoaded", function () {
+        const mobileInput = document.querySelector('#mobile-search-input');
+        const resultsDropdown = document.querySelector('#mobileSearchResults');
+        const resultsList = document.querySelector('#mobileSearchResultsList');
+        const loadingState = document.querySelector('#mobileSearchLoading');
+        const noResultsState = document.querySelector('#mobileNoResults');
+        const baseURL = window.location.origin;
 
-            if (!searchInput) {
-                console.log('Mobile menu search input not found.');
+        if (!mobileInput) return;
+
+        let searchTimeout;
+
+        mobileInput.addEventListener('input', function () {
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                resultsDropdown.classList.remove('show');
                 return;
             }
 
-            searchInput.addEventListener('focus', function() {
-                isSearchFocused = true;
-            });
+            clearTimeout(searchTimeout);
 
-            searchInput.addEventListener('blur', function() {
-                isSearchFocused = false;
-            });
+            loadingState.style.display = 'block';
+            resultsList.style.display = 'none';
+            noResultsState.style.display = 'none';
+            resultsDropdown.classList.add('show');
 
-            var observer = new MutationObserver(function(mutations) {
-                if (isSearchFocused) {
-                    mutations.forEach(function(mutation) {
-                        if (mutation.attributeName === 'class') {
-                            var targetNode = mutation.target;
-                            if (!targetNode.classList.contains('mmenu-active')) {
-                                targetNode.classList.add('mmenu-active');
-                            }
+            searchTimeout = setTimeout(() => {
+                fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        loadingState.style.display = 'none';
+                        resultsList.innerHTML = ''; // clear previous
+
+                        // --- 🟩 Show Brands ---
+                        if (data.brands && data.brands.length > 0) {
+                            resultsList.innerHTML += `<div class="search-section-header">Brands</div>`;
+                            data.brands.forEach(brand => {
+                                resultsList.innerHTML += `
+                                <a href="/product-lists?brand_id=${brand.id}" class="search-result-item d-flex align-items-center">
+                                    <img src="${baseURL}/${brand.image}" alt="${brand.brand_name}" class="search-result-img me-2">
+                                    <div class="search-result-info">
+                                        <p class="search-result-title">${brand.brand_name}</p>
+                                    </div>
+                                </a>
+                            `;
+                            });
+                            resultsList.innerHTML += `<hr>`;
                         }
-                    });
-                }
-            });
 
-            observer.observe(body, {
-                attributes: true
-            });
+                        // --- 🟨 Show Products ---
+                        if (data.products && data.products.length > 0) {
+                            resultsList.innerHTML += `<div class="search-section-header">Products</div>`;
+                            data.products.forEach(product => {
+                                resultsList.innerHTML += `
+                                <a href="/product-details/${product.id}" class="search-result-item d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <img src="${baseURL}/${product.image}" alt="${product.product_name}" class="search-result-img me-2">
+                                        <div class="search-result-info">
+                                            <p class="search-result-title">${product.product_name}</p>
+                                            ${product.brand_name ? `<p class="search-result-category">${product.brand_name}</p>` : ''}
+                                        </div>
+                                    </div>
+                                    <p class="search-result-price">${product.product_price} BDT</p>
+                                </a>
+                            `;
+                            });
+                        }
+
+                        if (
+                            (!data.brands || data.brands.length === 0) &&
+                            (!data.products || data.products.length === 0)
+                        ) {
+                            noResultsState.style.display = 'block';
+                            resultsList.style.display = 'none';
+                        } else {
+                            noResultsState.style.display = 'none';
+                            resultsList.style.display = 'block';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error:', err);
+                        loadingState.style.display = 'none';
+                        noResultsState.innerHTML = '<i class="w-icon-exclamation-triangle"></i><p>Error loading results</p>';
+                        noResultsState.style.display = 'block';
+                    });
+            }, 300);
         });
-    })();
+
+        // Hide suggestions on outside click
+        document.addEventListener('click', function (e) {
+            if (!mobileInput.contains(e.target) && !resultsDropdown.contains(e.target)) {
+                resultsDropdown.classList.remove('show');
+            }
+        });
+
+        // Press enter -> go to first result
+        mobileInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && resultsDropdown.classList.contains('show')) {
+                const firstResult = resultsList.querySelector('.search-result-item');
+                if (firstResult) {
+                    e.preventDefault();
+                    window.location.href = firstResult.getAttribute('href');
+                }
+            }
+        });
+    });
 </script>
