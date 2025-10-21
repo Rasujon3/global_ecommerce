@@ -68,11 +68,9 @@ class FrontController extends Controller
     {
     	$query = Product::query();
 
-
 	    if ($request->filled('category_id')) {
 	        $query->where('category_id', $request->category_id);
 	    }
-
 
 	    if ($request->filled('brand_id')) {
 	        $query->where('brand_id', $request->brand_id);
@@ -89,13 +87,50 @@ class FrontController extends Controller
 	        });
 	    }
 
-	    $products = $query->with('category', 'images')->latest()->paginate(4);
+	    $products = $query
+            ->with('category', 'images', 'brand')
+            ->latest()
+            ->paginate(4);
 
 	    $products->appends($request->query());
 
 	    $products->appends($request->only(['category_id', 'brand_id', 'product_id', 'search_product']));
 
-	    return view('fronts.product_page', compact('products'));
+        // prepare header info
+        $headerTitle = 'Products';
+        $headerLogo  = null;
+
+        /*
+        if ($request->filled('category_id')) {
+            $category = Category::find($request->category_id);
+            if ($category) {
+                $headerTitle = $category->category_name;
+                $headerLogo  = $category->image ?? null;
+            }
+        } elseif ($request->filled('brand_id')) {
+            $brand = Brand::find($request->brand_id);
+            if ($brand) {
+                $headerTitle = $brand->brand_name;
+                $headerLogo  = $brand->image ?? null;
+            }
+        } else {
+            $headerTitle = 'Products';
+            $headerLogo  = null;
+        }
+        */
+
+        if ($request->filled('brand_id')) {
+            $brand = Brand::find($request->brand_id);
+            if ($brand) {
+                $headerTitle = $brand->brand_name;
+                $headerLogo  = $brand->image ?? null;
+            }
+        } else {
+            $headerTitle = 'Products';
+            $headerLogo  = null;
+        }
+
+	    return view('fronts.product_page', compact('products', 'headerTitle', 'headerLogo'));
     }
     public function contact()
     {

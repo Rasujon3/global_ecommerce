@@ -65,9 +65,16 @@
 <!-- Start of Main -->
         <main class="main wishlist-page">
             <!-- Start of Page Header -->
-            <div class="page-header">
-                <div class="container">
-                    <h1 class="page-title mb-0">Products</h1>
+            <div class="page-header py-4">
+                <div class="container d-flex align-items-center justify-content-center gap-3">
+                    @if($headerLogo)
+                        <img src="{{ URL::to($headerLogo) }}"
+                             alt="{{ $headerTitle }}"
+                             width="80" height="80"
+                             class="me-3 rounded">
+                    @endif
+
+                    <h1 class="page-title mb-0 fw-bold">{{ $headerTitle }}</h1>
                 </div>
             </div>
             <!-- End of Page Header -->
