@@ -238,12 +238,29 @@ class FrontController extends Controller
             return response()->json([]);
         }
 
-        $products = Product::where('product_name', 'LIKE', "%{$keyword}%")
-            ->select('id', 'product_name')
-            ->take(8)
+        // 🔍 Get matching brands
+        $brands = Brand::where('brand_name', 'LIKE', "%{$keyword}%")
+            ->select('id', 'brand_name', 'image')
+            ->take(5)
             ->get();
 
-        return response()->json($products);
+        // 🔍 Get matching products
+        $products = Product::with(['brand', 'images'])
+            ->where('product_name', 'LIKE', "%{$keyword}%")
+            ->select('id', 'product_name', 'product_price', 'brand_id')
+            ->take(8)
+            ->get()
+            ->map(function ($product) {
+                $product->image = $product->images->first()->image ?? setting()->no_img;
+                $product->brand_name = $product->brand->brand_name ?? null;
+                $product->brand_logo = $product->brand->image ?? null;
+                return $product;
+            });
+
+        return response()->json([
+            'brands' => $brands,
+            'products' => $products,
+        ]);
     }
 
 }

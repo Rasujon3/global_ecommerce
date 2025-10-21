@@ -737,66 +737,47 @@
       })
     </script>
 
-    <style>
-        .suggestions-container {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-top: 0;
-            display: none;
-            z-index: 1000;
-        }
-        .suggestion-item {
-            padding: 10px;
-            cursor: pointer;
-        }
-        .suggestion-item:hover {
-            background: #f0f0f0;
-        }
-    </style>
 
-    <script>
-        $(document).ready(function() {
-            var $searchProduct = $('#search-product');
-            var $suggestionsContainer = $('#search-suggestions-container');
 
-            $searchProduct.on('keyup', function() {
-                var query = $(this).val();
+{{--    <script>--}}
+{{--        $(document).ready(function() {--}}
+{{--            var $searchProduct = $('#search-product');--}}
+{{--            var $suggestionsContainer = $('#search-suggestions-container');--}}
 
-                if (query.length > 2) {
-                    $.ajax({
-                        url: '{{ route("search.suggestions") }}',
-                        data: { q: query },
-                        success: function(data) {
-                            $suggestionsContainer.html('').hide();
+{{--            $searchProduct.on('keyup', function() {--}}
+{{--                var query = $(this).val();--}}
 
-                            if (data.length) {
-                                $.each(data, function(index, item) {
-                                    var suggestion = '' +
-                                        '<div class="suggestion-item" data-id="' + item.id + '">' +
-                                        '<a href="/product-details/' + item.id + '">' + item.product_name + '</a>' +
-                                        '</div>';
-                                    $suggestionsContainer.append(suggestion);
-                                });
-                                $suggestionsContainer.show();
-                            }
-                        }
-                    });
-                } else {
-                    $suggestionsContainer.hide();
-                }
-            });
+{{--                if (query.length > 2) {--}}
+{{--                    $.ajax({--}}
+{{--                        url: '{{ route("search.suggestions") }}',--}}
+{{--                        data: { q: query },--}}
+{{--                        success: function(data) {--}}
+{{--                            $suggestionsContainer.html('').hide();--}}
 
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.header-search').length) {
-                    $suggestionsContainer.hide();
-                }
-            });
-        });
-    </script>
+{{--                            if (data.length) {--}}
+{{--                                $.each(data, function(index, item) {--}}
+{{--                                    var suggestion = '' +--}}
+{{--                                        '<div class="suggestion-item" data-id="' + item.id + '">' +--}}
+{{--                                        '<a href="/product-details/' + item.id + '">' + item.product_name + '</a>' +--}}
+{{--                                        '</div>';--}}
+{{--                                    $suggestionsContainer.append(suggestion);--}}
+{{--                                });--}}
+{{--                                $suggestionsContainer.show();--}}
+{{--                            }--}}
+{{--                        }--}}
+{{--                    });--}}
+{{--                } else {--}}
+{{--                    $suggestionsContainer.hide();--}}
+{{--                }--}}
+{{--            });--}}
+
+{{--            $(document).on('click', function(e) {--}}
+{{--                if (!$(e.target).closest('.header-search').length) {--}}
+{{--                    $suggestionsContainer.hide();--}}
+{{--                }--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
 </body>
 
  <script>
@@ -1010,113 +991,6 @@
     });
 </script>
 -->
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        function setupSearch(inputSelector, resultsDropdownSelector, resultsListSelector, loadingSelector, noResultsSelector) {
-            const input = document.querySelector(inputSelector);
-            const resultsDropdown = document.querySelector(resultsDropdownSelector);
-            const resultsList = document.querySelector(resultsListSelector);
-            const loadingState = document.querySelector(loadingSelector);
-            const noResultsState = document.querySelector(noResultsSelector);
-
-            if (!input || !resultsDropdown) return;
-
-            let searchTimeout;
-
-            input.addEventListener('input', function() {
-                const query = this.value.trim();
-
-                if (query.length < 2) {
-                    resultsDropdown.classList.remove('show');
-                    return;
-                }
-
-                clearTimeout(searchTimeout);
-
-                loadingState.style.display = 'block';
-                resultsList.style.display = 'none';
-                noResultsState.style.display = 'none';
-                resultsDropdown.classList.add('show');
-
-                searchTimeout = setTimeout(() => {
-                    fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            loadingState.style.display = 'none';
-
-                            if (data.length === 0) {
-                                resultsList.style.display = 'none';
-                                noResultsState.style.display = 'block';
-                            } else {
-                                noResultsState.style.display = 'none';
-                                resultsList.style.display = 'block';
-
-                                resultsList.innerHTML = data.map(item => `
-                                    <a href="{{ url('/product-details') }}/${item.id}" class="search-result-item">
-                                            <p class="search-result-title">${item.product_name}</p>
-                                        </div>
-                                    </a>
-                                `).join('');
-                            }
-                        })
-                        .catch(err => {
-                            console.error('Error:', err);
-                            loadingState.style.display = 'none';
-                            resultsList.style.display = 'none';
-                            noResultsState.innerHTML = '<i class="w-icon-exclamation-triangle"></i><p>Error loading results</p>';
-                            noResultsState.style.display = 'block';
-                        });
-                }, 300);
-            });
-
-            input.addEventListener('focus', function() {
-                if (this.value.trim().length >= 2) {
-                    resultsDropdown.classList.add('show');
-                }
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!input.contains(e.target) && !resultsDropdown.contains(e.target)) {
-                    resultsDropdown.classList.remove('show');
-                }
-            });
-
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && resultsDropdown.classList.contains('show')) {
-                    const firstResult = resultsList.querySelector('.search-result-item');
-                    if (firstResult) {
-                        e.preventDefault();
-                        window.location.href = firstResult.getAttribute('href');
-                    }
-                }
-            });
-        }
-
-        // Desktop search
-        setupSearch(
-            '#search-product',
-            '#searchResults',
-            '#searchResultsList',
-            '#searchLoading',
-            '#noResults'
-        );
-
-        // Mobile search
-        setupSearch(
-            '#mobile-search-input',
-            '#mobileSearchResults',
-            '#mobileSearchResultsList',
-            '#mobileSearchLoading',
-            '#mobileNoResults'
-        );
-    });
-</script>
-
-
-
-
 
 <!-- Mirrored from portotheme.com/html/wolmart/{{url('/')}} by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Oct 2025 04:52:13 GMT -->
 </html>
