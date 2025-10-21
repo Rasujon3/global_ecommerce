@@ -233,45 +233,82 @@
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const mobileInput = document.querySelector('#mobile-search-input');
-        const resultsDropdown = document.querySelector('#mobileSearchResults');
-        const resultsList = document.querySelector('#mobileSearchResultsList');
-        const loadingState = document.querySelector('#mobileSearchLoading');
-        const noResultsState = document.querySelector('#mobileNoResults');
-        const baseURL = window.location.origin;
+    (function() {
+        // Keep menu open when search is focused
+        window.addEventListener('load', function() {
+            var searchInput = document.querySelector('.mobile-menu-container input[name="search_product"]');
+            var body = document.body;
+            var isSearchFocused = false;
 
-        if (!mobileInput) return;
-
-        let searchTimeout;
-
-        mobileInput.addEventListener('input', function () {
-            const query = this.value.trim();
-
-            if (query.length < 2) {
-                resultsDropdown.classList.remove('show');
+            if (!searchInput) {
+                console.log('Mobile menu search input not found.');
                 return;
             }
 
-            clearTimeout(searchTimeout);
+            searchInput.addEventListener('focus', function() {
+                isSearchFocused = true;
+            });
 
-            loadingState.style.display = 'block';
-            resultsList.style.display = 'none';
-            noResultsState.style.display = 'none';
-            resultsDropdown.classList.add('show');
+            searchInput.addEventListener('blur', function() {
+                isSearchFocused = false;
+            });
 
-            searchTimeout = setTimeout(() => {
-                fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        loadingState.style.display = 'none';
-                        resultsList.innerHTML = ''; // clear previous
+            var observer = new MutationObserver(function(mutations) {
+                if (isSearchFocused) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.attributeName === 'class') {
+                            var targetNode = mutation.target;
+                            if (!targetNode.classList.contains('mmenu-active')) {
+                                targetNode.classList.add('mmenu-active');
+                            }
+                        }
+                    });
+                }
+            });
 
-                        // --- 🟩 Show Brands ---
-                        if (data.brands && data.brands.length > 0) {
-                            resultsList.innerHTML += `<div class="search-section-header">Brands</div>`;
-                            data.brands.forEach(brand => {
-                                resultsList.innerHTML += `
+            observer.observe(body, {
+                attributes: true
+            });
+        });
+
+            const mobileInput = document.querySelector('#mobile-search-input');
+            const resultsDropdown = document.querySelector('#mobileSearchResults');
+            const resultsList = document.querySelector('#mobileSearchResultsList');
+            const loadingState = document.querySelector('#mobileSearchLoading');
+            const noResultsState = document.querySelector('#mobileNoResults');
+            const baseURL = window.location.origin;
+
+            if (!mobileInput) return;
+
+            let searchTimeout;
+
+            mobileInput.addEventListener('input', function () {
+                const query = this.value.trim();
+
+                if (query.length < 2) {
+                    resultsDropdown.classList.remove('show');
+                    return;
+                }
+
+                clearTimeout(searchTimeout);
+
+                loadingState.style.display = 'block';
+                resultsList.style.display = 'none';
+                noResultsState.style.display = 'none';
+                resultsDropdown.classList.add('show');
+
+                searchTimeout = setTimeout(() => {
+                    fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            loadingState.style.display = 'none';
+                            resultsList.innerHTML = ''; // clear previous
+
+                            // --- 🟩 Show Brands ---
+                            if (data.brands && data.brands.length > 0) {
+                                resultsList.innerHTML += `<div class="search-section-header">Brands</div>`;
+                                data.brands.forEach(brand => {
+                                    resultsList.innerHTML += `
                                 <a href="/product-lists?brand_id=${brand.id}" class="search-result-item d-flex align-items-center">
                                     <img src="${baseURL}/${brand.image}" alt="${brand.brand_name}" class="search-result-img me-2">
                                     <div class="search-result-info">
@@ -279,15 +316,15 @@
                                     </div>
                                 </a>
                             `;
-                            });
-                            resultsList.innerHTML += `<hr>`;
-                        }
+                                });
+                                resultsList.innerHTML += `<hr>`;
+                            }
 
-                        // --- 🟨 Show Products ---
-                        if (data.products && data.products.length > 0) {
-                            resultsList.innerHTML += `<div class="search-section-header">Products</div>`;
-                            data.products.forEach(product => {
-                                resultsList.innerHTML += `
+                            // --- 🟨 Show Products ---
+                            if (data.products && data.products.length > 0) {
+                                resultsList.innerHTML += `<div class="search-section-header">Products</div>`;
+                                data.products.forEach(product => {
+                                    resultsList.innerHTML += `
                                 <a href="/product-details/${product.id}" class="search-result-item d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center">
                                         <img src="${baseURL}/${product.image}" alt="${product.product_name}" class="search-result-img me-2">
@@ -299,45 +336,47 @@
                                     <p class="search-result-price">${product.product_price} BDT</p>
                                 </a>
                             `;
-                            });
-                        }
+                                });
+                            }
 
-                        if (
-                            (!data.brands || data.brands.length === 0) &&
-                            (!data.products || data.products.length === 0)
-                        ) {
+                            if (
+                                (!data.brands || data.brands.length === 0) &&
+                                (!data.products || data.products.length === 0)
+                            ) {
+                                noResultsState.style.display = 'block';
+                                resultsList.style.display = 'none';
+                            } else {
+                                noResultsState.style.display = 'none';
+                                resultsList.style.display = 'block';
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Error:', err);
+                            loadingState.style.display = 'none';
+                            noResultsState.innerHTML = '<i class="w-icon-exclamation-triangle"></i><p>Error loading results</p>';
                             noResultsState.style.display = 'block';
-                            resultsList.style.display = 'none';
-                        } else {
-                            noResultsState.style.display = 'none';
-                            resultsList.style.display = 'block';
-                        }
-                    })
-                    .catch(err => {
-                        console.error('Error:', err);
-                        loadingState.style.display = 'none';
-                        noResultsState.innerHTML = '<i class="w-icon-exclamation-triangle"></i><p>Error loading results</p>';
-                        noResultsState.style.display = 'block';
-                    });
-            }, 300);
-        });
+                        });
+                }, 300);
+            });
 
-        // Hide suggestions on outside click
-        document.addEventListener('click', function (e) {
-            if (!mobileInput.contains(e.target) && !resultsDropdown.contains(e.target)) {
-                resultsDropdown.classList.remove('show');
-            }
-        });
-
-        // Press enter -> go to first result
-        mobileInput.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' && resultsDropdown.classList.contains('show')) {
-                const firstResult = resultsList.querySelector('.search-result-item');
-                if (firstResult) {
-                    e.preventDefault();
-                    window.location.href = firstResult.getAttribute('href');
+            // Hide suggestions on outside click
+            document.addEventListener('click', function (e) {
+                if (!mobileInput.contains(e.target) && !resultsDropdown.contains(e.target)) {
+                    resultsDropdown.classList.remove('show');
                 }
-            }
-        });
-    });
+            });
+
+            // Press enter -> go to first result
+            mobileInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && resultsDropdown.classList.contains('show')) {
+                    const firstResult = resultsList.querySelector('.search-result-item');
+                    if (firstResult) {
+                        e.preventDefault();
+                        window.location.href = firstResult.getAttribute('href');
+                    }
+                }
+            });
+
+    })();
+
 </script>
