@@ -143,6 +143,8 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $arrivalProducts = Product::where('is_arrival_product',1)
+                ->withAvg('reviews', 'rating')
+                ->withCount('reviews')
                 ->where('status','Active')
                 ->latest()
                 ->get();
@@ -152,6 +154,8 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $bestSellers = Product::where('is_best_seller',1)
+                ->withAvg('reviews', 'rating')
+                ->withCount('reviews')
                 ->where('status','Active')
                 ->latest()
                 ->get();
