@@ -74,6 +74,9 @@
                     <li><a href="{{url('/contact')}}">Contact Us</a></li>
                     @if(Auth::check())
                         <li>
+                            <a href="{{ url('/wishlists') }}" class="">My Wishlist</a>
+                        </li>
+                        <li>
                             <a href="{{ route('my-account') }}" class="">My Account</a>
                         </li>
                         <li>
