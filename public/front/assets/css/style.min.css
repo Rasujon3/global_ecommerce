@@ -15495,6 +15495,7 @@ body .product-popup {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  flex-direction: row;
 }
 .cart-dropdown .cart-action .btn {
   width: 50%;

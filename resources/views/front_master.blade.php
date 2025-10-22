@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from portotheme.com/html/wolmart/{{url('/')}} by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Oct 2025 04:50:26 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Glamours World</title>
+    <title>{{ setting()->shop_name ?? 'Glamours World' }}</title>
 
     <meta name="keywords" content="Marketplace ecommerce responsive HTML5 Template" />
     <meta name="description"
@@ -283,6 +280,114 @@
             background: #ccc;
             border-radius: 3px;
         }
+        /* Cart Dropdown Styles */
+        .cart-dropdown {
+            position: relative;
+        }
+
+        .cart-dropdown .dropdown-box {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 9999;
+            overflow-y: auto;
+        }
+
+        .cart-dropdown.active .dropdown-box,
+        .cart-dropdown.opened .dropdown-box {
+            right: 0;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        body.cart-opened {
+            overflow: hidden;
+        }
+
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header span {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .cart-header .btn-close {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cart-header .btn-close:hover {
+            color: #000;
+        }
+
+        .products {
+            padding: 20px;
+        }
+
+        .cart-total {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-action {
+            padding: 0 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        /* Cart Dropdown - Higher specificity to override other styles */
+        .cart-dropdown .dropdown-box {
+            position: fixed !important;
+            right: -400px !important;
+            top: 0 !important;
+            width: 350px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease !important;
+            z-index: 9999;
+            overflow-y: auto;
+            display: block !important; /* Override any display:none from hover */
+        }
+
+        .cart-dropdown.active .dropdown-box,
+        .cart-dropdown.opened .dropdown-box {
+            right: 0 !important;
+        }
     </style>
 
     <!-- Meta Pixel Code -->
@@ -312,7 +417,6 @@
              src="https://www.facebook.com/tr?id={{ setting()->meta_pixel_script ?? '' }}&ev=PageView&noscript=1"/>
     </noscript>
     <!-- End Meta Pixel Code -->
-
 
 </head>
 
@@ -365,13 +469,14 @@
     <script src="{{asset('front/assets/vendor/jquery.countdown/jquery.countdown.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/skrollr/skrollr.min.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Swiper JS -->
     <script src="{{asset('front/assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
 
     <!-- Main JS -->
     <script src="{{asset('front/assets/js/main.min.js')}}"></script>
+
+{{--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>--}}
 
     <script src="{{asset('custom/toastr.js')}}"></script>
 
@@ -382,20 +487,22 @@
     @stack('scripts')
 
     @if(Route::currentRouteName() != 'home')
-     <script>
-       $(document).ready(function(){
-          $('.category-toggle, .has-submenu, .dropdown-box').hover(
-            function() {
-                $('.dropdown-box').stop(true, true).fadeIn(200);
-            },
-            function() {
-                $('.dropdown-box').stop(true, true).fadeOut(200);
-            }
-        );
+        <script>
+            $(document).ready(function(){
+                // Select only the category dropdown area
+                const $categoryDropdown = $('.category-dropdown');
 
-
-       });
-     </script>
+                // Show only its own dropdown-box on hover
+                $categoryDropdown.hover(
+                    function() {
+                        $(this).find('.dropdown-box').stop(true, true).fadeIn(200);
+                    },
+                    function() {
+                        $(this).find('.dropdown-box').stop(true, true).fadeOut(200);
+                    }
+                );
+            });
+        </script>
     @endif
 
     <script>
@@ -404,6 +511,98 @@
         localStorage.setItem('base_url', base_url);
       })
     </script>
+
+<script>
+    // Replace the existing script section with this updated version
+    $(document).ready(function() {
+        // Cart dropdown toggle functionality (WORKS ON ALL PAGES)
+        $('.cart-toggle').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const $cartDropdown = $('.cart-dropdown');
+            const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
+            const $overlay = $('.cart-overlay');
+
+            // Toggle active state
+            $cartDropdown.toggleClass('active opened');
+            $cartDropdownBox.toggleClass('active opened');
+            $overlay.toggleClass('active');
+
+            // Prevent body scroll when cart is open
+            if ($cartDropdown.hasClass('active')) {
+                $('body').addClass('cart-opened');
+            } else {
+                $('body').removeClass('cart-opened');
+            }
+        });
+
+        // Close cart dropdown when clicking close button
+        $('.cart-dropdown .btn-close').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const $cartDropdown = $('.cart-dropdown');
+            const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
+            const $overlay = $('.cart-overlay');
+
+            $cartDropdown.removeClass('active opened');
+            $cartDropdownBox.removeClass('active opened');
+            $overlay.removeClass('active');
+            $('body').removeClass('cart-opened');
+        });
+
+        // Close cart dropdown when clicking overlay
+        $('.cart-overlay').on('click', function(e) {
+            e.preventDefault();
+
+            const $cartDropdown = $('.cart-dropdown');
+            const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
+            const $overlay = $('.cart-overlay');
+
+            $cartDropdown.removeClass('active opened');
+            $cartDropdownBox.removeClass('active opened');
+            $overlay.removeClass('active');
+            $('body').removeClass('cart-opened');
+        });
+
+        // Close cart dropdown when clicking outside
+        $(document).on('click', function(e) {
+            const $cartDropdown = $('.cart-dropdown');
+
+            if (!$cartDropdown.is(e.target) && $cartDropdown.has(e.target).length === 0) {
+                const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
+                const $overlay = $('.cart-overlay');
+
+                $cartDropdown.removeClass('active opened');
+                $cartDropdownBox.removeClass('active opened');
+                $overlay.removeClass('active');
+                $('body').removeClass('cart-opened');
+            }
+        });
+
+        // Prevent cart dropdown from closing when clicking inside
+        $('.cart-dropdown .dropdown-box').on('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Category dropdown functionality (ONLY FOR NON-HOME PAGES)
+        var isHomePage = $('body').hasClass('home') || window.location.pathname === '/' || window.location.pathname === '';
+
+        if (!isHomePage) {
+            $('.category-toggle, .has-submenu').hover(
+                function() {
+                    // Only show category dropdown, NOT cart dropdown
+                    $(this).find('.dropdown-box').not('.cart-dropdown .dropdown-box').stop(true, true).fadeIn(200);
+                },
+                function() {
+                    // Only hide category dropdown, NOT cart dropdown
+                    $(this).find('.dropdown-box').not('.cart-dropdown .dropdown-box').stop(true, true).fadeOut(200);
+                }
+            );
+        }
+    });
+</script>
 
 </body>
 

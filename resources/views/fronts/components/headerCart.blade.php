@@ -81,7 +81,7 @@
             </div>
 
             <div class="cart-action">
-                <a href="{{url('/carts')}}" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
+                <a href="{{ url('/carts') }}" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
                 <a href="{{ url('/checkout') }}" class="btn btn-primary  btn-rounded">Checkout</a>
             </div>
         </div>
