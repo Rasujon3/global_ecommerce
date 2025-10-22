@@ -25,7 +25,7 @@
             </i>
             <span class="cart-label">Cart</span>
         </a>
-        <div class="dropdown-box">
+        <div class="dropdown-box" id="cart-dropdown-box">
             <div class="cart-header">
                 <span>Shopping Cart</span>
                 <a href="#" class="btn-close">Close<i class="w-icon-long-arrow-right"></i></a>

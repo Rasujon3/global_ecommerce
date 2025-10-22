@@ -43,6 +43,7 @@ Route::get('/my-account', [FrontController::class, 'myAccount'])->name('my-accou
 Route::get('/invoice/{id}', [FrontController::class, 'showInvoice'])->name('front.invoice');
 Route::post('/user-change-password', [FrontController::class, 'userChangePassword'])->name('user-change-password');
 Route::get('/search-suggestions', [FrontController::class, 'searchSuggestions'])->name('search.suggestions');
+Route::get('/cart-partial', [FrontController::class, 'getCartPartial'])->name('cart.partial');
 
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.subscribe');
 

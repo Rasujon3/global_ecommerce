@@ -262,5 +262,12 @@ class FrontController extends Controller
             'products' => $products,
         ]);
     }
+    public function getCartPartial()
+    {
+        $carts = Cart::with('product','productvariant', 'product.images')->where('cart_session_id',Session::get('cart_session_id'))->latest()->get();
+        $sum = Cart::where('cart_session_id',Session::get('cart_session_id'))->sum('unit_total');
+        return view('fronts.partials.cart-modal-content', compact('carts', 'sum'));
+    }
+
 
 }
