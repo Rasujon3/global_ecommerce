@@ -346,106 +346,9 @@
     </div>
     <!-- End of Page-wrapper-->
 
-    <!-- Start of Sticky Footer -->
-    <div class="sticky-footer sticky-content fix-bottom d-none">
-        <a href="{{url('/')}}" class="sticky-link active">
-            <i class="w-icon-home"></i>
-            <p>Home</p>
-        </a>
-        <a href="shop-banner-sidebar.html" class="sticky-link">
-            <i class="w-icon-category"></i>
-            <p>Shop</p>
-        </a>
-        <a href="my-account.html" class="sticky-link">
-            <i class="w-icon-account"></i>
-            <p>Account</p>
-        </a>
-        <div class="cart-dropdown dir-up">
-            <a href="{{url('/carts')}}" class="sticky-link">
-                <i class="w-icon-cart"></i>
-                <p>Cart</p>
-            </a>
-            <div class="dropdown-box">
-                <div class="products">
-                    <div class="product product-cart">
-                        <div class="product-detail">
-                            <h3 class="product-name">
-                                <a href="product-default.html">Beige knitted elas<br>tic
-                                    runner shoes</a>
-                            </h3>
-                            <div class="price-box">
-                                <span class="product-quantity">1</span>
-                                <span class="product-price">$25.68</span>
-                            </div>
-                        </div>
-                        <figure class="product-media">
-                            <a href="product-default.html">
-                                <img src="front/assets/images/cart/product-1.jpg" alt="product" height="84" width="94" />
-                            </a>
-                        </figure>
-                        <button class="btn btn-link btn-close" aria-label="button">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+    @include('fronts.components.stickyFooter')
 
-                    <div class="product product-cart">
-                        <div class="product-detail">
-                            <h3 class="product-name">
-                                <a href="product-default.html">Blue utility pina<br>fore
-                                    denim dress</a>
-                            </h3>
-                            <div class="price-box">
-                                <span class="product-quantity">1</span>
-                                <span class="product-price">$32.99</span>
-                            </div>
-                        </div>
-                        <figure class="product-media">
-                            <a href="product-default.html">
-                                <img src="front/assets/images/cart/product-2.jpg" alt="product" width="84" height="94" />
-                            </a>
-                        </figure>
-                        <button class="btn btn-link btn-close" aria-label="button">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="cart-total">
-                    <label>Subtotal:</label>
-                    <span class="price">$58.67</span>
-                </div>
-
-                <div class="cart-action">
-                    <a href="{{url('/carts')}}" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
-                    <a href="checkout.html" class="btn btn-primary  btn-rounded">Checkout</a>
-                </div>
-            </div>
-            <!-- End of Dropdown Box -->
-        </div>
-
-        <div class="header-search hs-toggle dir-up">
-            <a href="#" class="search-toggle sticky-link">
-                <i class="w-icon-search"></i>
-                <p>Search</p>
-            </a>
-            <form action="#" class="input-wrapper">
-                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Search"
-                    required />
-                <button class="btn btn-search" type="submit">
-                    <i class="w-icon-search"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-    <!-- End of Sticky Footer -->
-
-    <!-- Start of Scroll Top -->
-    <a id="scroll-top" class="scroll-top" href="#top" title="Top" role="button"> <i class="w-icon-angle-up"></i> <svg
-            version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
-            <circle id="progress-indicator" fill="transparent" stroke="#000000" stroke-miterlimit="10" cx="35" cy="35"
-                r="34" style="stroke-dasharray: 16.4198, 400;"></circle>
-        </svg> </a>
-    <!-- End of Scroll Top -->
+    @include('fronts.components.scrollTop')
 
     @include('mobileMenu')
 
@@ -464,10 +367,8 @@
     <script src="{{asset('front/assets/vendor/skrollr/skrollr.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <!-- Swiper JS -->
     <script src="{{asset('front/assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
-
 
     <!-- Main JS -->
     <script src="{{asset('front/assets/js/main.min.js')}}"></script>
@@ -504,47 +405,6 @@
       })
     </script>
 
-
-
-{{--    <script>--}}
-{{--        $(document).ready(function() {--}}
-{{--            var $searchProduct = $('#search-product');--}}
-{{--            var $suggestionsContainer = $('#search-suggestions-container');--}}
-
-{{--            $searchProduct.on('keyup', function() {--}}
-{{--                var query = $(this).val();--}}
-
-{{--                if (query.length > 2) {--}}
-{{--                    $.ajax({--}}
-{{--                        url: '{{ route("search.suggestions") }}',--}}
-{{--                        data: { q: query },--}}
-{{--                        success: function(data) {--}}
-{{--                            $suggestionsContainer.html('').hide();--}}
-
-{{--                            if (data.length) {--}}
-{{--                                $.each(data, function(index, item) {--}}
-{{--                                    var suggestion = '' +--}}
-{{--                                        '<div class="suggestion-item" data-id="' + item.id + '">' +--}}
-{{--                                        '<a href="/product-details/' + item.id + '">' + item.product_name + '</a>' +--}}
-{{--                                        '</div>';--}}
-{{--                                    $suggestionsContainer.append(suggestion);--}}
-{{--                                });--}}
-{{--                                $suggestionsContainer.show();--}}
-{{--                            }--}}
-{{--                        }--}}
-{{--                    });--}}
-{{--                } else {--}}
-{{--                    $suggestionsContainer.hide();--}}
-{{--                }--}}
-{{--            });--}}
-
-{{--            $(document).on('click', function(e) {--}}
-{{--                if (!$(e.target).closest('.header-search').length) {--}}
-{{--                    $suggestionsContainer.hide();--}}
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
 </body>
 
  <script>
@@ -633,16 +493,6 @@
     });
  </script>
 <script>
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     // Disable the newsletter popup trigger entirely
-    //     if (typeof Wolmart !== "undefined") {
-    //         Wolmart.popup = function() {
-    //             console.log("Newsletter popup disabled.");
-    //         };
-    //     }
-    // });
-</script>
-<script>
     $(document).ready(function(){
         $('#category').on('change', function(){
             var categoryId = $(this).val();
@@ -658,106 +508,5 @@
         Wolmart.setCookie("hideNewsletterPopup", true, 7);
     });
 </script>
-<!--
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
 
-        function setupSearch(inputSelector, resultsDropdownSelector) {
-            const input = document.querySelector(inputSelector);
-            const resultsDropdown = document.querySelector(resultsDropdownSelector);
-            const resultsList = resultsDropdown?.querySelector('#searchResultsList');
-            const loadingState = resultsDropdown?.querySelector('#searchLoading');
-            const noResultsState = resultsDropdown?.querySelector('#noResults');
-
-            if (!input || !resultsDropdown) return;
-
-            let searchTimeout;
-
-            input.addEventListener('input', function() {
-                const query = this.value.trim();
-
-                // Hide dropdown if query is too short
-                if (query.length < 2) {
-                    resultsDropdown.classList.remove('show');
-                    return;
-                }
-
-                // Clear previous timeout
-                clearTimeout(searchTimeout);
-
-                // Show loading state
-                loadingState.style.display = 'block';
-                resultsList.style.display = 'none';
-                noResultsState.style.display = 'none';
-                resultsDropdown.classList.add('show');
-
-                // Debounce search
-                searchTimeout = setTimeout(() => {
-                    fetch(`{{ route('search.suggestions') }}?q=${encodeURIComponent(query)}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            loadingState.style.display = 'none';
-
-                            if (data.length === 0) {
-                                resultsList.style.display = 'none';
-                                noResultsState.style.display = 'block';
-                            } else {
-                                noResultsState.style.display = 'none';
-                                resultsList.style.display = 'block';
-
-                                resultsList.innerHTML = data.map(item => `
-                                    <a href="{{ url('/product-details') }}/${item.id}" class="search-result-item">
-                                        <div class="search-result-info">
-                                            <p class="search-result-title">${item.product_name}</p>
-                                        </div>
-                                    </a>
-                                `).join('');
-                            }
-                        })
-                        .catch(err => {
-                            console.error('Error:', err);
-                            loadingState.style.display = 'none';
-                            resultsList.style.display = 'none';
-                            noResultsState.innerHTML = '<i class="w-icon-exclamation-triangle"></i><p>Error loading results</p>';
-                            noResultsState.style.display = 'block';
-                        });
-                }, 300); // 300ms debounce
-            });
-
-            // Show dropdown when input is focused and has value
-            input.addEventListener('focus', function() {
-                if (this.value.trim().length >= 2) {
-                    resultsDropdown.classList.add('show');
-                }
-            });
-
-            // Hide dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!input.contains(e.target) && !resultsDropdown.contains(e.target)) {
-                    resultsDropdown.classList.remove('show');
-                }
-            });
-
-            // Prevent form submission on Enter if dropdown is visible
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && resultsDropdown.classList.contains('show')) {
-                    const firstResult = resultsList.querySelector('.search-result-item');
-                    if (firstResult) {
-                        e.preventDefault();
-                        window.location.href = firstResult.getAttribute('href');
-                    }
-                }
-            });
-        }
-
-        // Desktop search
-        setupSearch('#search-product', '#searchResults');
-
-        // Mobile search (if you have mobile search)
-        setupSearch('.mobile-menu-container input[name="search_product"]', '#mobileSearchResults');
-    });
-</script>
--->
-
-<!-- Mirrored from portotheme.com/html/wolmart/by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Oct 2025 04:52:13 GMT -->
 </html>
