@@ -133,6 +133,7 @@ class ProductController extends Controller
                 'stock_qty' => $request->stock_qty,
                 'is_arrival_product' => $request->is_arrival_product,
                 'is_best_seller' => $request->is_best_seller,
+                'tag' => $request->tag,
             ]);
 
             if($request->hasFile('images') && count($request->file('images')) > 0) {
@@ -153,8 +154,8 @@ class ProductController extends Controller
             DB::commit();
 
             $notification=array(
-                'messege'=>"Successfully a product has been added",
-                'alert-type'=>"success",
+                'messege' => "Successfully a product has been added",
+                'alert-type' => "success",
             );
 
             return redirect()->route('products.index')->with($notification);
@@ -228,6 +229,7 @@ class ProductController extends Controller
             $product->stock_qty = $request->stock_qty;
             $product->is_arrival_product = $request->is_arrival_product;
             $product->is_best_seller = $request->is_best_seller;
+            $product->tag = $request->tag;
             $product->update();
 
             if($request->hasFile('images') && count($request->file('images')) > 0) {

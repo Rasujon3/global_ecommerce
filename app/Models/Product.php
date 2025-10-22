@@ -24,6 +24,7 @@ class Product extends Model
         'description',
         'is_best_seller',
         'is_arrival_product',
+        'tag',
     ];
 
 

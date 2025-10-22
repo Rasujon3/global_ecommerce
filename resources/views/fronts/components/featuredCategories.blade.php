@@ -24,7 +24,7 @@
                                     @if($product->stock_qty == 0)
                                         <label class="product-label label-out">Stock Out</label>
                                     @else
-                                        <label class="product-label label-in">In Stock</label>
+                                        <label class="product-label label-in">{{ $product->tag ?? 'In Stock' }}</label>
                                     @endif
                                 </div>
                                 <!-- Swiper Container -->

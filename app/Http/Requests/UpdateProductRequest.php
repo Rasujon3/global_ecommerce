@@ -37,6 +37,7 @@ class UpdateProductRequest extends FormRequest
             'description' => 'required',
             'is_arrival_product' => 'required|in:0,1',
             'is_best_seller' => 'required|in:0,1',
+            'tag' => 'nullable|string|max:100',
         ];
     }
 }

@@ -74,8 +74,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{URL::to('/dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{URL::to('/products')}}">All Product
-                                </a></li>
+                        <li class="breadcrumb-item"><a href="{{URL::to('/products')}}">All Product</a></li>
                         <li class="breadcrumb-item active">Add Product</li>
                     </ol>
                 </div><!-- /.col -->
@@ -213,7 +212,25 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="tag">Tag <span class="required">*</span></label>
+                                <input
+                                    type="text"
+                                    name="tag"
+                                    class="form-control"
+                                    id="tag"
+                                    placeholder="Tag"
+                                    required=""
+                                    value="{{old('tag')}}"
+                                >
+                                @error('tag')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_arrival_product">Is Arrival Product <span class="required">*</span></label>
                                 <select
@@ -232,7 +249,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_best_seller">Is Best Seller <span class="required">*</span></label>
                                 <select
