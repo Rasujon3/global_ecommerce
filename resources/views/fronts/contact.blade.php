@@ -935,6 +935,22 @@
    	 	productvariant_ids = [];
    	 });
 
+       function updateCartDropdown() {
+           $.ajax({
+               url: "{{ route('cart.html') }}",
+               type: "GET",
+               success: function (res) {
+                   if (res.status) {
+                       $('#cart-dropdown-box').html($(res.html).find('#cart-dropdown-box').html());
+                       $('#cart-count').text($(res.html).find('#cart-count').text());
+                   }
+               },
+               error: function () {
+                   console.error("Failed to update cart.");
+               }
+           });
+       }
+
    	 $(document).on('click', '.add-cart', function(e){
    	 	e.preventDefault();
    	 	let product_id = $(this).data('id');
@@ -952,6 +968,7 @@
                 success:function(data) {
                 if (data.status == true) {
                     toastr.success(data.message);
+                    updateCartDropdown();
                     setTimeout(function() {
                         window.location.href = redirectUrl;
                     }, 1000);
