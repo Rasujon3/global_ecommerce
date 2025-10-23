@@ -23,21 +23,31 @@
 @push('scripts')
  <script>
    $(document).ready(function(){
-       function rebindCartEvents() {
-           $(document).on('click', '.btn-close', function(e) {
-               e.preventDefault();
-               const target = $(this).data('target');
+       function refreshCart() {
+           $.ajax({
+               url: "{{ route('get.cart.html') }}",
+               type: "GET",
+               success: function(res) {
+                   console.log('res', res);
+                   if (res.status) {
+                       // Update cart content
+                       $('#cart-dropdown-box').html(res.html);
+                       $('.cart-count').text(res.count);
 
-               switch (target) {
-                   case 'cart':
-                       $('.cart-dropdown').removeClass('show');
-                       $('.cart-overlay').removeClass('show');
-                       break;
+                       // $('#cart-dropdown-box').html($(res.html).find('#cart-dropdown-box').html());
+                   } else {
+                       console.error('Cart update failed');
+                   }
+               },
+               error: function(err) {
+                   console.error('Cart refresh error:', err);
                }
            });
        }
-      let product_id;
+
+       let product_id;
       $(document).on('click', '.add-to-cart', function(e){
+          console.log('ruru');
          e.preventDefault();
          product_id = $(this).data('id');
          $.ajax({
@@ -64,7 +74,7 @@
                             $('#cart-dropdown-box').html($(data.cart_html).find('#cart-dropdown-box').html());
                             // if you want to ensure the new HTML has id #cart-dropdown-box:
                             // $('#cart-dropdown-box').html(data.cart_html);
-                            rebindCartEvents(); // rebind events for new content
+                            // refreshCart();
                         }
 
                         // $('.cart-count').text(data.cart_count);

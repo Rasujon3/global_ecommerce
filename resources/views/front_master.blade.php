@@ -463,22 +463,6 @@
     <!-- Plugin JS File -->
 {{--    <script data-cfasync="false" src="{{asset('../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')}}"></script>--}}
     <script src="{{asset('front/assets/vendor/jquery/jquery.min.js')}}"></script>
-    @section('scripts')
-        <script>
-            $(document).on('click', '.btn-close', function(e) {
-                e.preventDefault();
-                const target = $(this).data('target');
-                console.log('target', target);
-
-                switch (target) {
-                    case 'cart':
-                        $('.cart-dropdown').removeClass('show');
-                        $('.cart-overlay').removeClass('show');
-                        break;
-                }
-            });
-        </script>
-    @endsection
     <script src="{{asset('front/assets/vendor/jquery.plugin/jquery.plugin.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/zoom/jquery.zoom.js')}}"></script>
@@ -500,20 +484,7 @@
         @toastr("{{ Session::get('messege') }}")
       @endif
 
-    <script>
-        $(document).on('click', '.btn-close', function(e) {
-            e.preventDefault();
-            const target = $(this).data('target');
-            console.log('target', target);
 
-            switch (target) {
-                case 'cart':
-                    $('.cart-dropdown').removeClass('show');
-                    $('.cart-overlay').removeClass('show');
-                    break;
-            }
-        });
-    </script>
 
     @stack('scripts')
 
@@ -631,21 +602,6 @@
                         $(this).find('.dropdown-box').not('.cart-dropdown .dropdown-box').stop(true, true).fadeOut(200);
                     }
                 );
-            }
-        });
-    </script>
-
-    <script>
-        $(document).on('click', '.btn-close', function(e) {
-            e.preventDefault();
-            const target = $(this).data('target');
-            console.log('target', target);
-
-            switch (target) {
-                case 'cart':
-                    $('.cart-dropdown').removeClass('show');
-                    $('.cart-overlay').removeClass('show');
-                    break;
             }
         });
     </script>
