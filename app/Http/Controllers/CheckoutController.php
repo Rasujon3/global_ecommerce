@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Orderdetail;
 use App\Http\Requests\CheckoutRequest;
+use Illuminate\Support\Facades\Log;
 use Session;
 use DB;
 
@@ -93,6 +95,8 @@ class CheckoutController extends Controller
 
     		Session::forget('cart_session_id');
 
+            // Get rendered cart HTML + sum + count
+            $cartData = $this->getCartHtml();
 
     		$notification=array(
                 'messege'=>"Successfully your order has been taken. We Will Contact you soon",
@@ -106,6 +110,40 @@ class CheckoutController extends Controller
     	}catch(Exception $e){
     		DB::rollback();
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
+        }
+    }
+    public function getCartHtml()
+    {
+        try {
+            $carts = Cart::with('product', 'productvariant', 'product.images')
+                ->where('cart_session_id', Session::get('cart_session_id'))
+                ->latest()
+                ->get();
+
+            $sum = Cart::where('cart_session_id', Session::get('cart_session_id'))
+                ->sum('unit_total');
+
+            // Render the partial (make sure this view path is correct)
+            $view = view('fronts.components.cart-dropdown', compact('carts', 'sum'))->render();
+
+            return [
+                'success' => true,
+                'html' => $view,
+                'sum' => $sum,
+                'count' => $carts->count(),
+            ];
+        } catch (Exception $e) {
+            Log::error('Error in getCartHtml : '.$e->getMessage(), [
+                'code' => $e->getCode(),
+                'line' => $e->getLine()
+            ]);
+
+            return [
+                'success' => false,
+                'html' => '',
+                'sum' => 0,
+                'count' => 0,
+            ];
         }
     }
     public function showBankInfo()
