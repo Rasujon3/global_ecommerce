@@ -17949,6 +17949,7 @@ body .product-popup {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   -webkit-box-align: center;

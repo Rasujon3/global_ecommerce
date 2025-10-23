@@ -13,6 +13,7 @@ use App\Models\Productvariant;
 use App\Models\Cart;
 use App\Models\Whishlist;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Session;
 session_start();
 use Auth;
@@ -250,8 +251,20 @@ class AjaxController extends Controller
                 $cart->unit_total = round($price * $qty,2);
                 $cart->save();
             }
+
             $countCart = Cart::where('cart_session_id',$cart_session_id)->count();
-            return response()->json(['status'=>true, 'cart_count'=>$countCart, 'message'=>'Successfully the product has been added to cart']);
+            // Get rendered cart HTML + sum + count
+            $cartData = $this->getCartHtml();
+
+            return response()->json([
+                'status' => true,
+                'cart_count' => $countCart,
+                'message' => 'Successfully the product has been added to cart',
+                'cart_html' => $cartData['html'],
+                'cart_sum' => $cartData['sum'],
+            ]);
+
+            # return response()->json(['status'=>true, 'cart_count'=>$countCart, 'message'=>'Successfully the product has been added to cart']);
 
         }catch (Exception $e) {
             return response()->json([
@@ -267,8 +280,19 @@ class AjaxController extends Controller
         try
         {
             Cart::truncate();
-            return response()->json(['status'=>true, 'message'=>"Cart empty done"]);
-        }catch (Exception $e) {
+            // Get rendered cart HTML + sum + count
+            $cartData = $this->getCartHtml();
+
+            return response()->json([
+                'status' => true,
+                'cart_count' => 0,
+                'message' => 'Successfully the product has been added to cart',
+                'cart_html' => $cartData['html'],
+                'cart_sum' => $cartData['sum'],
+            ]);
+
+            # return response()->json(['status'=>true, 'message'=>"Cart empty done"]);
+        } catch (Exception $e) {
             return response()->json([
                 'status' => false,
                 'code' => $e->getCode(),
@@ -284,8 +308,20 @@ class AjaxController extends Controller
             $cart = Cart::findorfail($id);
             $cart->delete();
             $count = Cart::where('cart_session_id',Session::get('cart_session_id'))->count();
-            return response()->json(['status'=>true, 'cart_count'=>$count, 'message'=>'Successfully the cart has been deleted']);
-        }catch (Exception $e) {
+
+            // Get rendered cart HTML + sum + count
+            $cartData = $this->getCartHtml();
+
+            return response()->json([
+                'status' => true,
+                'cart_count' => $count,
+                'message' => 'Successfully the product has been added to cart',
+                'cart_html' => $cartData['html'],
+                'cart_sum' => $cartData['sum'],
+            ]);
+
+            # return response()->json(['status'=>true, 'cart_count'=>$count, 'message'=>'Successfully the cart has been deleted']);
+        } catch (Exception $e) {
             return response()->json([
                 'status' => false,
                 'code' => $e->getCode(),
@@ -350,6 +386,41 @@ class AjaxController extends Controller
                 'code' => $e->getCode(),
                 'message' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function getCartHtml()
+    {
+        try {
+            $carts = Cart::with('product', 'productvariant', 'product.images')
+                ->where('cart_session_id', Session::get('cart_session_id'))
+                ->latest()
+                ->get();
+
+            $sum = Cart::where('cart_session_id', Session::get('cart_session_id'))
+                ->sum('unit_total');
+
+            // Render the partial (make sure this view path is correct)
+            $view = view('fronts.components.cart-dropdown', compact('carts', 'sum'))->render();
+
+            return [
+                'success' => true,
+                'html' => $view,
+                'sum' => $sum,
+                'count' => $carts->count(),
+            ];
+        } catch (Exception $e) {
+            Log::error('Error in getCartHtml : '.$e->getMessage(), [
+                'code' => $e->getCode(),
+                'line' => $e->getLine()
+            ]);
+
+            return [
+                'success' => false,
+                'html' => '',
+                'sum' => 0,
+                'count' => 0,
+            ];
         }
     }
 

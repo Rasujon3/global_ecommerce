@@ -463,6 +463,22 @@
     <!-- Plugin JS File -->
 {{--    <script data-cfasync="false" src="{{asset('../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')}}"></script>--}}
     <script src="{{asset('front/assets/vendor/jquery/jquery.min.js')}}"></script>
+    @section('scripts')
+        <script>
+            $(document).on('click', '.btn-close', function(e) {
+                e.preventDefault();
+                const target = $(this).data('target');
+                console.log('target', target);
+
+                switch (target) {
+                    case 'cart':
+                        $('.cart-dropdown').removeClass('show');
+                        $('.cart-overlay').removeClass('show');
+                        break;
+                }
+            });
+        </script>
+    @endsection
     <script src="{{asset('front/assets/vendor/jquery.plugin/jquery.plugin.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
     <script src="{{asset('front/assets/vendor/zoom/jquery.zoom.js')}}"></script>
@@ -483,6 +499,21 @@
       @if(Session::has('messege'))
         @toastr("{{ Session::get('messege') }}")
       @endif
+
+    <script>
+        $(document).on('click', '.btn-close', function(e) {
+            e.preventDefault();
+            const target = $(this).data('target');
+            console.log('target', target);
+
+            switch (target) {
+                case 'cart':
+                    $('.cart-dropdown').removeClass('show');
+                    $('.cart-overlay').removeClass('show');
+                    break;
+            }
+        });
+    </script>
 
     @stack('scripts')
 
@@ -506,71 +537,43 @@
     @endif
 
     <script>
-      $(function () {
-        var base_url = "{{url('/')}}";
-        localStorage.setItem('base_url', base_url);
-      })
-    </script>
+          $(function () {
+            var base_url = "{{url('/')}}";
+            localStorage.setItem('base_url', base_url);
+          })
+        </script>
 
-<script>
-    // Replace the existing script section with this updated version
-    $(document).ready(function() {
-        // Cart dropdown toggle functionality (WORKS ON ALL PAGES)
-        $('.cart-toggle').on('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+    <script>
+        // Replace the existing script section with this updated version
+        $(document).ready(function() {
+            // Cart dropdown toggle functionality (WORKS ON ALL PAGES)
+            $('.cart-toggle').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            const $cartDropdown = $('.cart-dropdown');
-            const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
-            const $overlay = $('.cart-overlay');
+                const $cartDropdown = $('.cart-dropdown');
+                const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
+                const $overlay = $('.cart-overlay');
 
-            // Toggle active state
-            $cartDropdown.toggleClass('active opened');
-            $cartDropdownBox.toggleClass('active opened');
-            $overlay.toggleClass('active');
+                // Toggle active state
+                $cartDropdown.toggleClass('active opened');
+                $cartDropdownBox.toggleClass('active opened');
+                $overlay.toggleClass('active');
 
-            // Prevent body scroll when cart is open
-            if ($cartDropdown.hasClass('active')) {
-                $('body').addClass('cart-opened');
-            } else {
-                $('body').removeClass('cart-opened');
-            }
-        });
+                // Prevent body scroll when cart is open
+                if ($cartDropdown.hasClass('active')) {
+                    $('body').addClass('cart-opened');
+                } else {
+                    $('body').removeClass('cart-opened');
+                }
+            });
 
-        // Close cart dropdown when clicking close button
-        $('.cart-dropdown .btn-close').on('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+            // Close cart dropdown when clicking close button
+            $('.cart-dropdown .btn-close').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            const $cartDropdown = $('.cart-dropdown');
-            const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
-            const $overlay = $('.cart-overlay');
-
-            $cartDropdown.removeClass('active opened');
-            $cartDropdownBox.removeClass('active opened');
-            $overlay.removeClass('active');
-            $('body').removeClass('cart-opened');
-        });
-
-        // Close cart dropdown when clicking overlay
-        $('.cart-overlay').on('click', function(e) {
-            e.preventDefault();
-
-            const $cartDropdown = $('.cart-dropdown');
-            const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
-            const $overlay = $('.cart-overlay');
-
-            $cartDropdown.removeClass('active opened');
-            $cartDropdownBox.removeClass('active opened');
-            $overlay.removeClass('active');
-            $('body').removeClass('cart-opened');
-        });
-
-        // Close cart dropdown when clicking outside
-        $(document).on('click', function(e) {
-            const $cartDropdown = $('.cart-dropdown');
-
-            if (!$cartDropdown.is(e.target) && $cartDropdown.has(e.target).length === 0) {
+                const $cartDropdown = $('.cart-dropdown');
                 const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
                 const $overlay = $('.cart-overlay');
 
@@ -578,134 +581,177 @@
                 $cartDropdownBox.removeClass('active opened');
                 $overlay.removeClass('active');
                 $('body').removeClass('cart-opened');
+            });
+
+            // Close cart dropdown when clicking overlay
+            $('.cart-overlay').on('click', function(e) {
+                e.preventDefault();
+
+                const $cartDropdown = $('.cart-dropdown');
+                const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
+                const $overlay = $('.cart-overlay');
+
+                $cartDropdown.removeClass('active opened');
+                $cartDropdownBox.removeClass('active opened');
+                $overlay.removeClass('active');
+                $('body').removeClass('cart-opened');
+            });
+
+            // Close cart dropdown when clicking outside
+            $(document).on('click', function(e) {
+                const $cartDropdown = $('.cart-dropdown');
+
+                if (!$cartDropdown.is(e.target) && $cartDropdown.has(e.target).length === 0) {
+                    const $cartDropdownBox = $cartDropdown.find('.dropdown-box');
+                    const $overlay = $('.cart-overlay');
+
+                    $cartDropdown.removeClass('active opened');
+                    $cartDropdownBox.removeClass('active opened');
+                    $overlay.removeClass('active');
+                    $('body').removeClass('cart-opened');
+                }
+            });
+
+            // Prevent cart dropdown from closing when clicking inside
+            $('.cart-dropdown .dropdown-box').on('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // Category dropdown functionality (ONLY FOR NON-HOME PAGES)
+            var isHomePage = $('body').hasClass('home') || window.location.pathname === '/' || window.location.pathname === '';
+
+            if (!isHomePage) {
+                $('.category-toggle, .has-submenu').hover(
+                    function() {
+                        // Only show category dropdown, NOT cart dropdown
+                        $(this).find('.dropdown-box').not('.cart-dropdown .dropdown-box').stop(true, true).fadeIn(200);
+                    },
+                    function() {
+                        // Only hide category dropdown, NOT cart dropdown
+                        $(this).find('.dropdown-box').not('.cart-dropdown .dropdown-box').stop(true, true).fadeOut(200);
+                    }
+                );
             }
         });
+    </script>
 
-        // Prevent cart dropdown from closing when clicking inside
-        $('.cart-dropdown .dropdown-box').on('click', function(e) {
-            e.stopPropagation();
+    <script>
+        $(document).on('click', '.btn-close', function(e) {
+            e.preventDefault();
+            const target = $(this).data('target');
+            console.log('target', target);
+
+            switch (target) {
+                case 'cart':
+                    $('.cart-dropdown').removeClass('show');
+                    $('.cart-overlay').removeClass('show');
+                    break;
+            }
         });
-
-        // Category dropdown functionality (ONLY FOR NON-HOME PAGES)
-        var isHomePage = $('body').hasClass('home') || window.location.pathname === '/' || window.location.pathname === '';
-
-        if (!isHomePage) {
-            $('.category-toggle, .has-submenu').hover(
-                function() {
-                    // Only show category dropdown, NOT cart dropdown
-                    $(this).find('.dropdown-box').not('.cart-dropdown .dropdown-box').stop(true, true).fadeIn(200);
-                },
-                function() {
-                    // Only hide category dropdown, NOT cart dropdown
-                    $(this).find('.dropdown-box').not('.cart-dropdown .dropdown-box').stop(true, true).fadeOut(200);
-                }
-            );
-        }
-    });
-</script>
+    </script>
 
 </body>
 
- <script>
-    $(document).ready(function(){
+    <script>
+        $(document).ready(function(){
 
-        $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           }
-       });
+            $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               }
+           });
 
-        $(document).on('submit','#signupUser',function(e){
-            e.preventDefault();
-            let name_1 = $('#name_1').val();
-            let email_1 = $('#email_1').val();
-            let phone_1 = $('#phone_1').val();
-            let password_1 = $('#password_1').val();
-            let password_2 = $('#password_2').val();
-            // let redirectUrl = "{{url('/')}}/"+"user-dashboard";
-            let redirectUrl = "{{url('/')}}";
-            $.ajax({
+            $(document).on('submit','#signupUser',function(e){
+                e.preventDefault();
+                let name_1 = $('#name_1').val();
+                let email_1 = $('#email_1').val();
+                let phone_1 = $('#phone_1').val();
+                let password_1 = $('#password_1').val();
+                let password_2 = $('#password_2').val();
+                // let redirectUrl = "{{url('/')}}/"+"user-dashboard";
+                let redirectUrl = "{{url('/')}}";
+                $.ajax({
 
-                url: "{{url('user-signup')}}",
+                    url: "{{url('user-signup')}}",
 
-                    type:"POST",
+                        type:"POST",
 
-                    data:{'name_1':name_1,'email_1':email_1,'phone_1':phone_1,'password_1':password_1,'password_2':password_2},
-                    dataType:"json",
-                    success:function(data) {
-                        if(data.status == true){
-                            $('#name_1').val('');
-                            $('#email_1').val('');
-                            $('#phone_1').val('');
-                            $('#password_1').val('');
-                            $('#password_2').val('');
-                            toastr.success(data.message);
-                            setTimeout(function() {
-                                window.location.href = redirectUrl;
-                            }, 1000);
-                        }else{
-                            toastr.error(data.message);
-                        }
+                        data:{'name_1':name_1,'email_1':email_1,'phone_1':phone_1,'password_1':password_1,'password_2':password_2},
+                        dataType:"json",
+                        success:function(data) {
+                            if(data.status == true){
+                                $('#name_1').val('');
+                                $('#email_1').val('');
+                                $('#phone_1').val('');
+                                $('#password_1').val('');
+                                $('#password_2').val('');
+                                toastr.success(data.message);
+                                setTimeout(function() {
+                                    window.location.href = redirectUrl;
+                                }, 1000);
+                            }else{
+                                toastr.error(data.message);
+                            }
 
-                },
+                    },
 
+                });
+            });
+
+            $(document).on('submit','#signinUser',function(e){
+                e.preventDefault();
+                let email_or_phone = $('#email_or_phone').val();
+                let password = $('#password').val();
+                // let redirectUrl = "{{url('/')}}/"+"user-dashboard";
+                let sessionGet = "{{Session::get('page')}}";
+                let redirectUrl;
+                if(sessionGet == 'checkout'){
+                    redirectUrl = "{{url('/')}}/checkout";
+                }else{
+                    redirectUrl = "{{url('/')}}";
+                };
+                $.ajax({
+
+                    url: "{{url('user-signin')}}",
+
+                        type:"POST",
+
+                        data:{'email_or_phone':email_or_phone,'password':password},
+                        dataType:"json",
+                        success:function(data) {
+                            if(data.status == true){
+                                $('#email_or_phone').val('');
+                                $('#password').val('');
+                                toastr.success(data.message);
+                                setTimeout(function() {
+                                    window.location.href = redirectUrl;
+                                }, 1000);
+                            }else{
+                                toastr.error(data.message);
+                            }
+
+                    },
+
+                });
+            });
+
+        });
+     </script>
+    <script>
+        $(document).ready(function(){
+            $('#category').on('change', function(){
+                var categoryId = $(this).val();
+                if(categoryId){
+                    window.location.href = "{{ url('/product-lists') }}?category_id=" + categoryId;
+                }
             });
         });
-
-        $(document).on('submit','#signinUser',function(e){
-            e.preventDefault();
-            let email_or_phone = $('#email_or_phone').val();
-            let password = $('#password').val();
-            // let redirectUrl = "{{url('/')}}/"+"user-dashboard";
-            let sessionGet = "{{Session::get('page')}}";
-            let redirectUrl;
-            if(sessionGet == 'checkout'){
-                redirectUrl = "{{url('/')}}/checkout";
-            }else{
-                redirectUrl = "{{url('/')}}";
-            };
-            $.ajax({
-
-                url: "{{url('user-signin')}}",
-
-                    type:"POST",
-
-                    data:{'email_or_phone':email_or_phone,'password':password},
-                    dataType:"json",
-                    success:function(data) {
-                        if(data.status == true){
-                            $('#email_or_phone').val('');
-                            $('#password').val('');
-                            toastr.success(data.message);
-                            setTimeout(function() {
-                                window.location.href = redirectUrl;
-                            }, 1000);
-                        }else{
-                            toastr.error(data.message);
-                        }
-
-                },
-
-            });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Set the cookie to true immediately when page loads
+            Wolmart.setCookie("hideNewsletterPopup", true, 7);
         });
-
-    });
- </script>
-<script>
-    $(document).ready(function(){
-        $('#category').on('change', function(){
-            var categoryId = $(this).val();
-            if(categoryId){
-                window.location.href = "{{ url('/product-lists') }}?category_id=" + categoryId;
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        // Set the cookie to true immediately when page loads
-        Wolmart.setCookie("hideNewsletterPopup", true, 7);
-    });
-</script>
+    </script>
 
 </html>

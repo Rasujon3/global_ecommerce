@@ -51,6 +51,18 @@ class CartController extends Controller
                 }
             }
 
+            $count = Cart::where('cart_session_id',Session::get('cart_session_id'))->count();
+            // Get rendered cart HTML + sum + count
+            $cartData = $this->getCartHtml();
+
+//            return response()->json([
+//                'status' => true,
+//                'cart_count' => $count,
+//                'message' => 'Cart updated successfully.',
+//                'cart_html' => $cartData['html'],
+//                'cart_sum' => $cartData['sum'],
+//            ]);
+
             return redirect()->back()->with([
                 'messege' => "Cart updated successfully!",
                 'alert-type' => "success"
@@ -58,6 +70,40 @@ class CartController extends Controller
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
+        }
+    }
+    public function getCartHtml()
+    {
+        try {
+            $carts = Cart::with('product', 'productvariant', 'product.images')
+                ->where('cart_session_id', Session::get('cart_session_id'))
+                ->latest()
+                ->get();
+
+            $sum = Cart::where('cart_session_id', Session::get('cart_session_id'))
+                ->sum('unit_total');
+
+            // Render the partial (make sure this view path is correct)
+            $view = view('fronts.components.cart-dropdown', compact('carts', 'sum'))->render();
+
+            return [
+                'success' => true,
+                'html' => $view,
+                'sum' => $sum,
+                'count' => $carts->count(),
+            ];
+        } catch (Exception $e) {
+            Log::error('Error in getCartHtml : '.$e->getMessage(), [
+                'code' => $e->getCode(),
+                'line' => $e->getLine()
+            ]);
+
+            return [
+                'success' => false,
+                'html' => '',
+                'sum' => 0,
+                'count' => 0,
+            ];
         }
     }
 

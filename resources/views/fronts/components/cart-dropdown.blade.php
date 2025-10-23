@@ -21,88 +21,87 @@
     <div class="dropdown-box" id="cart-dropdown-box">
         <div class="cart-header">
             <span>Shopping Cart</span>
-            <a href="#" class="btn-close">Close<i class="w-icon-long-arrow-right"></i></a>
+            <a href="#" class="btn-close" data-target="cart">
+                Close <i class="w-icon-long-arrow-right"></i>
+            </a>
         </div>
 
-        <div class="products">
-            @forelse($carts as $cart)
-                <div class="product product-cart">
-                    <div class="product-detail">
-                        <a href="{{url('/product-details/'.$cart->product->id)}}"
-                           class="product-name">
-                            {{$cart->product->product_name}} @if($cart->productvariant != null)( {{$cart->productvariant->variant_value}} )@endif
-                        </a>
-                        <div class="price-box">
-                            <span class="product-quantity">
-                                {{$cart->cart_qty}}
-                            </span>
-                            <span class="product-price">
-                                @if($cart->productvariant == null)
-                                    {{discount($cart->product)}} BDT
-                                @else
-                                    {{$cart->productvariant->pricevariant_price}} BDT
-                                @endif
-                            </span>
+        <!-- Scrollable products -->
+        <div class="cart-content">
+            <div class="products">
+                @foreach($carts as $cart)
+                    <div class="product product-cart">
+                        <div class="product-detail">
+                            <a href="{{ url('/product-details/'.$cart->product->id) }}" class="product-name">
+                                {{ $cart->product->product_name }}
+                            </a>
+                            <div class="price-box">
+                                <span class="product-quantity">{{ $cart->cart_qty }} </span>
+                                <span class="product-price">{{ discount($cart->product) }} BDT</span>
+                            </div>
                         </div>
+                        <figure class="product-media">
+                            <a href="{{ url('/product-details/'.$cart->product->id) }}">
+                                <img src="{{ URL::to($cart->product->images[0]->image) }}" alt="product" height="84" width="94" />
+                            </a>
+                        </figure>
                     </div>
-                    <figure class="product-media">
-                        <a href="{{url('/product-details/'.$cart->product->id)}}">
-                            <img
-                                src="{{URL::to($cart->product->images[0]->image)}}"
-                                alt="product"
-                                height="84"
-                                width="94"
-                            />
-                        </a>
-                    </figure>
-                    <button
-                        class="btn btn-link btn-close remove-cart"
-                        aria-label="button"
-                        data-id="{{ $cart->id }}"
-                    >
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            @empty
-                <p class="text-center p-3">Cart is empty.</p>
-            @endforelse
+                @endforeach
+            </div>
         </div>
 
-        <div class="cart-total">
-            <label>Subtotal:</label>
-            <span class="price">{{ $sum }} BDT</span>
-        </div>
-
-        <div class="cart-action">
-            <a href="{{ url('/carts') }}" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
-            <a href="{{ url('/checkout') }}" class="btn btn-primary  btn-rounded">Checkout</a>
+        <!-- Fixed footer -->
+        <div class="cart-footer">
+            <div class="cart-total">
+                <label>Subtotal:</label>
+                <span class="price">{{ $sum }} BDT</span>
+            </div>
+            <div class="cart-action">
+                <a href="{{ url('/carts') }}" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
+                <a href="{{ url('/checkout') }}" class="btn btn-primary btn-rounded">Checkout</a>
+            </div>
         </div>
     </div>
     <!-- End of Dropdown Box -->
 </div>
 
-<script>
-    $(document).on('click', '.remove-cart', function(e){
-        e.preventDefault();
-        cart_id = $(this).data('id');
-        if(confirm('Do you want to delete this?'))
-        {
-            $.ajax({
+<style>
+    /* Ensure dropdown-box has a proper height */
+    #cart-dropdown-box {
+        display: flex;
+        flex-direction: column;
+        max-height: 100%; /* Adjust as needed */
+        width: 320px; /* optional, for consistent layout */
+    }
 
-                url: "{{url('/cart-delete')}}/"+cart_id,
+    /* Scrollable middle area */
+    .cart-content {
+        overflow-y: auto;
+        flex: 1;
+        padding-right: 6px; /* avoid scrollbar overlap */
+        margin-bottom: 10px;
+    }
 
-                type:"GET",
-                dataType:"json",
-                success:function(data) {
+    /* Fix footer to bottom */
+    .cart-footer {
+        border-top: 1px solid #eee;
+        background: #fff;
+        padding: 12px;
+        flex-shrink: 0;
+        position: sticky;
+        bottom: 0;
+    }
 
-                    $('#cart_'+cart_id).remove();
-                    $('.cart-count').text(data.cart_count);
-                    cartCal();
-                    toastr.success(data.message);
+    /* Optional: make smooth scrolling look nice */
+    .cart-content::-webkit-scrollbar {
+        width: 6px;
+    }
+    .cart-content::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 3px;
+    }
+</style>
 
-                },
+@push('scripts')
 
-            });
-        }
-    });
-</script>
+@endpush

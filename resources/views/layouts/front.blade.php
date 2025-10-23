@@ -23,6 +23,19 @@
 @push('scripts')
  <script>
    $(document).ready(function(){
+       function rebindCartEvents() {
+           $(document).on('click', '.btn-close', function(e) {
+               e.preventDefault();
+               const target = $(this).data('target');
+
+               switch (target) {
+                   case 'cart':
+                       $('.cart-dropdown').removeClass('show');
+                       $('.cart-overlay').removeClass('show');
+                       break;
+               }
+           });
+       }
       let product_id;
       $(document).on('click', '.add-to-cart', function(e){
          e.preventDefault();
@@ -30,7 +43,6 @@
          $.ajax({
 
             url: "{{url('/add-to-cart')}}",
-
                  type:"GET",
                  data:{'use_for':'product','element_id':product_id},
                  dataType:"json",
@@ -42,10 +54,20 @@
                         "timeOut": "3000"
                     };
                     if(data.status == false){
-
                         toastr.error(data.message);
                     }else{
+                        // update cart count in header
                         $('.cart-count').text(data.cart_count);
+
+                        // replace dropdown-box content
+                        if (data.cart_html) {
+                            $('#cart-dropdown-box').html($(data.cart_html).find('#cart-dropdown-box').html());
+                            // if you want to ensure the new HTML has id #cart-dropdown-box:
+                            // $('#cart-dropdown-box').html(data.cart_html);
+                            rebindCartEvents(); // rebind events for new content
+                        }
+
+                        // $('.cart-count').text(data.cart_count);
                         toastr.success(data.message);
                     }
             },
