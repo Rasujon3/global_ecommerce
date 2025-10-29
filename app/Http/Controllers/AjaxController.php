@@ -401,8 +401,8 @@ class AjaxController extends Controller
             $sum = Cart::where('cart_session_id', Session::get('cart_session_id'))
                 ->sum('unit_total');
 
-            // Render the partial (make sure this view path is correct)
-            $view = view('fronts.components.cart-dropdown', compact('carts', 'sum'))->render();
+            // Render ONLY the scrollableProducts partial
+            $view = view('fronts.components.scrollableProducts', compact('carts', 'sum'))->render();
 
             return [
                 'success' => true,
@@ -418,10 +418,61 @@ class AjaxController extends Controller
 
             return [
                 'success' => false,
-                'html' => '',
+                'html' => '<p class="text-center py-3">Error loading cart</p>',
                 'sum' => 0,
                 'count' => 0,
             ];
+        }
+    }
+
+    // Add this new method in AjaxController
+    public function updateCartQuantity(Request $request)
+    {
+        try {
+            $cart = Cart::findOrFail($request->cart_id);
+            $product = $cart->product;
+
+            // Calculate new quantity
+            $newQty = $request->action === 'increase' ? $cart->cart_qty + 1 : $cart->cart_qty - 1;
+
+            // Check if quantity is valid
+            if ($newQty < 1) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Quantity cannot be less than 1'
+                ]);
+            }
+
+            // Check stock
+            if ($newQty > $product->stock_qty) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Requested quantity not available in stock'
+                ]);
+            }
+
+            // Update cart
+            $price = discount($product);
+            $cart->cart_qty = $newQty;
+            $cart->unit_total = round($price * $newQty, 2);
+            $cart->save();
+
+            $countCart = Cart::where('cart_session_id', Session::get('cart_session_id'))->count();
+            $cartData = $this->getCartHtml();
+
+            return response()->json([
+                'status' => true,
+                'cart_count' => $countCart,
+                'message' => 'Cart updated successfully',
+                'cart_html' => $cartData['html'],
+                'cart_sum' => $cartData['sum'],
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 

@@ -25,3 +25,6 @@ Route::get('/product-variant-details/{id}', [AjaxController::class, 'productVari
 //wishlist ajax requests
 Route::get('/add-wishlist/{id}', [AjaxController::class, 'addWishlist']);
 Route::get('/remove-wishlist/{id}', [AjaxController::class, 'removeWishlist']);
+
+// Add this route
+Route::post('/cart-update-quantity', [AjaxController::class, 'updateCartQuantity']);
