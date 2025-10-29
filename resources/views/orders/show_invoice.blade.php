@@ -79,31 +79,31 @@
                   <table class="table table-striped">
                     <thead>
                     <tr>
-                      <th>Qty</th>
-                      <th>Product</th>
                       <th>Serial #</th>
+                      <th>Product</th>
+                      <th>Qty</th>
                       <th>Unit Total</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($data->orders as $key=>$order)
                     <tr>
-                      <td>{{$order->qty}}</td>
-                      <td>
-                      	{{$order->product->product_name}}
-                          {{-- ✅ Show variants if available --}}
-                          @if(!empty($order->variant_details))
-                              <br>
-                              @foreach($order->variant_details as $variant)
-                                  <small class="text-muted">
-                                      {{ $variant->variant_name }}: {{ $variant->variant_value }}
-                                      @if(!$loop->last) | @endif
-                                  </small>
-                              @endforeach
-                          @endif
-                      </td>
-                      <td>{{$key+1}}</td>
-                      <td>{{discount($order->product)}} BDT</td>
+                        <td>{{$key+1}}</td>
+                        <td>
+                            {{$order->product->product_name}}
+                            {{-- ✅ Show variants if available --}}
+                            @if(!empty($order->variant_details))
+                                <br>
+                                @foreach($order->variant_details as $variant)
+                                    <small class="text-muted">
+                                        {{ $variant->variant_name }}: {{ $variant->variant_value }}
+                                        @if(!$loop->last) | @endif
+                                    </small>
+                                @endforeach
+                            @endif
+                        </td>
+                        <td>{{$order->qty}}</td>
+                        <td>{{discount($order->product)}} BDT</td>
                     </tr>
                     @endforeach
                     </tbody>
