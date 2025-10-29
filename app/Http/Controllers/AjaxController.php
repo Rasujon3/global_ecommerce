@@ -236,8 +236,9 @@ class AjaxController extends Controller
 
 
             if($cart){
-                $qty = $request->has('qty')?$request->qty+1:$cart->cart_qty+1;
-                $cart->cart_qty=$qty;
+                $change = $request->has('qty') ? (int)$request->qty : 1;
+                $qty = max(1, $cart->cart_qty + $change); // don’t go below 1
+                $cart->cart_qty = $qty;
                 $cart->unit_total = round($price * $qty,2);
                 $cart->update();
             }else{

@@ -20,7 +20,7 @@
                                                 {{ $product->tag ?? 'In Stock' }}
                                             </label>
                                             @if($product->stock_qty == 0)
-                                                <label class="product-label label-out">Stock Out</label>
+                                                <label class="product-label label-out">Sold Out</label>
                                             @endif
                                         </div>
 
