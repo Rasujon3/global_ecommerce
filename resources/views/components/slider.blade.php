@@ -17,6 +17,16 @@
         height: auto;
         display: block;
     }
+
+    .intro-section .banner-content {
+        position: absolute;
+        bottom: 80px; /* adjust as needed */
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+
 </style>
  <section class="intro-section">
                 <div class="swiper-container swiper-theme nav-inner pg-inner swiper-nav-lg animation-slider pg-xxl-hide nav-xxl-show nav-hide"
@@ -42,7 +52,7 @@
 {{--                                        height="397"--}}
 {{--                                    >--}}
 {{--                                </figure>--}}
-                                <div class="banner-content y-50 text-center">
+                                <div class="banner-content text-center">
                                     <h5 class="banner-subtitle font-weight-normal text-default ls-50 lh-1 mb-2 slide-animate d-none"
                                         data-animation-options="{
                                     'name': 'fadeInRightShorter',
