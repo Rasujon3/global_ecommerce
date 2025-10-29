@@ -17,17 +17,23 @@
                                     @foreach($menuCategories as $menuCategory)
                                         @if(count($menuCategory->subcategories) > 0)
                                             <li>
-                                                <a href="{{url('/product-lists?category_id='.$menuCategory->id)}}">
+                                                <a href="{{ url('/product-lists?category_id='.$menuCategory->id) }}">
                                                     <i class="w-icon-list"></i>{{$menuCategory->category_name}}
                                                 </a>
                                                 <ul class="megamenu">
                                                     @foreach($menuCategory->subcategories as $subcatgory)
                                                         <li>
-                                                            <h4 class="menu-title">{{$subcatgory->subcategory_name}}</h4>
+                                                            <a href="{{ url('/product-lists?category_id='.$menuCategory->id) }}">
+                                                                <h4 class="menu-title">{{$subcatgory->subcategory_name}}</h4>
+                                                            </a>
                                                             <hr class="divider">
                                                             <ul>
                                                                 @foreach($subcatgory->products as $product)
-                                                                    <li><a href="{{url('/product-details/'.$product->id)}}">{{$product->product_name}}</a>
+                                                                    <li>
+                                                                        <a href="{{url('/product-details/'.$product->id)}}">
+                                                                            {{$product->product_name}}
+                                                                        </a>
+                                                                    </li>
                                                                 @endforeach
                                                             </ul>
                                                         </li>
@@ -45,7 +51,7 @@
                                 @endif
 
                                 <li class="d-none">
-                                    <a href="shop-banner-sidebar.html"
+                                    <a href="#"
                                        class="font-weight-bold text-primary text-uppercase ls-25">
                                         View All Categories<i class="w-icon-angle-right"></i>
                                     </a>
@@ -75,7 +81,9 @@
                                                 <ul class="megamenu">
                                                     @foreach($menuCategory->subcategories as $subcatgory)
                                                         <li>
-                                                            <h4 class="menu-title">{{$subcatgory->subcategory_name}}</h4>
+                                                            <a href="{{ url('/product-lists?category_id='.$menuCategory->id) }}">
+                                                                <h4 class="menu-title">{{$subcatgory->subcategory_name}}</h4>
+                                                            </a>
                                                             <hr class="divider">
                                                             <ul>
                                                                 @foreach($subcatgory->products as $product)
