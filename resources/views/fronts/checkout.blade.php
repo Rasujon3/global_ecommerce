@@ -1,5 +1,44 @@
 @extends('front_master')
 @section('front_content')
+    <style>
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .order-table td.product-name {
+            word-wrap: break-word;
+            white-space: normal;
+            max-width: 150px; /* adjust based on your design */
+        }
+
+        @media (max-width: 768px) {
+            .order-table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .order-table {
+                min-width: 400px;
+            }
+            .order-table td,
+            .order-table th {
+                display: block;
+                width: 100%;
+                text-align: left;
+                box-sizing: border-box;
+            }
+
+            .order-table tr {
+                display: block;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .order-table td.product-name {
+                max-width: 100%;
+            }
+        }
+
+    </style>
 <!-- Start of Main -->
         <main class="main checkout">
             <!-- Start of Breadcrumb -->
@@ -229,23 +268,24 @@
                                 <div class="order-summary-wrapper sticky-sidebar">
                                     <h3 class="title text-uppercase ls-10">Your Order</h3>
                                     <div class="order-summary">
-                                        <table class="order-table">
-                                            <thead>
+                                        <div class="order-table-wrapper">
+                                            <table class="order-table">
+                                                <thead>
                                                 <tr>
                                                     <th colspan="2">
                                                         <b>Product</b>
                                                     </th>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                             @foreach($carts as $cart)
-                                                <tr class="bb-no">
-                                                    <td class="product-name">{{$cart->product->product_name}} <i
-                                                            class="fas fa-times"></i> <span
-                                                            class="product-quantity">{{$cart->cart_qty}}</span></td>
-                                                    <td class="product-total">{{$cart->unit_total}} BDT</td>
-                                                </tr>
-              								@endforeach
+                                                </thead>
+                                                <tbody>
+                                                @foreach($carts as $cart)
+                                                    <tr class="bb-no">
+                                                        <td class="product-name">{{$cart->product->product_name}} <i
+                                                                class="fas fa-times"></i> <span
+                                                                class="product-quantity">{{$cart->cart_qty}}</span></td>
+                                                        <td class="product-total">{{$cart->unit_total}} BDT</td>
+                                                    </tr>
+                                                @endforeach
                                                 <tr class="cart-subtotal bb-no">
                                                     <td>
                                                         <b>Subtotal</b>
@@ -254,33 +294,33 @@
                                                         <b>{{$sum}} BDT</b>
                                                     </td>
                                                 </tr>
-                                             <tr class="delivery-charge">
-                                                 <td><b>Delivery Charge</b></td>
-                                                 <td>
-                                                     <ul class="list-unstyled mb-0">
-                                                         <li>
-                                                             <label>
-                                                                 <input type="radio" name="delivery_charge" value="{{ $settings->inside_dhaka_dc }}" checked>
-                                                                 Inside Dhaka ({{ $settings->inside_dhaka_dc }} BDT)
-                                                             </label>
-                                                         </li>
-                                                         <li>
-                                                             <label>
-                                                                 <input type="radio" name="delivery_charge" value="{{ $settings->sub_urban_areas_dc }}">
-                                                                 Suburban Areas ({{ $settings->sub_urban_areas_dc }} BDT)
-                                                             </label>
-                                                         </li>
-                                                         <li>
-                                                             <label>
-                                                                 <input type="radio" name="delivery_charge" value="{{ $settings->outside_dhaka_dc }}">
-                                                                 Outside Dhaka ({{ $settings->outside_dhaka_dc }} BDT)
-                                                             </label>
-                                                         </li>
-                                                     </ul>
-                                                 </td>
-                                             </tr>
-                                            </tbody>
-                                            <tfoot>
+                                                <tr class="delivery-charge">
+                                                    <td><b>Delivery Charge</b></td>
+                                                    <td>
+                                                        <ul class="list-unstyled mb-0">
+                                                            <li>
+                                                                <label>
+                                                                    <input type="radio" name="delivery_charge" value="{{ $settings->inside_dhaka_dc }}" checked>
+                                                                    Inside Dhaka ({{ $settings->inside_dhaka_dc }} BDT)
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="radio" name="delivery_charge" value="{{ $settings->sub_urban_areas_dc }}">
+                                                                    Suburban Areas ({{ $settings->sub_urban_areas_dc }} BDT)
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="radio" name="delivery_charge" value="{{ $settings->outside_dhaka_dc }}">
+                                                                    Outside Dhaka ({{ $settings->outside_dhaka_dc }} BDT)
+                                                                </label>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
                                                 <tr class="shipping-methods d-none">
                                                     <td colspan="2" class="text-left">
                                                         <h4 class="title title-simple bb-no mb-1 pb-0 pt-3">Shipping
@@ -289,27 +329,27 @@
                                                             <li>
                                                                 <div class="custom-radio">
                                                                     <input type="radio" id="free-shipping"
-                                                                        class="custom-control-input" name="shipping">
+                                                                           class="custom-control-input" name="shipping">
                                                                     <label for="free-shipping"
-                                                                        class="custom-control-label color-dark">Free
+                                                                           class="custom-control-label color-dark">Free
                                                                         Shipping</label>
                                                                 </div>
                                                             </li>
                                                             <li>
                                                                 <div class="custom-radio">
                                                                     <input type="radio" id="local-pickup"
-                                                                        class="custom-control-input" name="shipping">
+                                                                           class="custom-control-input" name="shipping">
                                                                     <label for="local-pickup"
-                                                                        class="custom-control-label color-dark">Local
+                                                                           class="custom-control-label color-dark">Local
                                                                         Pickup</label>
                                                                 </div>
                                                             </li>
                                                             <li>
                                                                 <div class="custom-radio">
                                                                     <input type="radio" id="flat-rate"
-                                                                        class="custom-control-input" name="shipping">
+                                                                           class="custom-control-input" name="shipping">
                                                                     <label for="flat-rate"
-                                                                        class="custom-control-label color-dark">Flat
+                                                                           class="custom-control-label color-dark">Flat
                                                                         rate: $5.00</label>
                                                                 </div>
                                                             </li>
@@ -320,8 +360,9 @@
                                                     <th><b>Total</b></th>
                                                     <td><b id="grand-total">{{ $sum + $settings->inside_dhaka_dc }} BDT</b></td>
                                                 </tr>
-                                            </tfoot>
-                                        </table>
+                                                </tfoot>
+                                            </table>
+                                        </div>
 
                                         <div class="payment-methods" id="payment_method">
                                             <h4 class="title font-weight-bold ls-25 pb-0 mb-1">Payment Methods</h4>
