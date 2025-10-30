@@ -82,7 +82,7 @@
                                                                         {{ $product->tag ?? 'In Stock' }}
                                                                     </label>
                                                                     @if($product->stock_qty == 0)
-                                                                        <label class="product-label label-out">Sold Out</label>
+                                                                        <label class="product-label label-out">Stock Out</label>
                                                                     @endif
                                                                 </div>
                                                                 <img src="{{ URL::to($image->image) }}" data-zoom-image="{{ URL::to($image->image) }}" alt="{{ $product->product_name }}" width="800" height="900">
@@ -578,7 +578,7 @@
                                                             {{ $product->tag ?? 'In Stock' }}
                                                         </label>
                                                         @if($product->stock_qty == 0)
-                                                            <label class="product-label label-out">Sold Out</label>
+                                                            <label class="product-label label-out">Stock Out</label>
                                                         @endif
                                                     </div>
 
